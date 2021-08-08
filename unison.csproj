@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>unison.ico</ApplicationIcon>
+    <Win32Resource></Win32Resource>
+    <StartupObject>unison.App</StartupObject>
+    <Version>0.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="images\nocover.png" />
+    <None Remove="snapclient_0.25.0-1_win64\FLAC.dll" />
+    <None Remove="snapclient_0.25.0-1_win64\ogg.dll" />
+    <None Remove="snapclient_0.25.0-1_win64\opus.dll" />
+    <None Remove="snapclient_0.25.0-1_win64\snapclient.exe" />
+    <None Remove="snapclient_0.25.0-1_win64\soxr.dll" />
+    <None Remove="snapclient_0.25.0-1_win64\vorbis.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\nocover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="snapclient_0.25.0-1_win64\FLAC.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="snapclient_0.25.0-1_win64\ogg.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="snapclient_0.25.0-1_win64\opus.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="snapclient_0.25.0-1_win64\snapclient.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="snapclient_0.25.0-1_win64\soxr.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="snapclient_0.25.0-1_win64\vorbis.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
