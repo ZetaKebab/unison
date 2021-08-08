@@ -8,6 +8,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
+
 using MPDCtrl.Models;
 
 namespace unison
@@ -190,6 +193,11 @@ namespace unison
             await _mpd.MpdSetConsume(!_currentConsume);
         }
 
+        private async void ChangeVolume(int value)
+        {
+            await _mpd.MpdSetVolume(value);
+        }
+
         private void Snapcast_Clicked(object sender, RoutedEventArgs e)
         {
             if (!_snapcastStarted)
@@ -211,6 +219,95 @@ namespace unison
         {
             if (_snapcastStarted)
                 _snapcast.Kill();
+        }
+
+
+        // hotkeys handling
+
+        [DllImport("user32.dll")]
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+        [DllImport("user32.dll")]
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        private const int HOTKEY_ID = 9000;
+
+        // modifiers
+        private const uint MOD_NONE = 0x0000;
+        private const uint MOD_ALT = 0x0001;
+        private const uint MOD_CONTROL = 0x0002;
+        private const uint MOD_SHIFT = 0x0004;
+        private const uint MOD_WIN = 0x0008;
+
+        // reference => https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+        private const uint VK_MEDIA_PREV_TRACK = 0xB1;
+        private const uint VK_MEDIA_NEXT_TRACK = 0xB0;
+        private const uint VK_MEDIA_PLAY_PAUSE = 0xB3;
+        private const uint VK_VOLUME_UP = 0xAF;
+        private const uint VK_VOLUME_DOWN = 0xAE;
+
+        private IntPtr _windowHandle;
+        private HwndSource _source;
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            _windowHandle = new WindowInteropHelper(this).Handle;
+            _source = HwndSource.FromHwnd(_windowHandle);
+            _source.AddHook(HwndHook);
+
+            RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL, VK_MEDIA_PREV_TRACK);
+            RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL, VK_MEDIA_NEXT_TRACK);
+            RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL /*| MOD_ALT*/, VK_MEDIA_PLAY_PAUSE);
+            RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL, VK_VOLUME_UP);
+            RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL, VK_VOLUME_DOWN);
+        }
+
+        private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            const int WM_HOTKEY = 0x0312;
+            switch (msg)
+            {
+                case WM_HOTKEY:
+                    switch (wParam.ToInt32())
+                    {
+                        case HOTKEY_ID:
+                            int vkey = (((int)lParam >> 16) & 0xFFFF);
+                            if (vkey == VK_MEDIA_NEXT_TRACK)
+                            {
+                                Next_Clicked(null, null);
+                            }
+                            else if (vkey == VK_MEDIA_PREV_TRACK)
+                            {
+                                Previous_Clicked(null, null);
+                            }
+                            else if (vkey == VK_VOLUME_DOWN)
+                            {
+                                _currentVolume--;
+                                ChangeVolume(_currentVolume);
+                            }
+                            else if (vkey == VK_VOLUME_UP)
+                            {
+                                _currentVolume++;
+                                ChangeVolume(_currentVolume);
+                            }
+                            else if (vkey == VK_MEDIA_PLAY_PAUSE)
+                            {
+                                Pause_Clicked(null, null);
+                            }
+                            handled = true;
+                            break;
+                    }
+                    break;
+            }
+            return IntPtr.Zero;
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _source.RemoveHook(HwndHook);
+            UnregisterHotKey(_windowHandle, HOTKEY_ID);
+            base.OnClosed(e);
         }
     }
 }
