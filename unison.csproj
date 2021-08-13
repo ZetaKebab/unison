@@ -11,17 +11,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\nocover-test.png" />
     <None Remove="images\nocover.png" />
+    <None Remove="LICENSE" />
     <None Remove="snapclient_0.25.0-1_win64\FLAC.dll" />
     <None Remove="snapclient_0.25.0-1_win64\ogg.dll" />
     <None Remove="snapclient_0.25.0-1_win64\opus.dll" />
     <None Remove="snapclient_0.25.0-1_win64\snapclient.exe" />
     <None Remove="snapclient_0.25.0-1_win64\soxr.dll" />
     <None Remove="snapclient_0.25.0-1_win64\vorbis.dll" />
+    <None Remove="unison.ico" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\nocover-test.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\nocover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="LICENSE">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="unison.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="snapclient_0.25.0-1_win64\FLAC.dll">
@@ -42,6 +54,11 @@
     <Content Include="snapclient_0.25.0-1_win64\vorbis.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Emoji.Wpf" Version="0.3.3" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
   </ItemGroup>
 
 </Project>

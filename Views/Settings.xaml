@@ -1,0 +1,118 @@
+﻿<Window x:Class="unison.Views.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
+        xmlns:local="clr-namespace:unison.Views"
+        mc:Ignorable="d"
+        Closing="Window_Closing" Title="Settings" ResizeMode="CanMinimize" Icon="/unison.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <TabControl Margin="10">
+                <TabItem Header="MPD">
+                    <DockPanel Margin="8">
+                        <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
+                            <GroupBox.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <emoji:TextBlock Text="📶 Connection"/>
+                                </StackPanel>
+                            </GroupBox.Header>
+                            <Grid VerticalAlignment="Top">
+                                <StackPanel>
+                                    <StackPanel>
+                                        <TextBlock Text="Host" TextWrapping="Wrap" Margin="5,0,0,0"/>
+                                        <TextBox Text="192.168.0.1" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
+                                    </StackPanel>
+
+                                    <StackPanel Margin="0,5,0,0">
+                                        <TextBlock Text="Port" TextWrapping="Wrap" Margin="5,0,0,0"/>
+                                        <TextBox Text="6600" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
+                                    </StackPanel>
+
+                                    <StackPanel Margin="0,5,0,0">
+                                        <TextBlock Text="Password" TextWrapping="Wrap" Margin="5,0,0,0"/>
+                                        <TextBox Text="" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
+                                    </StackPanel>
+                                    <Button Content="Connect" Margin="0,10,0,0" Width="120"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+                    </DockPanel>
+                </TabItem>
+
+                <TabItem Header="Snapcast">
+                    <DockPanel Margin="8">
+                        <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
+                            <GroupBox.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <emoji:TextBlock Text="🔊 Snapcast"/>
+                                </StackPanel>
+                            </GroupBox.Header>
+                            <Grid VerticalAlignment="Top">
+                                <StackPanel>
+                                    <StackPanel>
+                                        <CheckBox Margin="5, 5, 0, 0">
+                                            <TextBlock Text="Launch at startup" TextWrapping="Wrap"/>
+                                        </CheckBox>
+                                        <TextBlock Text="Executable path" TextWrapping="Wrap" Margin="5,5,0,0"/>
+                                        <TextBox Text="snapclient_0.25.0-1_win64" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,5,0,0" TextAlignment="Left" Width="250">
+                                            You can change to your own locally installed version of the Snapcast client with an <Run FontStyle="Italic" FontWeight="DemiBold">absolute</Run> path.
+                                        </TextBlock>
+                                        <Button Content="Reset" Margin="0,10,0,0" Width="120"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+                    </DockPanel>
+                </TabItem>
+
+                <TabItem Header="About" Height="20" VerticalAlignment="Bottom">
+                    <DockPanel Margin="8">
+                        <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
+                            <GroupBox.Header>
+                                <emoji:TextBlock Text="🎶 unison"/>
+                            </GroupBox.Header>
+                            <Grid VerticalAlignment="Top">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock TextWrapping="Wrap" Margin="0,0,0,10" VerticalAlignment="Top">
+                                        <Run Text="Version:"/>
+                                        <Run Text="{Binding GetVersion, Mode = OneWay}"/>
+                                    </TextBlock>
+                                    <TextBlock TextWrapping="Wrap" VerticalAlignment="Top">
+                                        unison is free software. It is built with the following technologies:<LineBreak/>
+                                        ※ <Hyperlink NavigateUri="https://torum.github.io/MPDCtrl/" RequestNavigate="Hyperlink_RequestNavigate">MPDCtrl</Hyperlink><LineBreak/>
+                                        ※ <Hyperlink NavigateUri="https://github.com/hardcodet/wpf-notifyicon" RequestNavigate="Hyperlink_RequestNavigate">wpf-notifyicon</Hyperlink><LineBreak/>
+                                        ※ <Hyperlink NavigateUri="https://github.com/samhocevar/emoji.wpf" RequestNavigate="Hyperlink_RequestNavigate">Emoji.WPF</Hyperlink>
+                                    </TextBlock>
+                                    <TextBlock Margin="0,10,0,0">
+                                        Source code freely available
+                                        <Hyperlink NavigateUri="https://git.n700.ovh/keb/unison" RequestNavigate="Hyperlink_RequestNavigate">
+                                            here
+                                        </Hyperlink>.
+                                    </TextBlock>
+                                    <TextBlock Margin="0,10,0,0">
+                                        Made by
+                                        <Hyperlink NavigateUri="https://marchal.dev" RequestNavigate="Hyperlink_RequestNavigate">
+                                            Théo Marchal
+                                        </Hyperlink>.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0" Margin="0,10,0,0">
+                            <GroupBox.Header>
+                                <emoji:TextBlock Text="📝 License"/>
+                            </GroupBox.Header>
+                            <Grid VerticalAlignment="Top">
+                                <TextBlock Text="{Binding GetLicense, Mode = OneWay}" TextWrapping="Wrap" Width="400" TextAlignment="Justify" />
+                            </Grid>
+                        </GroupBox>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+    </Grid>
+</Window>

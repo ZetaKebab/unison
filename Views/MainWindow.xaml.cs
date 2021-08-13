@@ -3,47 +3,43 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Diagnostics;
-
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-
-using System.Runtime.InteropServices;
-using System.Windows.Interop;
-
 using MPDCtrl.Models;
+using System.Windows.Interop;
+using unison.Views;
 
 namespace unison
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private readonly MPC _mpd = new();
-        private bool _connected = false;
-        private int _currentVolume;
+        private bool _connected;
+        public int _currentVolume;
         private bool _currentRandom;
         private bool _currentRepeat;
         private bool _currentSingle;
         private bool _currentConsume;
         private double _currentElapsed;
 
-        private readonly Process _snapcast = new Process();
-        private bool _snapcastStarted = false;
-
-        private string _snapcastVersion = "snapclient_0.25.0-1_win64";
         private string _mpdHost = "192.168.1.13";
         private int _mpdPort = 6600;
         private string _mpdPassword = null;
 
+        Settings SettingsWindow = new Settings();
+
         public MainWindow()
         {
+            InitHwnd();
             InitializeComponent();
+
+            WindowState = WindowState.Minimized;
+
             ConnectToMPD();
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(0.2);
-            timer.Tick += timer_Tick;
+            timer.Tick += Timer_Tick;
             timer.Start();
         }
 
@@ -64,7 +60,7 @@ namespace unison
             }
         }
 
-        void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             LoopMPD();
             UpdateInterface();
@@ -102,14 +98,14 @@ namespace unison
         public void UpdateButton(ref Button button, bool b)
         {
             if (b)
-                button.Foreground = System.Windows.SystemColors.GradientActiveCaptionBrush;
+                button.Foreground = SystemColors.GradientActiveCaptionBrush;
             else
-                button.Foreground = System.Windows.SystemColors.DesktopBrush;
+                button.Foreground = SystemColors.DesktopBrush;
         }
 
         public string FormatSeconds(double time)
         {
-            var timespan = TimeSpan.FromSeconds(time);
+            TimeSpan timespan = TimeSpan.FromSeconds(time);
             return timespan.ToString(@"mm\:ss");
         }
 
@@ -138,16 +134,17 @@ namespace unison
             }
 
             if (_mpd.MpdStatus.MpdState == Status.MpdPlayState.Play)
-                PauseButton.Content = "⏸";
+                PauseButtonEmoji.Text = "⏸️";
             else if (_mpd.MpdStatus.MpdState == Status.MpdPlayState.Pause)
-                PauseButton.Content = "▶️";
+                PauseButtonEmoji.Text = "▶️";
 
-            if (_snapcastStarted)
-                Snapcast.Content = "Stop Snapcast";
+            SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
+            if (snapcast.Started)
+                SnapcastText.Text = "Stop Snapcast";
             else
-                Snapcast.Content = "Start Snapcast";
+                SnapcastText.Text = "Start Snapcast";
 
-            DebugText.Text = _mpd.MpdHost + ":" + _mpd.MpdPort;
+            Connection.Text = (_connected ? "✔️" : "❌") + _mpd.MpdHost + ":" + _mpd.MpdPort;
 
             UpdateButton(ref Random, _currentRandom);
             UpdateButton(ref Repeat, _currentRepeat);
@@ -155,7 +152,7 @@ namespace unison
             UpdateButton(ref Consume, _currentConsume);
         }
 
-        private async void Pause_Clicked(object sender, RoutedEventArgs e)
+        public async void Pause_Clicked(object sender, RoutedEventArgs e)
         {
             if (_mpd.MpdStatus.MpdState == Status.MpdPlayState.Play)
                 await _mpd.MpdPlaybackPause();
@@ -163,17 +160,17 @@ namespace unison
                 await _mpd.MpdPlaybackPlay(_currentVolume);
         }
 
-        private async void Previous_Clicked(object sender, RoutedEventArgs e)
+        public async void Previous_Clicked(object sender, RoutedEventArgs e)
         {
             await _mpd.MpdPlaybackPrev(_currentVolume);
         }
 
-        private async void Next_Clicked(object sender, RoutedEventArgs e)
+        public async void Next_Clicked(object sender, RoutedEventArgs e)
         {
             await _mpd.MpdPlaybackNext(_currentVolume);
         }
 
-        private async void Random_Clicked(object sender, RoutedEventArgs e)
+        public async void Random_Clicked(object sender, RoutedEventArgs e)
         {
             await _mpd.MpdSetRandom(!_currentRandom);
         }
@@ -193,121 +190,52 @@ namespace unison
             await _mpd.MpdSetConsume(!_currentConsume);
         }
 
-        private async void ChangeVolume(int value)
+        public async void ChangeVolume(int value)
         {
             await _mpd.MpdSetVolume(value);
         }
 
-        private void Snapcast_Clicked(object sender, RoutedEventArgs e)
+        public void Snapcast_Clicked(object sender, RoutedEventArgs e)
         {
-            if (!_snapcastStarted)
-            {
-                _snapcast.StartInfo.FileName = _snapcastVersion + @"\snapclient.exe";
-                _snapcast.StartInfo.Arguments = "--host " + _mpd.MpdHost;
-                _snapcast.StartInfo.CreateNoWindow = true;
-                _snapcast.Start();
-                _snapcastStarted = true;
-            }
+            SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
+            if (!snapcast.Started)
+                snapcast.Start(_mpd.MpdHost);
             else
+                snapcast.Stop();
+        }
+
+        public void Settings_Clicked(object sender, RoutedEventArgs e)
+        {
+            if (SettingsWindow.WindowState == WindowState.Normal)
             {
-                _snapcast.Kill();
-                _snapcastStarted = false;
+                SettingsWindow.Hide();
+                SettingsWindow.WindowState = WindowState.Minimized;
+            }
+            else if (SettingsWindow.WindowState == WindowState.Minimized)
+            {
+                SettingsWindow.WindowState = WindowState.Normal;
+                SettingsWindow.Show();
             }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            if (_snapcastStarted)
-                _snapcast.Kill();
+            e.Cancel = true;
+            WindowState = WindowState.Minimized;
+            Hide();
         }
 
-
-        // hotkeys handling
-
-        [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-
-        [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
-        private const int HOTKEY_ID = 9000;
-
-        // modifiers
-        private const uint MOD_NONE = 0x0000;
-        private const uint MOD_ALT = 0x0001;
-        private const uint MOD_CONTROL = 0x0002;
-        private const uint MOD_SHIFT = 0x0004;
-        private const uint MOD_WIN = 0x0008;
-
-        // reference => https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
-        private const uint VK_MEDIA_PREV_TRACK = 0xB1;
-        private const uint VK_MEDIA_NEXT_TRACK = 0xB0;
-        private const uint VK_MEDIA_PLAY_PAUSE = 0xB3;
-        private const uint VK_VOLUME_UP = 0xAF;
-        private const uint VK_VOLUME_DOWN = 0xAE;
-
-        private IntPtr _windowHandle;
-        private HwndSource _source;
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-
-            _windowHandle = new WindowInteropHelper(this).Handle;
-            _source = HwndSource.FromHwnd(_windowHandle);
-            _source.AddHook(HwndHook);
-
-            RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL, VK_MEDIA_PREV_TRACK);
-            RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL, VK_MEDIA_NEXT_TRACK);
-            RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL /*| MOD_ALT*/, VK_MEDIA_PLAY_PAUSE);
-            RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL, VK_VOLUME_UP);
-            RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL, VK_VOLUME_DOWN);
+            HotkeyHandler hk = (HotkeyHandler)Application.Current.Properties["hotkeys"];
+            hk.Activate(this);
         }
 
-        private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        public void InitHwnd()
         {
-            const int WM_HOTKEY = 0x0312;
-            switch (msg)
-            {
-                case WM_HOTKEY:
-                    switch (wParam.ToInt32())
-                    {
-                        case HOTKEY_ID:
-                            int vkey = (((int)lParam >> 16) & 0xFFFF);
-                            if (vkey == VK_MEDIA_NEXT_TRACK)
-                            {
-                                Next_Clicked(null, null);
-                            }
-                            else if (vkey == VK_MEDIA_PREV_TRACK)
-                            {
-                                Previous_Clicked(null, null);
-                            }
-                            else if (vkey == VK_VOLUME_DOWN)
-                            {
-                                _currentVolume--;
-                                ChangeVolume(_currentVolume);
-                            }
-                            else if (vkey == VK_VOLUME_UP)
-                            {
-                                _currentVolume++;
-                                ChangeVolume(_currentVolume);
-                            }
-                            else if (vkey == VK_MEDIA_PLAY_PAUSE)
-                            {
-                                Pause_Clicked(null, null);
-                            }
-                            handled = true;
-                            break;
-                    }
-                    break;
-            }
-            return IntPtr.Zero;
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            _source.RemoveHook(HwndHook);
-            UnregisterHotKey(_windowHandle, HOTKEY_ID);
-            base.OnClosed(e);
+            WindowInteropHelper helper = new(this);
+            helper.EnsureHandle();
         }
     }
 }
