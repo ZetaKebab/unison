@@ -8,7 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using MPDCtrl.Models;
 using System.Windows.Interop;
-using unison.Views;
 
 namespace unison
 {
@@ -29,6 +28,9 @@ namespace unison
 
         Settings SettingsWindow = new Settings();
 
+        Thickness SelectedThickness;
+        Thickness BaseThickness;
+
         public MainWindow()
         {
             InitHwnd();
@@ -41,6 +43,10 @@ namespace unison
             timer.Interval = TimeSpan.FromSeconds(0.2);
             timer.Tick += Timer_Tick;
             timer.Start();
+
+            SelectedThickness.Left = SelectedThickness.Right = SelectedThickness.Top = 0.0f;
+            SelectedThickness.Bottom = 2.0f;
+            BaseThickness.Left = BaseThickness.Right = BaseThickness.Top = BaseThickness.Bottom = 0.0f;
         }
 
         public async void ConnectToMPD()
@@ -95,12 +101,12 @@ namespace unison
             await Task.Delay(5);
         }
 
-        public void UpdateButton(ref Button button, bool b)
+        public void UpdateButton(ref Border border, bool b)
         {
             if (b)
-                button.Foreground = SystemColors.GradientActiveCaptionBrush;
+                border.BorderThickness = SelectedThickness;
             else
-                button.Foreground = SystemColors.DesktopBrush;
+                border.BorderThickness = BaseThickness;
         }
 
         public string FormatSeconds(double time)
@@ -146,10 +152,10 @@ namespace unison
 
             Connection.Text = (_connected ? "✔️" : "❌") + _mpd.MpdHost + ":" + _mpd.MpdPort;
 
-            UpdateButton(ref Random, _currentRandom);
-            UpdateButton(ref Repeat, _currentRepeat);
-            UpdateButton(ref Single, _currentSingle);
-            UpdateButton(ref Consume, _currentConsume);
+            UpdateButton(ref BorderRandom, _currentRandom);
+            UpdateButton(ref BorderRepeat, _currentRepeat);
+            UpdateButton(ref BorderSingle, _currentSingle);
+            UpdateButton(ref BorderConsume, _currentConsume);
         }
 
         public async void Pause_Clicked(object sender, RoutedEventArgs e)
@@ -206,15 +212,16 @@ namespace unison
 
         public void Settings_Clicked(object sender, RoutedEventArgs e)
         {
-            if (SettingsWindow.WindowState == WindowState.Normal)
-            {
-                SettingsWindow.Hide();
-                SettingsWindow.WindowState = WindowState.Minimized;
-            }
-            else if (SettingsWindow.WindowState == WindowState.Minimized)
+            if (SettingsWindow.WindowState == WindowState.Minimized)
             {
                 SettingsWindow.WindowState = WindowState.Normal;
                 SettingsWindow.Show();
+                SettingsWindow.Activate();
+            }
+            else
+            {
+                SettingsWindow.Hide();
+                SettingsWindow.WindowState = WindowState.Minimized;
             }
         }
 

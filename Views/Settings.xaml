@@ -1,10 +1,10 @@
-﻿<Window x:Class="unison.Views.Settings"
+﻿<Window x:Class="unison.Settings"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
-        xmlns:local="clr-namespace:unison.Views"
+        xmlns:local="clr-namespace:unison"
         mc:Ignorable="d"
         Closing="Window_Closing" Title="Settings" ResizeMode="CanMinimize" Icon="/unison.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
     <Grid>

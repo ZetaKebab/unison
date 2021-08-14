@@ -57,24 +57,24 @@
                                         <TextBlock Text="🔊" TextWrapping="Wrap" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Bottom" MinHeight="35">
-                                        <Border BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True">
+                                        <Border x:Name="BorderRandom" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True">
                                             <Button x:Name="Random" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="18" Click="Random_Clicked">
                                                 <emoji:TextBlock ColorBlend="True" Text="🔀" FontSize="18" Margin="0" Padding="0, 0, 0, 2" />
                                             </Button>
                                         </Border>
-                                        <Border BorderThickness="0, 0, 0, 2" BorderBrush="Black" VerticalAlignment="Top" Margin="5,0,0,0">
+                                        <Border x:Name="BorderRepeat" BorderThickness="0, 0, 0, 0" BorderBrush="Black" VerticalAlignment="Top" Margin="5,0,0,0">
                                             <Button x:Name="Repeat" Background="{x:Null}" FontSize="18" BorderBrush="{x:Null}" Click="Repeat_Clicked">
                                                 <emoji:TextBlock ColorBlend="True" Text="🔁" FontSize="18" Margin="0" Padding="0, 0, 0, 2" />
                                             </Button>
                                         </Border>
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Bottom" MinHeight="35">
-                                        <Border BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True" Margin="0,0,5,0">
+                                        <Border  x:Name="BorderSingle" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True" Margin="0,0,5,0">
                                             <Button x:Name="Single" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Click="Single_Clicked">
                                                 <emoji:TextBlock ColorBlend="True" Text="🔂" FontSize="18" Margin="0" Padding="0, 0, 0, 2" TextDecorations="{x:Null}"/>
                                             </Button>
                                         </Border>
-                                        <Border BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True">
+                                        <Border x:Name="BorderConsume" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True">
                                             <Button x:Name="Consume" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Click="Consume_Clicked">
                                                 <emoji:TextBlock ColorBlend="True" Text="🆓" FontSize="18" Margin="0" Padding="0, 0, 0, 2"/>
                                             </Button>
@@ -107,12 +107,12 @@
             </Button>
             <TextBlock x:Name="Connection" HorizontalAlignment="Center" Text="Not connected" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" MinWidth="350" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
-                <Button x:Name="Shuffle" Padding="5, 2" HorizontalAlignment="Right" Margin="0,0,10,0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+                <!--<Button x:Name="Shuffle" Padding="5, 2" HorizontalAlignment="Right" Margin="0,0,10,0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
                     <StackPanel Orientation="Horizontal">
                         <emoji:TextBlock Text="🔁"/>
                         <TextBlock Text="Shuffle" Margin="5, 0, 0, 0"/>
                     </StackPanel>
-                </Button>
+                </Button>-->
                 <Button x:Name="Settings" Padding="5, 2" Click="Settings_Clicked" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
                     <StackPanel Orientation="Horizontal">
                         <emoji:TextBlock Text="🛠️"/>
