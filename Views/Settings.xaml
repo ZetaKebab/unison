@@ -55,9 +55,11 @@
                                         <CheckBox x:Name="SnapcastStartup" Margin="5, 5, 0, 0">
                                             <TextBlock Text="Launch at startup" TextWrapping="Wrap"/>
                                         </CheckBox>
+                                        <TextBlock Text="Port" TextWrapping="Wrap" Margin="5,5,0,0"/>
+                                        <TextBox x:Name="SnapcastPort" MaxLength="5" PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" Width="250" Margin="10,2,5,0" HorizontalAlignment="Left"/>
                                         <TextBlock Text="Executable path" TextWrapping="Wrap" Margin="5,5,0,0"/>
-                                        <TextBox x:Name="SnapcastPath" TextWrapping="Wrap" Width="350" Margin="10,2,5,0"/>
-                                        <TextBlock TextWrapping="Wrap" Margin="5,5,0,0" TextAlignment="Left" Width="350">
+                                        <TextBox x:Name="SnapcastPath" TextWrapping="Wrap" Width="250" Margin="10,2,5,0" HorizontalAlignment="Left"/>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,5,0,0" TextAlignment="Left" Width="250">
                                             You can change to your own locally installed version of the Snapcast client with an <Run FontStyle="Italic" FontWeight="DemiBold">absolute</Run> path.
                                         </TextBlock>
                                         <Button Content="Reset" Margin="0,10,0,0" Width="120" Click="SnapcastReset_Clicked"/>
@@ -148,7 +150,7 @@
                                 <emoji:TextBlock Text="📝 License"/>
                             </GroupBox.Header>
                             <Grid VerticalAlignment="Top">
-                                <TextBlock Text="{Binding GetLicense, Mode = OneWay}" TextWrapping="Wrap" Width="400" TextAlignment="Justify" />
+                                <TextBlock Text="{Binding GetLicense, Mode = OneWay}" TextWrapping="Wrap" Width="500" TextAlignment="Justify" />
                             </Grid>
                         </GroupBox>
                     </DockPanel>

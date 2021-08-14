@@ -205,7 +205,7 @@ namespace unison
         {
             SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
             if (!snapcast.Started)
-                snapcast.Start(_mpd.MpdHost);
+                snapcast.Start();
             else
                 snapcast.Stop();
         }

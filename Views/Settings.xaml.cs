@@ -11,7 +11,8 @@ namespace unison
 {
     public partial class Settings : Window
     {
-        private string defaultSnapcast = "snapclient_0.25.0-1_win64";
+        private string defaultSnapcastPath = "snapclient_0.25.0-1_win64";
+        private string defaultSnapcastPort = "1704";
 
         public static string GetVersion => Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
 
@@ -45,6 +46,7 @@ namespace unison
             MpdPassword.Text = Properties.Settings.Default.mpd_password;
             SnapcastStartup.IsChecked = Properties.Settings.Default.snapcast_startup;
             SnapcastPath.Text = Properties.Settings.Default.snapcast_path;
+            SnapcastPort.Text = Properties.Settings.Default.snapcast_port.ToString();
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -63,7 +65,8 @@ namespace unison
 
         private void SnapcastReset_Clicked(object sender, RoutedEventArgs e)
         {
-            SnapcastPath.Text = defaultSnapcast;
+            SnapcastPath.Text = defaultSnapcastPath;
+            SnapcastPort.Text = defaultSnapcastPort;
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -75,6 +78,7 @@ namespace unison
             Properties.Settings.Default.mpd_password = MpdPassword.Text;
             Properties.Settings.Default.snapcast_startup = (bool)SnapcastStartup.IsChecked;
             Properties.Settings.Default.snapcast_path = SnapcastPath.Text;
+            Properties.Settings.Default.snapcast_port = int.Parse(SnapcastPort.Text);
             Properties.Settings.Default.Save();
 
             WindowState = WindowState.Minimized;

@@ -82,5 +82,17 @@ namespace unison.Properties {
                 this["snapcast_path"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1704")]
+        public int snapcast_port {
+            get {
+                return ((int)(this["snapcast_port"]));
+            }
+            set {
+                this["snapcast_port"] = value;
+            }
+        }
     }
 }
