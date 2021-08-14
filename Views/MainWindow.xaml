@@ -121,6 +121,5 @@
                 </Button>
             </StackPanel>
         </Grid>
-        <Image Margin="0,0,503,127" Stretch="Fill" Source="pack://siteoforigin:,,,/Image1.png"/>
     </Grid>
 </Window>
