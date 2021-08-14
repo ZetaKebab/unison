@@ -8,10 +8,6 @@ namespace unison
 {
     public class SystrayViewModel : INotifyPropertyChanged
     {
-        public SystrayViewModel()
-        {
-        }
-
         public string GetAppText => "unison v" + Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
 
         public ICommand ShowWindowCommand => new DelegateCommand
