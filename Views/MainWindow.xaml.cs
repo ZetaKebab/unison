@@ -51,7 +51,6 @@ namespace unison
 
         public async void ConnectToMPD()
         {
-            Trace.WriteLine("Trying to connect...");
             _connected = await _mpd.MpdCommandConnectionStart(_mpdHost, _mpdPort, _mpdPassword);
             if (_connected)
             {
@@ -212,17 +211,11 @@ namespace unison
 
         public void Settings_Clicked(object sender, RoutedEventArgs e)
         {
+            SettingsWindow.Show();
+            SettingsWindow.Activate();
+
             if (SettingsWindow.WindowState == WindowState.Minimized)
-            {
                 SettingsWindow.WindowState = WindowState.Normal;
-                SettingsWindow.Show();
-                SettingsWindow.Activate();
-            }
-            else
-            {
-                SettingsWindow.Hide();
-                SettingsWindow.WindowState = WindowState.Minimized;
-            }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Navigation;
 
 namespace unison
@@ -36,6 +37,7 @@ namespace unison
 
         public Settings()
         {
+            InitHwnd();
             InitializeComponent();
             DataContext = this;
 
@@ -83,6 +85,12 @@ namespace unison
 
             WindowState = WindowState.Minimized;
             Hide();
+        }
+
+        public void InitHwnd()
+        {
+            WindowInteropHelper helper = new(this);
+            helper.EnsureHandle();
         }
     }
 }
