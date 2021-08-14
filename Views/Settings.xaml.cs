@@ -2,16 +2,20 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Navigation;
 
 namespace unison
 {
     public partial class Settings : Window
     {
-        public string GetVersion => Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+        private string defaultSnapcast = "snapclient_0.25.0-1_win64";
 
-        public string GetLicense
+        public static string GetVersion => Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+
+        public static string GetLicense
         {
             get
             {
@@ -19,7 +23,7 @@ namespace unison
                 {
                     StreamReader Reader = new("LICENSE");
                     string file = "";
-                    file = file + Reader.ReadToEnd();
+                    file += Reader.ReadToEnd();
                     return file;
                 }
                 catch (IOException e)
@@ -35,6 +39,18 @@ namespace unison
             DataContext = this;
 
             WindowState = WindowState.Minimized;
+
+            MpdHost.Text = Properties.Settings.Default.mpd_host;
+            MpdPort.Text = Properties.Settings.Default.mpd_port.ToString();
+            MpdPassword.Text = Properties.Settings.Default.mpd_password;
+            SnapcastStartup.IsChecked = Properties.Settings.Default.snapcast_startup;
+            SnapcastPath.Text = Properties.Settings.Default.snapcast_path;
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -45,9 +61,22 @@ namespace unison
             e.Handled = true;
         }
 
+        private void SnapcastReset_Clicked(object sender, RoutedEventArgs e)
+        {
+            SnapcastPath.Text = defaultSnapcast;
+        }
+
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             e.Cancel = true;
+
+            Properties.Settings.Default.mpd_host = MpdHost.Text;
+            Properties.Settings.Default.mpd_port = int.Parse(MpdPort.Text);
+            Properties.Settings.Default.mpd_password = MpdPassword.Text;
+            Properties.Settings.Default.snapcast_startup = (bool)SnapcastStartup.IsChecked;
+            Properties.Settings.Default.snapcast_path = SnapcastPath.Text;
+            Properties.Settings.Default.Save();
+
             WindowState = WindowState.Minimized;
             Hide();
         }

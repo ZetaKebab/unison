@@ -8,9 +8,9 @@ namespace unison
 {
     public class SystrayViewModel : INotifyPropertyChanged
     {
-        public string GetAppText => "unison v" + Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+        public static string GetAppText => "unison v" + Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
 
-        public ICommand ShowWindowCommand => new DelegateCommand
+        public static ICommand ShowWindowCommand => new DelegateCommand
         {
             CommandAction = () =>
             {
@@ -24,7 +24,7 @@ namespace unison
             CanExecuteFunc = () => true
         };
 
-        public ICommand ExitApplicationCommand => new DelegateCommand
+        public static ICommand ExitApplicationCommand => new DelegateCommand
         {
             CommandAction = () =>
             {
@@ -33,7 +33,7 @@ namespace unison
             CanExecuteFunc = () => true
         };
 
-        public string SnapcastText
+        public static string SnapcastText
         {
             get
             {
@@ -77,8 +77,7 @@ namespace unison
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

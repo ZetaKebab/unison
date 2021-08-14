@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="unison.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="mpd_host" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.0.1</Value>
+    </Setting>
+    <Setting Name="mpd_port" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">6600</Value>
+    </Setting>
+    <Setting Name="mpd_password" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="snapcast_startup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="snapcast_path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">snapclient_0.25.0-1_win64</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
