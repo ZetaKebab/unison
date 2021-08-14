@@ -6,7 +6,7 @@
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
         xmlns:local="clr-namespace:unison"
         mc:Ignorable="d"
-        Closing="Window_Closing" Title="Settings" ResizeMode="CanMinimize" Icon="/unison.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
+        Closing="Window_Closing" Title="Settings" ResizeMode="CanMinimize" Icon="/images/unison.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
     <Grid>
         <StackPanel Orientation="Vertical">
             <TabControl Margin="10">
@@ -63,6 +63,47 @@
                                         <Button Content="Reset" Margin="0,10,0,0" Width="120"/>
                                     </StackPanel>
                                 </StackPanel>
+                            </Grid>
+                        </GroupBox>
+                    </DockPanel>
+                </TabItem>
+
+                <TabItem Header="Shortcuts">
+                    <DockPanel Margin="8">
+                        <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
+                            <GroupBox.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <emoji:TextBlock Text="⌨️ Shortcuts"/>
+                                </StackPanel>
+                            </GroupBox.Header>
+                            <Grid>
+                                <Grid MinWidth="220">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Next track" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" Margin="1"/>
+                                    <TextBlock Text="Previous track" TextWrapping="Wrap" Grid.Column="0" Grid.Row="1" Margin="1"/>
+                                    <TextBlock Text="Play / Pause" TextWrapping="Wrap" Grid.Column="0" Grid.Row="2" Margin="1"/>
+                                    <TextBlock Text="Volume up" TextWrapping="Wrap" Grid.Column="0" Grid.Row="3" Margin="1"/>
+                                    <TextBlock Text="Volume down" TextWrapping="Wrap" Grid.Column="0" Grid.Row="4" Margin="1"/>
+                                    <TextBlock Text="Show window" TextWrapping="Wrap" Grid.Column="0" Grid.Row="5" Margin="1"/>
+
+                                    <TextBlock Text="ctrl + media_next" TextWrapping="Wrap" Grid.Column="1" Grid.Row="0" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                    <TextBlock Text="ctrl + media_prev" TextWrapping="Wrap" Grid.Column="1" Grid.Row="1" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                    <TextBlock Text="ctrl + media_play" TextWrapping="Wrap" Grid.Column="1" Grid.Row="2" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                    <TextBlock Text="ctrl + volume_up" TextWrapping="Wrap" Grid.Column="1" Grid.Row="3" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                    <TextBlock Text="ctrl + volume_down" TextWrapping="Wrap" Grid.Column="1" Grid.Row="4" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                    <TextBlock Text="ctrl + alt + enter" TextWrapping="Wrap" Grid.Column="1" Grid.Row="5" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                </Grid>
                             </Grid>
                         </GroupBox>
                     </DockPanel>

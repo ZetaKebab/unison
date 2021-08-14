@@ -3,23 +3,13 @@ using System.Windows.Input;
 using System.Reflection;
 using System.ComponentModel;
 using System;
-using System.Windows.Threading;
 
 namespace unison
 {
-    public class NotifyIconViewModel : INotifyPropertyChanged
+    public class SystrayViewModel : INotifyPropertyChanged
     {
-        private DispatcherTimer timer;
-
-        public NotifyIconViewModel()
+        public SystrayViewModel()
         {
-            //timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, OnTimerTick, Application.Current.Dispatcher);
-        }
-
-        private void OnTimerTick(object sender, EventArgs e)
-        {
-            //fire a property change event for the timestamp
-            //Application.Current.Dispatcher.BeginInvoke(new Action(() => OnPropertyChanged("SnapcastText")));
         }
 
         public string GetAppText => "unison v" + Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
@@ -51,7 +41,6 @@ namespace unison
         {
             get
             {
-                //Application.Current.Dispatcher.BeginInvoke(new Action(() => OnPropertyChanged("SnapcastText")));
                 SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
                 return snapcast.Started ? "Stop Snapcast" : "Start Snapcast";
             }
@@ -61,11 +50,13 @@ namespace unison
         {
             get
             {
-                Application.Current.Dispatcher.BeginInvoke(new Action(() => OnPropertyChanged("SnapcastText")));
-                NotifyPropertyChanged("SnapcastText");
                 return new DelegateCommand
                 {
-                    CommandAction = () => ((MainWindow)Application.Current.MainWindow).Snapcast_Clicked(null, null),
+                    CommandAction = () =>
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(new Action(() => OnPropertyChanged("SnapcastText")));
+                        ((MainWindow)Application.Current.MainWindow).Snapcast_Clicked(null, null);
+                    },
                     CanExecuteFunc = () => true
                 };
             }
@@ -77,23 +68,12 @@ namespace unison
             {
                 return new DelegateCommand
                 {
-                    CommandAction = () => ((MainWindow)Application.Current.MainWindow).Settings_Clicked(null, null),
+                    CommandAction = () =>
+                    {
+                        ((MainWindow)Application.Current.MainWindow).Settings_Clicked(null, null);
+                    },
                     CanExecuteFunc = () => true
                 };
-            }
-        }
-
-        public string GetSnapcastText
-        {
-            get
-            {
-                /*if (Application.Current.MainWindow != null)
-                {
-                    SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
-                    return snapcast.Started ? "Stop Snapcast" : "Start Snapcast";
-                }
-                return "not initialized";*/
-                return SnapcastText;
             }
         }
 
@@ -103,12 +83,6 @@ namespace unison
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void NotifyPropertyChanged(string propertyName = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

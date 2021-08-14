@@ -61,7 +61,7 @@ namespace unison
 
             if (msg == WM_HOTKEY && wParam.ToInt32() == HOTKEY_ID)
             {
-                uint vkey = (((uint)lParam >> 16) & 0xFFFF);
+                uint vkey = ((uint)lParam >> 16) & 0xFFFF;
                 MainWindow AppWindow = (MainWindow)Application.Current.MainWindow;
                 switch (vkey)
                 {

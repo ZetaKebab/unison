@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>unison.ico</ApplicationIcon>
+    <ApplicationIcon>images\unison.ico</ApplicationIcon>
     <Win32Resource></Win32Resource>
     <StartupObject>unison.App</StartupObject>
     <Version>0.0.1</Version>
@@ -13,6 +13,7 @@
   <ItemGroup>
     <None Remove="images\nocover-test.png" />
     <None Remove="images\nocover.png" />
+    <None Remove="images\unison.ico" />
     <None Remove="LICENSE" />
     <None Remove="snapclient_0.25.0-1_win64\FLAC.dll" />
     <None Remove="snapclient_0.25.0-1_win64\ogg.dll" />
@@ -21,7 +22,6 @@
     <None Remove="snapclient_0.25.0-1_win64\snapclient.exe" />
     <None Remove="snapclient_0.25.0-1_win64\soxr.dll" />
     <None Remove="snapclient_0.25.0-1_win64\vorbis.dll" />
-    <None Remove="unison.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,7 +37,7 @@
     <Content Include="snapclient_0.25.0-1_win64\README.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="unison.ico">
+    <Resource Include="images\unison.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="snapclient_0.25.0-1_win64\FLAC.dll">

@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:unison"
         mc:Ignorable="d"
         Title="unison"
-        Closing="Window_Closing" Icon="/unison.ico" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
+        Closing="Window_Closing" Icon="/images/unison.ico" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
 
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" MinHeight="270">
         <Grid x:Name="TopLayout" Margin="10,0,10,0" VerticalAlignment="Stretch" Width="Auto" Height="Auto">
