@@ -68,12 +68,8 @@ namespace unison
 
         private void MPDConnect_Clicked(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.mpd_host = MpdHost.Text;
-            Properties.Settings.Default.mpd_port = int.Parse(MpdPort.Text, CultureInfo.InvariantCulture);
-            Properties.Settings.Default.mpd_password = MpdPassword.Text;
-            Properties.Settings.Default.Save();
-
-            var mpd = (MPDHandler)Application.Current.Properties["mpd"];
+            SaveSettings();
+            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
             mpd.Connect();
         }
 
@@ -83,10 +79,8 @@ namespace unison
             SnapcastPort.Text = defaultSnapcastPort;
         }
 
-        private void Window_Closing(object sender, CancelEventArgs e)
+        public void SaveSettings()
         {
-            e.Cancel = true;
-
             Properties.Settings.Default.mpd_host = MpdHost.Text;
             Properties.Settings.Default.mpd_port = int.Parse(MpdPort.Text, CultureInfo.InvariantCulture);
             Properties.Settings.Default.mpd_password = MpdPassword.Text;
@@ -94,7 +88,12 @@ namespace unison
             Properties.Settings.Default.snapcast_path = SnapcastPath.Text;
             Properties.Settings.Default.snapcast_port = int.Parse(SnapcastPort.Text, CultureInfo.InvariantCulture);
             Properties.Settings.Default.Save();
+        }
 
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;
+            SaveSettings();
             WindowState = WindowState.Minimized;
             Hide();
         }

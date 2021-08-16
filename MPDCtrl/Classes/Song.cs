@@ -87,7 +87,8 @@ namespace MPDCtrl.Models
                 double dtime = double.NaN;
                 try
                 {
-                    dtime = double.Parse(Time);
+                    if (Time != "")
+                        dtime = double.Parse(Time);
                 }
                 catch { }
                 return dtime;
