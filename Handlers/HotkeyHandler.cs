@@ -34,8 +34,11 @@ namespace unison
         private IntPtr _windowHandle;
         private HwndSource _source;
 
+        private readonly MPDHandler mpd;
+
         public HotkeyHandler()
         {
+            mpd = (MPDHandler)Application.Current.Properties["mpd"];
         }
 
         public void Activate(Window win)
@@ -66,22 +69,21 @@ namespace unison
                 switch (vkey)
                 {
                     case VK_MEDIA_NEXT_TRACK:
-                        Trace.WriteLine("TEST super important");
-                        AppWindow.Next_Clicked(null, null);
+                        mpd.Next();
                         break;
                     case VK_MEDIA_PREV_TRACK:
-                        AppWindow.Previous_Clicked(null, null);
+                        mpd.Prev();
                         break;
                     case VK_VOLUME_DOWN:
-                        AppWindow._currentVolume -= 5;
-                        AppWindow.ChangeVolume(AppWindow._currentVolume);
+                        mpd._currentVolume -= 5;
+                        mpd.SetVolume(mpd._currentVolume);
                         break;
                     case VK_VOLUME_UP:
-                        AppWindow._currentVolume += 5;
-                        AppWindow.ChangeVolume(AppWindow._currentVolume);
+                        mpd._currentVolume += 5;
+                        mpd.SetVolume(mpd._currentVolume);
                         break;
                     case VK_MEDIA_PLAY_PAUSE:
-                        AppWindow.Pause_Clicked(null, null);
+                        mpd.PlayPause();
                         break;
                     case VK_ENTER:
                         if (AppWindow.WindowState == WindowState.Minimized)

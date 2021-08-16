@@ -8,6 +8,7 @@ namespace unison
         private TaskbarIcon Systray;
         private HotkeyHandler Hotkeys;
         private SnapcastHandler Snapcast;
+        private MPDHandler MPD;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -19,10 +20,13 @@ namespace unison
             Snapcast = new SnapcastHandler();
             Current.Properties["snapcast"] = Snapcast;
 
+            MPD = new MPDHandler();
+            Current.Properties["mpd"] = MPD;
+
             Current.MainWindow = new MainWindow();
 
             Systray = (TaskbarIcon)FindResource("SystrayTaskbar");
-            Current.Properties["notify"] = Systray;
+            Current.Properties["systray"] = Systray;
         }
 
         protected override void OnExit(ExitEventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -65,6 +66,17 @@ namespace unison
             e.Handled = true;
         }
 
+        private void MPDConnect_Clicked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.mpd_host = MpdHost.Text;
+            Properties.Settings.Default.mpd_port = int.Parse(MpdPort.Text, CultureInfo.InvariantCulture);
+            Properties.Settings.Default.mpd_password = MpdPassword.Text;
+            Properties.Settings.Default.Save();
+
+            var mpd = (MPDHandler)Application.Current.Properties["mpd"];
+            mpd.Connect();
+        }
+
         private void SnapcastReset_Clicked(object sender, RoutedEventArgs e)
         {
             SnapcastPath.Text = defaultSnapcastPath;
@@ -76,11 +88,11 @@ namespace unison
             e.Cancel = true;
 
             Properties.Settings.Default.mpd_host = MpdHost.Text;
-            Properties.Settings.Default.mpd_port = int.Parse(MpdPort.Text);
+            Properties.Settings.Default.mpd_port = int.Parse(MpdPort.Text, CultureInfo.InvariantCulture);
             Properties.Settings.Default.mpd_password = MpdPassword.Text;
             Properties.Settings.Default.snapcast_startup = (bool)SnapcastStartup.IsChecked;
             Properties.Settings.Default.snapcast_path = SnapcastPath.Text;
-            Properties.Settings.Default.snapcast_port = int.Parse(SnapcastPort.Text);
+            Properties.Settings.Default.snapcast_port = int.Parse(SnapcastPort.Text, CultureInfo.InvariantCulture);
             Properties.Settings.Default.Save();
 
             WindowState = WindowState.Minimized;
