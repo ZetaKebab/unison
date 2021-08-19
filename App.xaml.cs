@@ -1,5 +1,15 @@
-﻿using System.Windows;
+﻿using System;
+using System.Diagnostics;
+using System.Windows;
 using Hardcodet.Wpf.TaskbarNotification;
+
+// todo:
+//
+// * finish correct refresh of mpd
+// * show mpd version
+// * change volume offset
+// * fix window resize
+// * show covers
 
 namespace unison
 {
@@ -14,19 +24,21 @@ namespace unison
         {
             base.OnStartup(e);
 
-            Hotkeys = new HotkeyHandler();
-            Current.Properties["hotkeys"] = Hotkeys;
-
             Snapcast = new SnapcastHandler();
             Current.Properties["snapcast"] = Snapcast;
 
             MPD = new MPDHandler();
             Current.Properties["mpd"] = MPD;
 
+            Hotkeys = new HotkeyHandler();
+            Current.Properties["hotkeys"] = Hotkeys;
+
             Current.MainWindow = new MainWindow();
 
             Systray = (TaskbarIcon)FindResource("SystrayTaskbar");
             Current.Properties["systray"] = Systray;
+
+            MPD.Start();
         }
 
         protected override void OnExit(ExitEventArgs e)

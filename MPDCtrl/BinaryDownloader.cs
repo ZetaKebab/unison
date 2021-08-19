@@ -103,19 +103,22 @@ namespace MPDCtrl.Models
 
                     string response = await _binaryReader.ReadLineAsync();
 
-                    if (response.StartsWith("OK MPD "))
+                    if (response != null)
                     {
-                        MpdVersion = response.Replace("OK MPD ", string.Empty).Trim();
+                        if (response.StartsWith("OK MPD "))
+                        {
+                            MpdVersion = response.Replace("OK MPD ", string.Empty).Trim();
 
-                        //Debug.WriteLine("TCP Binary Connection: Connected. MPD " + VerText);
+                            //Debug.WriteLine("TCP Binary Connection: Connected. MPD " + VerText);
 
-                        //DebugCommandOutput?.Invoke(this, "<<<<" + response.Trim() + "\n" + "\n");
+                            //DebugCommandOutput?.Invoke(this, "<<<<" + response.Trim() + "\n" + "\n");
 
-                        //IsMpdCommandConnected = true;
+                            //IsMpdCommandConnected = true;
 
-                        result.IsSuccess = true;
+                            result.IsSuccess = true;
 
-                        // Done for now.
+                            // Done for now.
+                        }
                     }
                     else
                     {

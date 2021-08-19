@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using unison;
 
 namespace MPDCtrl.Models
 {
@@ -188,8 +189,8 @@ namespace MPDCtrl.Models
         public delegate void MpdCurrentQueueChangedEvent(MPC sender);
         public event MpdCurrentQueueChangedEvent MpdCurrentQueueChanged;
 
-        public delegate void MpdPlaylistsChangedEvent(MPC sender);
-        public event MpdPlaylistsChangedEvent MpdPlaylistsChanged;
+        //public delegate void MpdPlaylistsChangedEvent(MPC sender);
+        //public event MpdPlaylistsChangedEvent MpdPlaylistsChanged;
 
         public delegate void MpdAlbumArtChangedEvent(MPC sender);
         public event MpdAlbumArtChangedEvent MpdAlbumArtChanged;
@@ -920,7 +921,7 @@ namespace MPDCtrl.Models
             {
                 bool isPlayer = false;
                 bool isCurrentQueue = false;
-                bool isStoredPlaylist = false;
+                //bool isStoredPlaylist = false;
 
                 foreach (string line in SubSystems)
                 {
@@ -947,7 +948,7 @@ namespace MPDCtrl.Models
                     if (line.ToLower() == "changed: stored_playlist")
                     {
                         // stored_playlist: a stored playlist has been modified, renamed, created or deleted
-                        isStoredPlaylist = true;
+                        //isStoredPlaylist = true;
                     }
                 }
 
@@ -960,7 +961,18 @@ namespace MPDCtrl.Models
                     }
                 }
 
+                // custom test
                 if (isCurrentQueue)
+                {
+                    CommandResult idleResult = await MpdIdleQueryCurrentSong();
+                    if (idleResult.IsSuccess)
+                    {
+                        MpdCurrentQueueChanged?.Invoke(this);
+                    }
+                }
+
+                // takes lot of time
+                /*if (isCurrentQueue)
                 {
                     CommandResult idleResult = await MpdIdleQueryCurrentQueue();
                     if (idleResult.IsSuccess)
@@ -976,7 +988,7 @@ namespace MPDCtrl.Models
                     {
                         MpdPlaylistsChanged?.Invoke(this);
                     }
-                }
+                }*/
 
                 //MpcProgress?.Invoke(this, "");
 
@@ -2609,15 +2621,6 @@ namespace MPDCtrl.Models
             {
                 Debug.WriteLine("Exception@ParseStatus:" + ex.Message);
 
-                if (Application.Current != null)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        /*App app = App.Current as App;
-                        app.AppendErrorLog("Exception@MPC@ParseStatus", ex.Message);*/
-                    });
-                }
-
                 IsBusy?.Invoke(this, false);
                 return Task.FromResult(false);
             }
@@ -2695,15 +2698,6 @@ namespace MPDCtrl.Models
             catch (Exception ex)
             {
                 Debug.WriteLine("Error@ParseCurrentSong: " + ex.Message);
-
-                if (Application.Current != null)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        /*App app = App.Current as App;
-                        app.AppendErrorLog("Exception@MPC@ParseCurrentSong", ex.Message);*/
-                    });
-                }
 
                 return Task.FromResult(false);
             }
@@ -2917,15 +2911,6 @@ namespace MPDCtrl.Models
             {
                 Debug.WriteLine("Exception@ParsePlaylistInfo: " + ex.Message);
 
-                if (Application.Current != null)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        /*App app = App.Current as App;
-                        app.AppendErrorLog("Exception@MPC@ParsePlaylistInfo", ex.Message);*/
-                    });
-                }
-
                 return Task.FromResult(false);
             }
             finally
@@ -3069,15 +3054,6 @@ namespace MPDCtrl.Models
             {
                 Debug.WriteLine("Error@FillSongInfoEx: " + e.ToString());
 
-                if (Application.Current != null)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        /*App app = App.Current as App;
-                        app.AppendErrorLog("Exception@MPC@FillSongInfoEx", e.Message);*/
-                    });
-                }
-
                 return null;
             }
         }
@@ -3182,15 +3158,6 @@ namespace MPDCtrl.Models
             {
                 Debug.WriteLine("Error@ParsePlaylists: " + e.ToString());
 
-                if (Application.Current != null)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        /*App app = App.Current as App;
-                        app.AppendErrorLog("Exception@MPC@ParsePlaylists", e.Message);*/
-                    });
-                }
-
                 IsBusy?.Invoke(this, false);
                 return Task.FromResult(false);
             }
@@ -3276,15 +3243,6 @@ namespace MPDCtrl.Models
             catch (Exception e)
             {
                 Debug.WriteLine("Error@ParseListAll: " + e.ToString());
-
-                if (Application.Current != null)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        /*App app = App.Current as App;
-                        app.AppendErrorLog("Exception@MPC@ParseListAll", e.Message);*/
-                    });
-                }
 
                 IsBusy?.Invoke(this, false);
                 return Task.FromResult(false); ;
@@ -3424,15 +3382,6 @@ namespace MPDCtrl.Models
             {
                 Debug.WriteLine("Error@ParseSearchResult: " + ex.Message);
 
-                if (Application.Current != null)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        /*App app = App.Current as App;
-                        app.AppendErrorLog("Exception@MPC@ParseSearchResult", ex.Message);*/
-                    });
-                }
-
                 IsBusy?.Invoke(this, false);
                 return Task.FromResult(false);
             }
@@ -3564,15 +3513,6 @@ namespace MPDCtrl.Models
             catch (Exception ex)
             {
                 Debug.WriteLine("Error@ParsePlaylistSongsResult: " + ex.Message);
-
-                if (Application.Current != null)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        /*App app = App.Current as App;
-                        app.AppendErrorLog("Exception@MPC@ParsePlaylistSongsResult", ex.Message);*/
-                    });
-                }
 
                 return songList;
             }

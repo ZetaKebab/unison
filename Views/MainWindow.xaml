@@ -25,7 +25,7 @@
                                 <TextBlock x:Name="SongTitle" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal" FontSize="20" Text="Title"/>
                                 <TextBlock x:Name="SongArtist" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold" FontSize="18"  Text="Artist"/>
                                 <TextBlock x:Name="SongAlbum" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal" FontSize="16"  Text="Album"/>
-                                <TextBlock x:Name="Bitrate" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal"  Text="Bitrate"/>
+                                <TextBlock x:Name="Bitrate" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal"  Text="Bitrate" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
                             </StackPanel>
                         </Grid>
                         <Grid x:Name="Controls" VerticalAlignment="Top" Margin="10,106,10,0">
@@ -93,7 +93,8 @@
                         <StackPanel.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=mask}"/>
                         </StackPanel.OpacityMask>
-                        <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="/images/nocover.png" />
+                        <Image x:Name="Cover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/images/nocover.png" Visibility="Collapsed" />
+                        <Image x:Name="NoCover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/images/nocover.png" />
                     </StackPanel>
                 </Grid>
             </Border>

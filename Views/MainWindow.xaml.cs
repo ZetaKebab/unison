@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows.Interop;
-using System.Diagnostics;
 
 namespace unison
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private readonly Settings SettingsWindow = new Settings();
 
-        private readonly MPDHandler mpd;
+        private MPDHandler mpd;
 
         Thickness SelectedThickness;
         Thickness BaseThickness;
@@ -27,10 +24,9 @@ namespace unison
             WindowState = WindowState.Minimized;
 
             mpd = (MPDHandler)Application.Current.Properties["mpd"];
-            mpd.Connect();
 
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(0.2);
+            timer.Interval = TimeSpan.FromSeconds(0.5);
             timer.Tick += Timer_Tick;
             timer.Start();
 
@@ -41,9 +37,6 @@ namespace unison
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
-            mpd.Loop();
-
             UpdateInterface();
         }
 
@@ -63,7 +56,7 @@ namespace unison
 
         public void UpdateInterface()
         {
-            if (mpd.GetCurrentSong() != null)
+            if (mpd.GetCurrentSong() != null && mpd.GetStatus() != null)
             {
                 SongTitle.Text = mpd.GetCurrentSong().Title;
                 SongTitle.ToolTip = mpd.GetCurrentSong().File;
@@ -74,11 +67,11 @@ namespace unison
                 Bitrate.Text = mpd.GetCurrentSong().File.Substring(mpd.GetCurrentSong().File.LastIndexOf(".") + 1) + " – ";
                 Bitrate.Text += mpd.GetStatus().MpdBitrate + "kbps";
 
-                CurrentTime.Text = FormatSeconds(mpd._currentElapsed);
+                CurrentTime.Text = FormatSeconds(mpd._elapsed);
                 EndTime.Text = FormatSeconds(mpd.GetStatus().MpdSongTime);
 
                 if (!System.Double.IsNaN(mpd.GetCurrentSong().TimeSort))
-                    TimeSlider.Value = mpd._currentElapsed / mpd.GetCurrentSong().TimeSort * 100;
+                    TimeSlider.Value = mpd._elapsed / mpd.GetCurrentSong().TimeSort * 100;
             }
 
             if (VolumeSlider.Value != mpd._currentVolume)
@@ -104,11 +97,28 @@ namespace unison
             UpdateButton(ref BorderRepeat, mpd._currentRepeat);
             UpdateButton(ref BorderSingle, mpd._currentSingle);
             UpdateButton(ref BorderConsume, mpd._currentConsume);
+
+            if (mpd.GetCover() != null)
+            {
+                if ((!mpd.GetCover().IsDownloading) && mpd.GetCover().IsSuccess)
+                {
+                    if (mpd.GetCurrentSong().File == mpd.GetCover().SongFilePath)
+                    {
+                        Cover.Source = mpd.GetCover().AlbumImageSource;
+                        Cover.Visibility = Visibility.Visible;
+                        NoCover.Visibility = Visibility.Collapsed;
+                        return;
+                    }
+                }
+            }
+            NoCover.Visibility = Visibility.Visible;
+            Cover.Visibility = Visibility.Collapsed;
         }
 
         public void Pause_Clicked(object sender, RoutedEventArgs e) => mpd.PlayPause();
         public void Previous_Clicked(object sender, RoutedEventArgs e) =>  mpd.Prev();
         public void Next_Clicked(object sender, RoutedEventArgs e) => mpd.Next();
+
         public void Random_Clicked(object sender, RoutedEventArgs e) => mpd.Random();
         public void Repeat_Clicked(object sender, RoutedEventArgs e) => mpd.Repeat();
         public void Single_Clicked(object sender, RoutedEventArgs e) => mpd.Single();
@@ -151,6 +161,13 @@ namespace unison
         {
             WindowInteropHelper helper = new(this);
             helper.EnsureHandle();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <None Remove="images\nocover-test.png" />
-    <None Remove="images\nocover.png" />
     <None Remove="images\unison.ico" />
     <None Remove="LICENSE" />
     <None Remove="snapclient_0.25.0-1_win64\FLAC.dll" />
