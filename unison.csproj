@@ -24,9 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\nocover-test.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="images\nocover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
