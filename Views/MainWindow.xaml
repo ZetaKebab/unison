@@ -38,45 +38,45 @@
                                     </StackPanel>
 
                                 </Grid>
-
+                                <!-- https://docs.microsoft.com/en-us/windows/apps/design/style/segoe-ui-symbol-font -->
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0">
-                                    <Button x:Name="PreviousTrack" Click="Previous_Clicked" FontSize="18" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold" HorizontalAlignment="Left">
-                                        <emoji:TextBlock ColorBlend="True" Text="⏪" FontSize="20"/>
+                                    <Button x:Name="PreviousTrack" Click="Previous_Clicked" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left">
+                                        <TextBlock FontSize="20" FontFamily="Segoe MDL2 Assets" Text="&#xeb9e;"/>
                                     </Button>
-                                    <Button x:Name="PauseButton" Click="Pause_Clicked" FontSize="18" FontWeight="Bold" Background="{x:Null}" BorderBrush="{x:Null}" Margin="10,0,10,0">
-                                        <emoji:TextBlock x:Name="PauseButtonEmoji" ColorBlend="True" Text="⏯️" FontSize="20"/>
+                                    <Button x:Name="PauseButton" Click="Pause_Clicked" Background="{x:Null}" BorderBrush="{x:Null}" Margin="10,0,10,0">
+                                        <TextBlock x:Name="PlayPause" FontSize="20" FontFamily="Segoe MDL2 Assets" Text="&#xedb5;"/>
                                     </Button>
-                                    <Button x:Name="NextTrack" Click="Next_Clicked" FontSize="18" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold" HorizontalAlignment="Right">
-                                        <emoji:TextBlock ColorBlend="True" Text="⏩" FontSize="20"/>
+                                    <Button x:Name="NextTrack" Click="Next_Clicked" FontSize="18" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right">
+                                        <TextBlock FontSize="20" FontFamily="Segoe MDL2 Assets" Text="&#xeb9d;"/>
                                     </Button>
                                 </StackPanel>
-                                <Grid VerticalAlignment="Stretch" Margin="0,2.5,0,0">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,6,0,0">
+                                <Grid VerticalAlignment="Stretch" Margin="0,15,0,0">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,1,0,0">
                                         <TextBlock Text="🔈" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                         <Slider x:Name="VolumeSlider" Maximum="100" Value="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="180" FlowDirection="LeftToRight" Margin="5,0,5,0" Foreground="{x:Null}" Background="{x:Null}"/>
                                         <TextBlock Text="🔊" TextWrapping="Wrap" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                     </StackPanel>
-                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Bottom" MinHeight="35">
+                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Bottom" MinHeight="25">
                                         <Border x:Name="BorderRandom" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True">
                                             <Button x:Name="Random" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="18" Click="Random_Clicked">
-                                                <emoji:TextBlock ColorBlend="True" Text="🔀" FontSize="18" Margin="0" Padding="0, 0, 0, 2" />
+                                                <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Text="&#xe8b1;" Margin="0" Padding="0, 0, 0, 2"/>
                                             </Button>
                                         </Border>
-                                        <Border x:Name="BorderRepeat" BorderThickness="0, 0, 0, 0" BorderBrush="Black" VerticalAlignment="Top" Margin="5,0,0,0">
+                                        <Border x:Name="BorderRepeat" BorderThickness="0, 0, 0, 0" BorderBrush="Black" VerticalAlignment="Top" Margin="10,0,0,0">
                                             <Button x:Name="Repeat" Background="{x:Null}" FontSize="18" BorderBrush="{x:Null}" Click="Repeat_Clicked">
-                                                <emoji:TextBlock ColorBlend="True" Text="🔁" FontSize="18" Margin="0" Padding="0, 0, 0, 2" />
+                                                <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Text="&#xe8ee;" Padding="0, 0, 0, 2"/>
                                             </Button>
                                         </Border>
                                     </StackPanel>
-                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Bottom" MinHeight="35">
-                                        <Border  x:Name="BorderSingle" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True" Margin="0,0,5,0">
+                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Bottom" MinHeight="25">
+                                        <Border  x:Name="BorderSingle" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True" Margin="0,0,10,0">
                                             <Button x:Name="Single" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Click="Single_Clicked">
-                                                <emoji:TextBlock ColorBlend="True" Text="🔂" FontSize="18" Margin="0" Padding="0, 0, 0, 2" TextDecorations="{x:Null}"/>
+                                                <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Text="&#xe8ed;" Margin="0" Padding="0, 0, 0, 2"/>
                                             </Button>
                                         </Border>
                                         <Border x:Name="BorderConsume" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True">
                                             <Button x:Name="Consume" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Click="Consume_Clicked">
-                                                <emoji:TextBlock ColorBlend="True" Text="🆓" FontSize="18" Margin="0" Padding="0, 0, 0, 2"/>
+                                                <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Text="&#xe75c;" Margin="0" Padding="0, 0, 0, 2"/>
                                             </Button>
                                         </Border>
                                     </StackPanel>

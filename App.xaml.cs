@@ -1,15 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using Hardcodet.Wpf.TaskbarNotification;
 
 // todo:
 //
-// * finish correct refresh of mpd
 // * show mpd version
 // * change volume offset
-// * fix window resize
-// * show covers
+// * fix window resize (if it still happens?)
 
 namespace unison
 {

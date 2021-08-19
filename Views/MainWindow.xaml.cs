@@ -81,9 +81,9 @@ namespace unison
             }
 
             if (mpd.IsPlaying())
-                PauseButtonEmoji.Text = "⏸️";
+                PlayPause.Text = "\xedb4";
             else
-                PauseButtonEmoji.Text = "▶️";
+                PlayPause.Text = "\xedb5";
 
             SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
             if (snapcast.Started)
