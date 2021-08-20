@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hardcodet.Wpf.TaskbarNotification;
+using System;
 using System.Diagnostics;
 using System.Windows;
 
@@ -16,6 +17,13 @@ namespace unison
             _snapcastPath = Properties.Settings.Default.snapcast_path;
             if (Properties.Settings.Default.snapcast_startup)
                 Start();
+        }
+
+        private void UpdateSystray()
+        {
+            TaskbarIcon Systray = (TaskbarIcon)Application.Current.Properties["systray"];
+            SystrayViewModel DataContext = Systray.DataContext as SystrayViewModel;
+            DataContext.OnPropertyChanged("SnapcastText");
         }
 
         public void Start()
@@ -37,11 +45,13 @@ namespace unison
                     return;
                 }
                 Started = true;
+                UpdateSystray();
             }
             else
             {
                 _snapcast.Kill();
                 Started = false;
+                UpdateSystray();
             }
         }
 
@@ -51,6 +61,7 @@ namespace unison
             {
                 _snapcast.Kill();
                 Started = false;
+                UpdateSystray();
             }
         }
     }

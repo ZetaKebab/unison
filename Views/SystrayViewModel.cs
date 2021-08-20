@@ -33,7 +33,7 @@ namespace unison
             CanExecuteFunc = () => true
         };
 
-        public static string SnapcastText
+        public string SnapcastText
         {
             get
             {
@@ -75,7 +75,7 @@ namespace unison
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        public virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
