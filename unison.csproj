@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>images\unison.ico</ApplicationIcon>
+    <ApplicationIcon>images\icon-full.ico</ApplicationIcon>
     <Win32Resource></Win32Resource>
     <StartupObject>unison.App</StartupObject>
     <Version>0.0.1</Version>
@@ -14,11 +14,13 @@
     <PackageProjectUrl>https://git.n700.ovh/keb/unison</PackageProjectUrl>
     <RepositoryUrl>https://git.n700.ovh/keb/unison</RepositoryUrl>
     <Copyright>Théo Marchal</Copyright>
+    <PackageIconUrl />
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="images\nocover-test.png" />
-    <None Remove="images\unison.ico" />
+    <None Remove="images\icon-full.ico" />
+    <None Remove="images\icon-mini.ico" />
+    <None Remove="images\nocover.png" />
     <None Remove="LICENSE" />
     <None Remove="snapclient_0.25.0-1_win64\FLAC.dll" />
     <None Remove="snapclient_0.25.0-1_win64\ogg.dll" />
@@ -34,6 +36,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\icon-full.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\icon-mini.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\nocover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -43,9 +51,6 @@
     <Content Include="snapclient_0.25.0-1_win64\README.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="images\unison.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Content Include="snapclient_0.25.0-1_win64\FLAC.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

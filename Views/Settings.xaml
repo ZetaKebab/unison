@@ -6,7 +6,7 @@
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
         xmlns:local="clr-namespace:unison"
         mc:Ignorable="d"
-        Closing="Window_Closing" Title="Settings" ResizeMode="CanMinimize" Icon="/images/unison.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
+        Closing="Window_Closing" Title="Settings" ResizeMode="CanMinimize" Icon="/images/icon-full.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
     <Grid>
         <StackPanel Orientation="Vertical">
             <TabControl Margin="10">
