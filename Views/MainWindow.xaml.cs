@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows.Interop;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace unison
 {
@@ -148,6 +150,24 @@ namespace unison
             e.Cancel = true;
             WindowState = WindowState.Minimized;
             Hide();
+        }
+
+        private void TimeSlider_DragCompleted(object sender, MouseButtonEventArgs e)
+        {
+            Slider slider = (Slider)sender;
+
+            double SongPercentage = slider.Value;
+            double SongTime = mpd.GetStatus().MpdSongTime;
+            double SeekTime = SongPercentage / 100 * SongTime;
+
+            mpd.SetTime((int)SeekTime);
+        }
+
+        private void VolumeSlider_DragCompleted(object sender, MouseButtonEventArgs e)
+        {
+            Slider slider = (Slider)sender;
+            mpd.SetVolume((int)slider.Value);
+            slider.ToolTip = mpd._currentVolume;
         }
 
         protected override void OnSourceInitialized(EventArgs e)

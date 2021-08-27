@@ -287,6 +287,12 @@ namespace unison
                 await _mpd.MpdSetVolume(value);
         }
 
+        public async void SetTime(int value)
+        {
+            if (!IsBusy)
+                await _mpd.MpdPlaybackSeek(_mpd.MpdCurrentSong.Id, value);
+        }
+
         public bool IsPlaying()
         {
             return _currentStatus?.MpdState == MPDCtrl.Models.Status.MpdPlayState.Play;

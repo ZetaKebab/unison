@@ -33,48 +33,48 @@
                                 <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Name="CurrentTime" Text="0:00" TextWrapping="Wrap" HorizontalAlignment="Left"/>
-                                        <Slider Style="{DynamicResource SliderTime}" x:Name="TimeSlider" MinWidth="320" Margin="5,0,5,0" HorizontalAlignment="Center" Maximum="100"/>
+                                        <Slider Style="{DynamicResource SliderTime}" x:Name="TimeSlider" MinWidth="320" Margin="5,0,5,0" HorizontalAlignment="Center" Maximum="100" PreviewMouseUp="TimeSlider_DragCompleted" FocusVisualStyle="{x:Null}"/>
                                         <TextBlock x:Name="EndTime" Text="0:00" TextWrapping="Wrap" Height="18" HorizontalAlignment="Right"/>
                                     </StackPanel>
                                 </Grid>
                                 <!-- https://docs.microsoft.com/en-us/windows/apps/design/style/segoe-ui-symbol-font -->
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,8,0,0">
-                                    <Button x:Name="PreviousTrack" Click="Previous_Clicked" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left">
+                                    <Button x:Name="PreviousTrack" Click="Previous_Clicked" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}">
                                         <TextBlock FontSize="25" FontFamily="Segoe MDL2 Assets" Text="&#xeb9e;"/>
                                     </Button>
-                                    <Button x:Name="PauseButton" Click="Pause_Clicked" Background="{x:Null}" BorderBrush="{x:Null}" Margin="10,0,10,0">
+                                    <Button x:Name="PauseButton" Click="Pause_Clicked" Background="{x:Null}" BorderBrush="{x:Null}" Margin="10,0,10,0" FocusVisualStyle="{x:Null}">
                                         <TextBlock x:Name="PlayPause" FontSize="25" FontFamily="Segoe MDL2 Assets" Text="&#xedb5;"/>
                                     </Button>
-                                    <Button x:Name="NextTrack" Click="Next_Clicked" FontSize="18" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right">
+                                    <Button x:Name="NextTrack" Click="Next_Clicked" FontSize="18" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" FocusVisualStyle="{x:Null}">
                                         <TextBlock FontSize="25" FontFamily="Segoe MDL2 Assets" Text="&#xeb9d;"/>
                                     </Button>
                                 </StackPanel>
                                 <Grid VerticalAlignment="Stretch" Margin="0,18,0,0">
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,2,0,0">
                                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xe992;" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16"/>
-                                        <Slider x:Name="VolumeSlider" Maximum="100" Value="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="180" FlowDirection="LeftToRight" Foreground="{x:Null}" Background="{x:Null}"/>
+                                        <Slider x:Name="VolumeSlider" Maximum="100" Value="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="180" FlowDirection="LeftToRight" PreviewMouseUp="VolumeSlider_DragCompleted" FocusVisualStyle="{x:Null}"/>
                                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xe995;" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="7.5,0,0,0" FontSize="16"/>
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Bottom" MinHeight="27">
                                         <Border x:Name="BorderRandom" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True">
-                                            <Button x:Name="Random" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Click="Random_Clicked">
+                                            <Button x:Name="Random" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Click="Random_Clicked" FocusVisualStyle="{x:Null}">
                                                 <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Text="&#xe8b1;" Margin="0" Padding="0, 0, 0, 2"/>
                                             </Button>
                                         </Border>
                                         <Border x:Name="BorderRepeat" BorderThickness="0, 0, 0, 0" BorderBrush="Black" VerticalAlignment="Top" Margin="10,0,0,0">
-                                            <Button x:Name="Repeat" Background="{x:Null}" FontSize="18" BorderBrush="{x:Null}" Click="Repeat_Clicked">
+                                            <Button x:Name="Repeat" Background="{x:Null}" FontSize="18" BorderBrush="{x:Null}" Click="Repeat_Clicked" FocusVisualStyle="{x:Null}">
                                                 <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Text="&#xe8ee;" Padding="0, 0, 0, 2"/>
                                             </Button>
                                         </Border>
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Bottom" MinHeight="27">
                                         <Border  x:Name="BorderSingle" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True" Margin="0,0,10,0">
-                                            <Button x:Name="Single" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Click="Single_Clicked">
+                                            <Button x:Name="Single" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Click="Single_Clicked" FocusVisualStyle="{x:Null}">
                                                 <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Text="&#xe8ed;" Margin="0" Padding="0, 0, 0, 2"/>
                                             </Button>
                                         </Border>
                                         <Border x:Name="BorderConsume" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True">
-                                            <Button x:Name="Consume" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Click="Consume_Clicked">
+                                            <Button x:Name="Consume" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Click="Consume_Clicked" FocusVisualStyle="{x:Null}">
                                                 <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Text="&#xe75c;" Margin="0" Padding="0, 0, 0, 2"/>
                                             </Button>
                                         </Border>
@@ -99,7 +99,7 @@
             </Border>
         </Grid>
         <Grid x:Name="BottomLayout" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Width="Auto" MinHeight="40">
-            <Button x:Name="Snapcast" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Snapcast_Clicked" Margin="10,0,0,0" Padding="5, 2" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+            <Button x:Name="Snapcast" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Snapcast_Clicked" Margin="10,0,0,0" Padding="5, 2" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" FocusVisualStyle="{x:Null}">
                 <StackPanel Orientation="Horizontal">
                     <emoji:TextBlock Text="🔊" Padding="0,0,0,2"/>
                     <TextBlock x:Name="SnapcastText" Text="Start Snapcast" Margin="5, 0, 0, 0"/>
@@ -113,7 +113,7 @@
                         <TextBlock Text="Shuffle" Margin="5, 0, 0, 0"/>
                     </StackPanel>
                 </Button>-->
-                <Button x:Name="Settings" Padding="5, 2" Click="Settings_Clicked" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+                <Button x:Name="Settings" Padding="5, 2" Click="Settings_Clicked" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" FocusVisualStyle="{x:Null}">
                     <StackPanel Orientation="Horizontal">
                         <emoji:TextBlock Text="🛠️"  Padding="0,0,0,2"/>
                         <TextBlock Text="Settings" Margin="5, 0, 0, 0"/>
