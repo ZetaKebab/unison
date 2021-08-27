@@ -8,6 +8,12 @@
     <Win32Resource></Win32Resource>
     <StartupObject>unison.App</StartupObject>
     <Version>0.0.1</Version>
+    <Company />
+    <Authors>Théo Marchal</Authors>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://git.n700.ovh/keb/unison</PackageProjectUrl>
+    <RepositoryUrl>https://git.n700.ovh/keb/unison</RepositoryUrl>
+    <Copyright>Théo Marchal</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +27,10 @@
     <None Remove="snapclient_0.25.0-1_win64\snapclient.exe" />
     <None Remove="snapclient_0.25.0-1_win64\soxr.dll" />
     <None Remove="snapclient_0.25.0-1_win64\vorbis.dll" />
+    <None Include="LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

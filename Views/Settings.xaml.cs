@@ -50,6 +50,7 @@ namespace unison
             SnapcastStartup.IsChecked = Properties.Settings.Default.snapcast_startup;
             SnapcastPath.Text = Properties.Settings.Default.snapcast_path;
             SnapcastPort.Text = Properties.Settings.Default.snapcast_port.ToString();
+            VolumeOffset.Text = Properties.Settings.Default.volume_offset.ToString();
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -66,11 +67,22 @@ namespace unison
             e.Handled = true;
         }
 
+        public void UpdateConnectionStatus()
+        {
+            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
+            if (mpd._connected)
+            {
+                ConnectionStatus.Text = "Connected to MPD " + mpd.GetVersion() + ".";
+                ConnectButton.IsEnabled = false;
+            }
+        }
+
         private void MPDConnect_Clicked(object sender, RoutedEventArgs e)
         {
             SaveSettings();
             MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
-            //mpd.Connect();
+            mpd.Start();
+            UpdateConnectionStatus();
         }
 
         private void SnapcastReset_Clicked(object sender, RoutedEventArgs e)
@@ -87,6 +99,7 @@ namespace unison
             Properties.Settings.Default.snapcast_startup = (bool)SnapcastStartup.IsChecked;
             Properties.Settings.Default.snapcast_path = SnapcastPath.Text;
             Properties.Settings.Default.snapcast_port = int.Parse(SnapcastPort.Text, CultureInfo.InvariantCulture);
+            Properties.Settings.Default.volume_offset = int.Parse(VolumeOffset.Text, CultureInfo.InvariantCulture);
             Properties.Settings.Default.Save();
         }
 

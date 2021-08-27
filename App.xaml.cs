@@ -1,12 +1,6 @@
 ﻿using System.Windows;
 using Hardcodet.Wpf.TaskbarNotification;
 
-// todo:
-//
-// * show mpd version
-// * change volume offset
-// * fix window resize (if it still happens?)
-
 namespace unison
 {
     public partial class App : Application

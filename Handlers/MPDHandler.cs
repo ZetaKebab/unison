@@ -59,7 +59,6 @@ namespace unison
             _elapsedTimer = new System.Timers.Timer(500);
             _elapsedTimer.Elapsed += new System.Timers.ElapsedEventHandler(ElapsedTimer);
 
-
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(2);
             timer.Tick += QueryStatus;
@@ -228,7 +227,8 @@ namespace unison
                 _elapsedTimer.Stop();
             }
 
-            await _mpd.MpdQueryAlbumArt(_currentSong.File, false);
+            if (_currentSong != null)
+                await _mpd.MpdQueryAlbumArt(_currentSong.File, false);
         }
 
         public SongInfoEx GetCurrentSong() => _currentSong;
@@ -290,6 +290,11 @@ namespace unison
         public bool IsPlaying()
         {
             return _currentStatus?.MpdState == MPDCtrl.Models.Status.MpdPlayState.Play;
+        }
+
+        public string GetVersion()
+        {
+            return _mpd.MpdVerText;
         }
     }
 }

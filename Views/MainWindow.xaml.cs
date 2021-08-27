@@ -9,7 +9,7 @@ namespace unison
 {
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private readonly Settings SettingsWindow = new Settings();
+        public readonly Settings SettingsWindow = new Settings();
 
         private MPDHandler mpd;
 

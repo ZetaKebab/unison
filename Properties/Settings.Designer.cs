@@ -94,5 +94,17 @@ namespace unison.Properties {
                 this["snapcast_port"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int volume_offset {
+            get {
+                return ((int)(this["volume_offset"]));
+            }
+            set {
+                this["volume_offset"] = value;
+            }
+        }
     }
 }

@@ -75,11 +75,15 @@ namespace unison
                         mpd.Prev();
                         break;
                     case VK_VOLUME_DOWN:
-                        mpd._currentVolume -= 5;
+                        mpd._currentVolume -= Properties.Settings.Default.volume_offset;
+                        if (mpd._currentVolume < 0)
+                            mpd._currentVolume = 0;
                         mpd.SetVolume(mpd._currentVolume);
                         break;
                     case VK_VOLUME_UP:
-                        mpd._currentVolume += 5;
+                        mpd._currentVolume += Properties.Settings.Default.volume_offset;
+                        if (mpd._currentVolume > 100)
+                            mpd._currentVolume = 100;
                         mpd.SetVolume(mpd._currentVolume);
                         break;
                     case VK_MEDIA_PLAY_PAUSE:
@@ -94,8 +98,17 @@ namespace unison
                         }
                         else
                         {
-                            AppWindow.Hide();
-                            AppWindow.WindowState = WindowState.Minimized;
+                            if (AppWindow.IsActive)
+                            {
+                                AppWindow.Hide();
+                                AppWindow.WindowState = WindowState.Minimized;
+                            }
+                            else  // not minimized but not in front
+                            {
+                                AppWindow.Show();
+                                AppWindow.Activate();
+                                AppWindow.WindowState = WindowState.Normal;
+                            }
                         }
                         break;
                 }
