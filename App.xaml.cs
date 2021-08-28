@@ -27,8 +27,6 @@ namespace unison
 
             Systray = (TaskbarIcon)FindResource("SystrayTaskbar");
             Current.Properties["systray"] = Systray;
-
-            MPD.Start();
         }
 
         protected override void OnExit(ExitEventArgs e)

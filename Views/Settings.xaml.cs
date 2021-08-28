@@ -81,7 +81,7 @@ namespace unison
         {
             SaveSettings();
             MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
-            mpd.Start();
+            // connect to mpd
             UpdateConnectionStatus();
         }
 

@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows.Interop;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace unison
@@ -50,6 +49,11 @@ namespace unison
                 border.BorderThickness = BaseThickness;
         }
 
+        public string FormatSeconds(int time)
+        {
+            TimeSpan timespan = TimeSpan.FromSeconds(time);
+            return timespan.ToString(@"mm\:ss");
+        }
         public string FormatSeconds(double time)
         {
             TimeSpan timespan = TimeSpan.FromSeconds(time);
@@ -58,23 +62,22 @@ namespace unison
 
         public void UpdateInterface()
         {
-            if (mpd.GetCurrentSong() != null && mpd.GetStatus() != null)
-            {
-                SongTitle.Text = mpd.GetCurrentSong().Title;
-                SongTitle.ToolTip = mpd.GetCurrentSong().File;
-                SongArtist.Text = mpd.GetCurrentSong().Artist;
-                SongAlbum.Text = mpd.GetCurrentSong().Album;
-                if (mpd.GetCurrentSong().Date.Length > 0)
-                    SongAlbum.Text += $" ({ mpd.GetCurrentSong().Date})";
-                Bitrate.Text = mpd.GetCurrentSong().File.Substring(mpd.GetCurrentSong().File.LastIndexOf(".") + 1) + " – ";
-                Bitrate.Text += mpd.GetStatus().MpdBitrate + "kbps";
+            if (mpd.GetCurrentSong() == null || mpd.GetStatus() == null)
+                return;
 
-                CurrentTime.Text = FormatSeconds(mpd._elapsed);
-                EndTime.Text = FormatSeconds(mpd.GetStatus().MpdSongTime);
+            SongTitle.Text = mpd.GetCurrentSong().Title;
+            SongTitle.ToolTip = mpd.GetCurrentSong().Path;
+            SongArtist.Text = mpd.GetCurrentSong().Artist;
+            SongAlbum.Text = mpd.GetCurrentSong().Album;
+            if (mpd.GetCurrentSong().Date != null)
+                SongAlbum.Text += $" ({ mpd.GetCurrentSong().Date})";
+            Bitrate.Text = mpd.GetCurrentSong().Path.Substring(mpd.GetCurrentSong().Path.LastIndexOf(".") + 1) + " – ";
+            Bitrate.Text += mpd.GetStatus().Bitrate + "kbps";
 
-                if (!System.Double.IsNaN(mpd.GetCurrentSong().TimeSort))
-                    TimeSlider.Value = mpd._elapsed / mpd.GetCurrentSong().TimeSort * 100;
-            }
+            CurrentTime.Text = FormatSeconds(mpd._currentTime);
+            EndTime.Text = FormatSeconds(mpd.GetCurrentSong().Time);
+
+            TimeSlider.Value = mpd._currentTime / mpd.GetCurrentSong().Time * 100;
 
             if (VolumeSlider.Value != mpd._currentVolume)
             {
@@ -87,12 +90,6 @@ namespace unison
             else
                 PlayPause.Text = "\xedb5";
 
-            SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
-            if (snapcast.Started)
-                SnapcastText.Text = "Stop Snapcast";
-            else
-                SnapcastText.Text = "Start Snapcast";
-
             Connection.Text = (mpd._connected ? "✔️" : "❌") + $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
 
             UpdateButton(ref BorderRandom, mpd._currentRandom);
@@ -100,21 +97,23 @@ namespace unison
             UpdateButton(ref BorderSingle, mpd._currentSingle);
             UpdateButton(ref BorderConsume, mpd._currentConsume);
 
-            if (mpd.GetCover() != null)
+            if (mpd.GetCover() == null)
             {
-                if ((!mpd.GetCover().IsDownloading) && mpd.GetCover().IsSuccess)
-                {
-                    if (mpd.GetCurrentSong().File == mpd.GetCover().SongFilePath)
-                    {
-                        Cover.Source = mpd.GetCover().AlbumImageSource;
-                        Cover.Visibility = Visibility.Visible;
-                        NoCover.Visibility = Visibility.Collapsed;
-                        return;
-                    }
-                }
+                NoCover.Visibility = Visibility.Visible;
+                Cover.Visibility = Visibility.Collapsed;
             }
-            NoCover.Visibility = Visibility.Visible;
-            Cover.Visibility = Visibility.Collapsed;
+            else if (Cover.Source != mpd.GetCover())
+            {
+                Cover.Source = mpd.GetCover();
+                Cover.Visibility = Visibility.Visible;
+                NoCover.Visibility = Visibility.Collapsed;
+            }
+
+            SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
+            if (snapcast.Started)
+                SnapcastText.Text = "Stop Snapcast";
+            else
+                SnapcastText.Text = "Start Snapcast";
         }
 
         public void Pause_Clicked(object sender, RoutedEventArgs e) => mpd.PlayPause();
@@ -157,10 +156,10 @@ namespace unison
             Slider slider = (Slider)sender;
 
             double SongPercentage = slider.Value;
-            double SongTime = mpd.GetStatus().MpdSongTime;
+            double SongTime = mpd._totalTime;
             double SeekTime = SongPercentage / 100 * SongTime;
 
-            mpd.SetTime((int)SeekTime);
+            mpd.SetTime(SeekTime);
         }
 
         private void VolumeSlider_DragCompleted(object sender, MouseButtonEventArgs e)
