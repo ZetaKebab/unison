@@ -49,6 +49,9 @@ namespace unison
         }
 
         private MpcConnection _connection;
+
+        private MpcConnection _commandConnection;
+
         private IPEndPoint _mpdEndpoint;
 
         private CancellationTokenSource cancelToken;
@@ -67,6 +70,7 @@ namespace unison
         {
             var token = cancelToken.Token;
             _connection = await Connect(token);
+            _commandConnection = await Connect(token);
             if (_connection.IsConnected)
             {
                 _connected = true;
@@ -168,21 +172,39 @@ namespace unison
             _isUpdatingStatus = false;
         }
 
+        bool _isUpdatingSong = false;
         private async Task UpdateSongAsync()
         {
-            MpcNET.Message.IMpdMessage<MpcNET.Types.IMpdFile> response = await _connection.SendAsync(new CurrentSongCommand());
-            if (response != null && response.IsResponseValid)
+            if (_connection == null) return;
+
+            if (_isUpdatingSong) return;
+            _isUpdatingSong = true;
+
+            try
             {
-                CurrentSong = response.Response.Content;
-                UpdateSong();
+                MpcNET.Message.IMpdMessage<MpcNET.Types.IMpdFile> response = await _connection.SendAsync(new CurrentSongCommand());
+                if (response != null && response.IsResponseValid)
+                {
+                    CurrentSong = response.Response.Content;
+                    UpdateSong();
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
+            catch
+            {
+                await Connect(cancelToken.Token);
+            }
+            _isUpdatingSong = false;
         }
 
         public async Task<T> SafelySendCommandAsync<T>(IMpcCommand<T> command)
         {
             try
             {
-                var response = await _connection.SendAsync(command);
+                var response = await _commandConnection.SendAsync(command);
                 if (!response.IsResponseValid)
                 {
                     // If we have an MpdError string, only show that as the error to avoid extra noise
@@ -323,7 +345,7 @@ namespace unison
 
         public async void Consume()
         {
-            await SafelySendCommandAsync(new ConsumeCommand(!_currentConsume));
+            var response2 = await SafelySendCommandAsync(new ConsumeCommand(!_currentConsume));
         }
 
         public async void SetVolume(int value)
