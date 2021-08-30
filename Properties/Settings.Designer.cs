@@ -106,5 +106,17 @@ namespace unison.Properties {
                 this["volume_offset"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool snapcast_window {
+            get {
+                return ((bool)(this["snapcast_window"]));
+            }
+            set {
+                this["snapcast_window"] = value;
+            }
+        }
     }
 }

@@ -57,6 +57,9 @@
                                         <CheckBox x:Name="SnapcastStartup" Margin="5, 5, 0, 0">
                                             <TextBlock Text="Launch at startup" TextWrapping="Wrap"/>
                                         </CheckBox>
+                                        <CheckBox x:Name="SnapcastWindow" Margin="5,2.5,0,0">
+                                            <TextBlock Text="Show Snapcast window" TextWrapping="Wrap"/>
+                                        </CheckBox>
                                         <TextBlock Text="Port" TextWrapping="Wrap" Margin="5,5,0,0"/>
                                         <TextBox x:Name="SnapcastPort" MaxLength="5" PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" Width="250" Margin="10,2,5,0" HorizontalAlignment="Left"/>
                                         <TextBlock Text="Executable path" TextWrapping="Wrap" Margin="5,5,0,0"/>

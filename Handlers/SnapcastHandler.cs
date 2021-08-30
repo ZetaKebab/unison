@@ -44,7 +44,7 @@ namespace unison
             {
                 _snapcast.StartInfo.FileName = Properties.Settings.Default.snapcast_path + @"\snapclient.exe";
                 _snapcast.StartInfo.Arguments = $"--host {Properties.Settings.Default.mpd_host}";
-                _snapcast.StartInfo.CreateNoWindow = true;
+                _snapcast.StartInfo.CreateNoWindow = !Properties.Settings.Default.snapcast_window;
                 try
                 {
                     _snapcast.Start();
