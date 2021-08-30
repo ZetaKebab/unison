@@ -25,7 +25,11 @@
                                 <TextBlock x:Name="SongTitle" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal" FontSize="20" Text="Title"/>
                                 <TextBlock x:Name="SongArtist" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold" FontSize="18"  Text="Artist"/>
                                 <TextBlock x:Name="SongAlbum" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal" FontSize="16"  Text="Album"/>
-                                <TextBlock x:Name="Bitrate" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal"  Text="Bitrate" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                                <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Margin="0,2,0,0">
+                                    <Run x:Name="SongGenre"/>
+                                    <Run> – </Run>
+                                    <Run x:Name="Format"/>
+                                </TextBlock>
                             </StackPanel>
                         </Grid>
                         <Grid x:Name="Controls" VerticalAlignment="Top" Margin="10,95,10,0">
@@ -99,7 +103,7 @@
             </Border>
         </Grid>
         <Grid x:Name="BottomLayout" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Width="Auto" MinHeight="40">
-            <Button x:Name="Snapcast" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Snapcast_Clicked" Margin="10,0,0,0" Padding="5, 2" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" FocusVisualStyle="{x:Null}">
+            <Button x:Name="Snapcast" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Snapcast_Clicked" Margin="10,0,0,0" Padding="5, 2" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" FocusVisualStyle="{x:Null}" IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
                     <emoji:TextBlock Text="🔊" Padding="0,0,0,2"/>
                     <TextBlock x:Name="SnapcastText" Text="Start Snapcast" Margin="5, 0, 0, 0"/>

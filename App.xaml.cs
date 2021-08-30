@@ -14,14 +14,14 @@ namespace unison
         {
             base.OnStartup(e);
 
-            Snapcast = new SnapcastHandler();
-            Current.Properties["snapcast"] = Snapcast;
-
             MPD = new MPDHandler();
             Current.Properties["mpd"] = MPD;
 
             Hotkeys = new HotkeyHandler();
             Current.Properties["hotkeys"] = Hotkeys;
+
+            Snapcast = new SnapcastHandler();
+            Current.Properties["snapcast"] = Snapcast;
 
             Current.MainWindow = new MainWindow();
 

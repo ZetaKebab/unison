@@ -46,7 +46,7 @@ namespace unison
 
             MpdHost.Text = Properties.Settings.Default.mpd_host;
             MpdPort.Text = Properties.Settings.Default.mpd_port.ToString();
-            MpdPassword.Text = null; //Properties.Settings.Default.mpd_password;
+            MpdPassword.Text = Properties.Settings.Default.mpd_password;
             SnapcastStartup.IsChecked = Properties.Settings.Default.snapcast_startup;
             SnapcastPath.Text = Properties.Settings.Default.snapcast_path;
             SnapcastPort.Text = Properties.Settings.Default.snapcast_port.ToString();
@@ -71,18 +71,17 @@ namespace unison
         {
             MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
             if (mpd._connected)
-            {
                 ConnectionStatus.Text = "Connected to MPD " + mpd.GetVersion() + ".";
-                ConnectButton.IsEnabled = false;
-            }
+            else
+                ConnectionStatus.Text = "Not connected.";
         }
 
         private void MPDConnect_Clicked(object sender, RoutedEventArgs e)
         {
             SaveSettings();
+            ConnectionStatus.Text = "Connecting...";
             MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
-            // connect to mpd
-            UpdateConnectionStatus();
+            mpd.Connect();
         }
 
         private void SnapcastReset_Clicked(object sender, RoutedEventArgs e)
@@ -95,7 +94,7 @@ namespace unison
         {
             Properties.Settings.Default.mpd_host = MpdHost.Text;
             Properties.Settings.Default.mpd_port = int.Parse(MpdPort.Text, CultureInfo.InvariantCulture);
-            Properties.Settings.Default.mpd_password = null;//MpdPassword.Text;
+            Properties.Settings.Default.mpd_password = MpdPassword.Text;
             Properties.Settings.Default.snapcast_startup = (bool)SnapcastStartup.IsChecked;
             Properties.Settings.Default.snapcast_path = SnapcastPath.Text;
             Properties.Settings.Default.snapcast_port = int.Parse(SnapcastPort.Text, CultureInfo.InvariantCulture);

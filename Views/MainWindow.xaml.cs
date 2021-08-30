@@ -12,7 +12,7 @@ namespace unison
     {
         public readonly Settings SettingsWindow = new Settings();
 
-        private MPDHandler mpd;
+        private readonly MPDHandler mpd;
 
         Thickness SelectedThickness;
         Thickness BaseThickness;
@@ -38,7 +38,11 @@ namespace unison
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            UpdateInterface();
+            if (mpd.GetCurrentSong() == null)
+                return;
+
+            CurrentTime.Text = FormatSeconds(mpd._currentTime);
+            TimeSlider.Value = mpd._currentTime / mpd.GetCurrentSong().Time * 100;
         }
 
         public void UpdateButton(ref Border border, bool b)
@@ -60,24 +64,39 @@ namespace unison
             return timespan.ToString(@"mm\:ss");
         }
 
-        public void UpdateInterface()
+        public void OnConnectionChanged(object sender, EventArgs e)
         {
-            if (mpd.GetCurrentSong() == null || mpd.GetStatus() == null)
+            Connection.Text = (mpd._connected ? "✔️" : "❌") + $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
+            SettingsWindow.UpdateConnectionStatus();
+            if (mpd._connected)
+                Snapcast.IsEnabled = true;
+        }
+
+        public void OnSongChanged(object sender, EventArgs e)
+        {
+            if (mpd.GetCurrentSong() == null)
                 return;
 
-            SongTitle.Text = mpd.GetCurrentSong().Title;
+            if (!mpd.GetCurrentSong().HasName)
+                SongTitle.Text = mpd.GetCurrentSong().Title;
+            else
+                SongTitle.Text = mpd.GetCurrentSong().Title;
             SongTitle.ToolTip = mpd.GetCurrentSong().Path;
             SongArtist.Text = mpd.GetCurrentSong().Artist;
             SongAlbum.Text = mpd.GetCurrentSong().Album;
+            SongGenre.Text = mpd.GetCurrentSong().Genre;
+
             if (mpd.GetCurrentSong().Date != null)
                 SongAlbum.Text += $" ({ mpd.GetCurrentSong().Date})";
-            Bitrate.Text = mpd.GetCurrentSong().Path.Substring(mpd.GetCurrentSong().Path.LastIndexOf(".") + 1) + " – ";
-            Bitrate.Text += mpd.GetStatus().Bitrate + "kbps";
+            Format.Text = mpd.GetCurrentSong().Path.Substring(mpd.GetCurrentSong().Path.LastIndexOf(".") + 1);
 
-            CurrentTime.Text = FormatSeconds(mpd._currentTime);
             EndTime.Text = FormatSeconds(mpd.GetCurrentSong().Time);
+        }
 
-            TimeSlider.Value = mpd._currentTime / mpd.GetCurrentSong().Time * 100;
+        public void OnStatusChanged(object sender, EventArgs e)
+        {
+            if (mpd.GetStatus() == null)
+                return;
 
             if (VolumeSlider.Value != mpd._currentVolume)
             {
@@ -90,13 +109,14 @@ namespace unison
             else
                 PlayPause.Text = "\xedb5";
 
-            Connection.Text = (mpd._connected ? "✔️" : "❌") + $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
-
             UpdateButton(ref BorderRandom, mpd._currentRandom);
             UpdateButton(ref BorderRepeat, mpd._currentRepeat);
             UpdateButton(ref BorderSingle, mpd._currentSingle);
             UpdateButton(ref BorderConsume, mpd._currentConsume);
+        }
 
+        public void OnCoverChanged(object sender, EventArgs e)
+        {
             if (mpd.GetCover() == null)
             {
                 NoCover.Visibility = Visibility.Visible;
@@ -108,7 +128,10 @@ namespace unison
                 Cover.Visibility = Visibility.Visible;
                 NoCover.Visibility = Visibility.Collapsed;
             }
+        }
 
+        public void OnSnapcastChanged()
+        {
             SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
             if (snapcast.Started)
                 SnapcastText.Text = "Stop Snapcast";

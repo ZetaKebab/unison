@@ -6,12 +6,16 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using MpcNET;
 using MpcNET.Commands.Database;
 using MpcNET.Commands.Playback;
 using MpcNET.Commands.Reflection;
 using MpcNET.Commands.Status;
+using MpcNET.Message;
+using MpcNET.Types;
 
 namespace unison
 {
@@ -26,13 +30,17 @@ namespace unison
         public bool _currentConsume;
         public double _currentTime;
         public double _totalTime;
-
         BitmapFrame _cover;
+
+        public event EventHandler ConnectionChanged;
+        public event EventHandler StatusChanged;
+        public event EventHandler SongChanged;
+        public event EventHandler CoverChanged;
 
         public static MpdStatus BOGUS_STATUS = new MpdStatus(0, false, false, false, false, -1, -1, -1, MpdState.Unknown, -1, -1, -1, -1, TimeSpan.Zero, TimeSpan.Zero, -1, -1, -1, -1, -1, "", "");
         public MpdStatus CurrentStatus { get; private set; } = BOGUS_STATUS;
 
-        MpcNET.Types.IMpdFile CurrentSong { get; set; }
+        IMpdFile CurrentSong { get; set; }
 
         private readonly System.Timers.Timer _elapsedTimer;
         private async void ElapsedTimer(object sender, System.Timers.ElapsedEventArgs e)
@@ -49,7 +57,6 @@ namespace unison
         }
 
         private MpcConnection _connection;
-
         private MpcConnection _commandConnection;
 
         private IPEndPoint _mpdEndpoint;
@@ -64,20 +71,76 @@ namespace unison
 
             _elapsedTimer = new System.Timers.Timer(500);
             _elapsedTimer.Elapsed += new System.Timers.ElapsedEventHandler(ElapsedTimer);
+
+            ConnectionChanged += OnConnectionChanged;
+            StatusChanged += OnStatusChanged;
+            SongChanged += OnSongChanged;
+            CoverChanged += OnCoverChanged;
         }
 
-        private async void Initialize()
+        static void OnConnectionChanged(object sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
+                MainWin.OnConnectionChanged(sender, e);
+
+                SnapcastHandler Snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
+                Snapcast.OnConnectionChanged(sender, e);
+
+            }, DispatcherPriority.ContextIdle);
+        }
+
+        static void OnStatusChanged(object sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
+                MainWin.OnStatusChanged(sender, e);
+            }, DispatcherPriority.ContextIdle);
+        }
+
+        static void OnSongChanged(object sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
+                MainWin.OnSongChanged(sender, e);
+            }, DispatcherPriority.ContextIdle);
+        }
+
+        static void OnCoverChanged(object sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
+                MainWin.OnCoverChanged(sender, e);
+            }, DispatcherPriority.ContextIdle);
+        }
+
+        private void Initialize()
+        {
+            Connect();
+        }
+
+        public async void Connect()
         {
             var token = cancelToken.Token;
-            _connection = await Connect(token);
-            _commandConnection = await Connect(token);
+            try
+            {
+                _connection = await ConnectInternal(token);
+                _commandConnection = await ConnectInternal(token);
+            }
+            catch(MpcNET.Exceptions.MpcConnectException exception)
+            {
+                Trace.WriteLine("exception: " + exception);
+            }
             if (_connection.IsConnected)
             {
                 _connected = true;
                 _version = _connection.Version;
+                ConnectionChanged?.Invoke(this, EventArgs.Empty);
             }
-            Trace.WriteLine("is connected: " + _connected);
-            Trace.WriteLine("version: " + _version);
 
             await UpdateStatusAsync();
             await UpdateSongAsync();
@@ -85,7 +148,7 @@ namespace unison
             Loop(token);
         }
 
-        private async Task<MpcConnection> Connect(CancellationToken token)
+        private async Task<MpcConnection> ConnectInternal(CancellationToken token)
         {
             IPAddress.TryParse(Properties.Settings.Default.mpd_host, out IPAddress ipAddress);
 
@@ -95,7 +158,7 @@ namespace unison
 
             if (!string.IsNullOrEmpty(Properties.Settings.Default.mpd_password))
             {
-                MpcNET.Message.IMpdMessage<string> result = await connection.SendAsync(new PasswordCommand(Properties.Settings.Default.mpd_password));
+                IMpdMessage<string> result = await connection.SendAsync(new PasswordCommand(Properties.Settings.Default.mpd_password));
                 if (!result.IsResponseValid)
                 {
                     string mpdError = result.Response?.Result?.MpdError;
@@ -135,14 +198,44 @@ namespace unison
 
         private async Task HandleIdleResponseAsync(string subsystems)
         {
-            if (subsystems.Contains("player") || subsystems.Contains("mixer") || subsystems.Contains("output") || subsystems.Contains("options"))
+            try
             {
-                await UpdateStatusAsync();
-
-                if (subsystems.Contains("player"))
+                if (subsystems.Contains("player") || subsystems.Contains("mixer") || subsystems.Contains("output") || subsystems.Contains("options"))
                 {
-                    await UpdateSongAsync();
+                    await UpdateStatusAsync();
+
+                    if (subsystems.Contains("player"))
+                    {
+                        await UpdateSongAsync();
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
+            }
+        }
+
+        private async Task UpdateStatusCommand()
+        {
+            if (_commandConnection == null) return;
+
+            try
+            {
+                MpdStatus response =  await SafelySendCommandAsync(new StatusCommand());
+
+                if (response != null)
+                {
+                    CurrentStatus = response;
+                    UpdateStatus();
+                }
+                else
+                    throw new Exception();
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
+                Connect();
             }
         }
 
@@ -156,7 +249,7 @@ namespace unison
 
             try
             {
-                MpcNET.Message.IMpdMessage<MpdStatus> response = await _connection.SendAsync(new StatusCommand());
+                IMpdMessage<MpdStatus> response = await _connection.SendAsync(new StatusCommand());
                 if (response != null && response.IsResponseValid)
                 {
                     CurrentStatus = response.Response.Content;
@@ -165,9 +258,10 @@ namespace unison
                 else
                     throw new Exception();
             }
-            catch
+            catch (Exception e)
             {
-                await Connect(cancelToken.Token);
+                Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
+                Connect();
             }
             _isUpdatingStatus = false;
         }
@@ -182,7 +276,7 @@ namespace unison
 
             try
             {
-                MpcNET.Message.IMpdMessage<MpcNET.Types.IMpdFile> response = await _connection.SendAsync(new CurrentSongCommand());
+                IMpdMessage<IMpdFile> response = await _connection.SendAsync(new CurrentSongCommand());
                 if (response != null && response.IsResponseValid)
                 {
                     CurrentSong = response.Response.Content;
@@ -193,9 +287,10 @@ namespace unison
                     throw new Exception();
                 }
             }
-            catch
+            catch (Exception e)
             {
-                await Connect(cancelToken.Token);
+                Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
+                Connect();
             }
             _isUpdatingSong = false;
         }
@@ -247,7 +342,7 @@ namespace unison
                     totalBinarySize = response.Size;
                     currentSize += response.Binary;
                     data.AddRange(response.Data);
-                    Debug.WriteLine($"Downloading albumart: {currentSize}/{totalBinarySize}");
+                    //Debug.WriteLine($"Downloading albumart: {currentSize}/{totalBinarySize}");
                 } while (currentSize < totalBinarySize && !token.IsCancellationRequested);
             }
             catch (Exception e)
@@ -260,11 +355,12 @@ namespace unison
             {
                 Trace.WriteLine("empty cover");
                 _cover = null;
-                return;
             }
-
-            using var stream = new MemoryStream(data.ToArray());
-            _cover = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+            else
+            {
+                using MemoryStream stream = new MemoryStream(data.ToArray());
+                _cover = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+            }
             UpdateCover();
         }
 
@@ -275,12 +371,12 @@ namespace unison
             if (CurrentSong == null)
                 return;
 
-            Trace.WriteLine($"[DEBUG] Song: name[{CurrentSong.Title}] artist[{CurrentSong.Artist}] album[{CurrentSong.Album}] uri[{CurrentSong.Path}]");
-
             _currentTime = CurrentStatus.Elapsed.TotalSeconds;
             _totalTime = CurrentSong.Time;
             if (!_elapsedTimer.Enabled)
                 _elapsedTimer.Start();
+
+            SongChanged?.Invoke(this, EventArgs.Empty);
 
             string uri = Regex.Escape(CurrentSong.Path);
             GetAlbumBitmap(uri);
@@ -288,7 +384,7 @@ namespace unison
 
         public void UpdateCover()
         {
-
+            CoverChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void UpdateStatus()
@@ -305,62 +401,26 @@ namespace unison
             _currentSingle = CurrentStatus.Single;
             _currentVolume = CurrentStatus.Volume;
 
-            Trace.WriteLine($"[DEBUG] Status: volume[{CurrentStatus.Volume}] random[{CurrentStatus.Random}] consume[{CurrentStatus.Consume}] State[{CurrentStatus.State}] Bitrate[{CurrentStatus.Bitrate}]");
+            StatusChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public MpcNET.Types.IMpdFile GetCurrentSong() => CurrentSong;
+        public IMpdFile GetCurrentSong() => CurrentSong;
         public MpdStatus GetStatus() => CurrentStatus;
         public BitmapFrame GetCover() => _cover;
         public string GetVersion() => _version;
 
-        public async void Prev()
-        {
-            await SafelySendCommandAsync(new PreviousCommand());
-        }
+        public async void Prev() => await SafelySendCommandAsync(new PreviousCommand());
+        public async void Next() => await SafelySendCommandAsync(new NextCommand());
+        public async void PlayPause() =>await SafelySendCommandAsync(new PauseResumeCommand());
 
-        public async void Next()
-        {
-            await SafelySendCommandAsync(new NextCommand());
-        }
+        public async void Random() => await SafelySendCommandAsync(new RandomCommand(!_currentRandom));
+        public async void Repeat() => await SafelySendCommandAsync(new RepeatCommand(!_currentRepeat));
+        public async void Single() => await SafelySendCommandAsync(new SingleCommand(!_currentSingle));
+        public async void Consume() => await SafelySendCommandAsync(new ConsumeCommand(!_currentConsume));
 
-        public async void PlayPause()
-        {
-            await SafelySendCommandAsync(new PauseResumeCommand());
-        }
+        public async void SetVolume(int value) => await SafelySendCommandAsync(new SetVolumeCommand((byte)value));
+        public async void SetTime(double value) => await SafelySendCommandAsync(new SeekCurCommand(value));
 
-        public async void Random()
-        {
-            await SafelySendCommandAsync(new RandomCommand(!_currentRandom));
-        }
-
-        public async void Repeat()
-        {
-            await SafelySendCommandAsync(new RepeatCommand(!_currentRepeat));
-        }
-
-        public async void Single()
-        {
-            await SafelySendCommandAsync(new SingleCommand(!_currentSingle));
-        }
-
-        public async void Consume()
-        {
-            var response2 = await SafelySendCommandAsync(new ConsumeCommand(!_currentConsume));
-        }
-
-        public async void SetVolume(int value)
-        {
-            await SafelySendCommandAsync(new SetVolumeCommand((byte)value));
-        }
-
-        public async void SetTime(double value)
-        {
-            await SafelySendCommandAsync(new SeekCurCommand(value));
-        }
-
-        public bool IsPlaying()
-        {
-            return CurrentStatus?.State == MpdState.Play;
-        }
+        public bool IsPlaying() => CurrentStatus?.State == MpdState.Play;
     }
 }
