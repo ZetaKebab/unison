@@ -37,7 +37,7 @@
                                 <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Name="CurrentTime" Text="0:00" TextWrapping="Wrap" HorizontalAlignment="Left"/>
-                                        <Slider Style="{DynamicResource SliderTime}" x:Name="TimeSlider" MinWidth="320" Margin="5,0,5,0" HorizontalAlignment="Center" Maximum="100" PreviewMouseUp="TimeSlider_DragCompleted" FocusVisualStyle="{x:Null}"/>
+                                        <Slider Style="{DynamicResource SliderTime}" x:Name="TimeSlider" MinWidth="320" Margin="5,0,5,0" HorizontalAlignment="Center" Maximum="100" PreviewMouseUp="TimeSlider_DragCompleted" Thumb.DragStarted="TimeSlider_DragStarted" FocusVisualStyle="{x:Null}"/>
                                         <TextBlock x:Name="EndTime" Text="0:00" TextWrapping="Wrap" Height="18" HorizontalAlignment="Right"/>
                                     </StackPanel>
                                 </Grid>

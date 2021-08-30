@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows.Interop;
 using System.Windows.Input;
+using System.Windows.Controls.Primitives;
 
 namespace unison
 {
@@ -13,6 +14,8 @@ namespace unison
         public readonly Settings SettingsWindow = new Settings();
 
         private readonly MPDHandler mpd;
+
+        DispatcherTimer timer = new DispatcherTimer();
 
         Thickness SelectedThickness;
         Thickness BaseThickness;
@@ -26,7 +29,7 @@ namespace unison
 
             mpd = (MPDHandler)Application.Current.Properties["mpd"];
 
-            DispatcherTimer timer = new DispatcherTimer();
+            timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(0.5);
             timer.Tick += Timer_Tick;
             timer.Start();
@@ -174,6 +177,11 @@ namespace unison
             Hide();
         }
 
+        private void TimeSlider_DragStarted(object sender, DragStartedEventArgs e)
+        {
+            timer.Stop();
+        }
+
         private void TimeSlider_DragCompleted(object sender, MouseButtonEventArgs e)
         {
             Slider slider = (Slider)sender;
@@ -183,6 +191,7 @@ namespace unison
             double SeekTime = SongPercentage / 100 * SongTime;
 
             mpd.SetTime(SeekTime);
+            timer.Start();
         }
 
         private void VolumeSlider_DragCompleted(object sender, MouseButtonEventArgs e)
