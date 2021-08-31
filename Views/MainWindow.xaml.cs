@@ -17,9 +17,6 @@ namespace unison
 
         DispatcherTimer timer = new DispatcherTimer();
 
-        Thickness SelectedThickness;
-        Thickness BaseThickness;
-
         public MainWindow()
         {
             InitHwnd();
@@ -29,14 +26,9 @@ namespace unison
 
             mpd = (MPDHandler)Application.Current.Properties["mpd"];
 
-            timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(0.5);
             timer.Tick += Timer_Tick;
             timer.Start();
-
-            SelectedThickness.Left = SelectedThickness.Right = SelectedThickness.Top = 0.0f;
-            SelectedThickness.Bottom = 2.0f;
-            BaseThickness.Left = BaseThickness.Right = BaseThickness.Top = BaseThickness.Bottom = 0.0f;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -50,10 +42,7 @@ namespace unison
 
         public void UpdateButton(ref Border border, bool b)
         {
-            if (b)
-                border.BorderThickness = SelectedThickness;
-            else
-                border.BorderThickness = BaseThickness;
+            border.Style = b ? (Style)Resources["SelectedButton"] : (Style)Resources["UnselectedButton"];
         }
 
         public string FormatSeconds(int time)

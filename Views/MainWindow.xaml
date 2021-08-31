@@ -10,6 +10,15 @@
         Title="unison"
         Closing="Window_Closing" Icon="/images/icon-full.ico" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
 
+    <Window.Resources>
+        <Style TargetType="Border" x:Key="UnselectedButton">
+            <Setter Property="BorderThickness" Value="0, 0, 0, 0"/>
+        </Style>
+        <Style TargetType="Border" x:Key="SelectedButton">
+            <Setter Property="BorderThickness" Value="0, 0, 0, 2"/>
+        </Style>
+    </Window.Resources>
+
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" MinHeight="270">
         <Grid x:Name="TopLayout" Margin="10,0,10,0" VerticalAlignment="Stretch" Width="Auto" Height="Auto">
             <Grid x:Name="Display" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="225,0,0,0" Height="Auto" Width="Auto">
@@ -60,24 +69,24 @@
                                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xe995;" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="7.5,0,0,0" FontSize="16"/>
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Bottom" MinHeight="27">
-                                        <Border x:Name="BorderRandom" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True">
+                                        <Border x:Name="BorderRandom" Style="{StaticResource UnselectedButton}" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True">
                                             <Button x:Name="Random" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Click="Random_Clicked" FocusVisualStyle="{x:Null}">
                                                 <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Text="&#xe8b1;" Margin="0" Padding="0, 0, 0, 2"/>
                                             </Button>
                                         </Border>
-                                        <Border x:Name="BorderRepeat" BorderThickness="0, 0, 0, 0" BorderBrush="Black" VerticalAlignment="Top" Margin="10,0,0,0">
+                                        <Border x:Name="BorderRepeat" Style="{StaticResource UnselectedButton}" BorderBrush="Black" VerticalAlignment="Top" Margin="10,0,0,0">
                                             <Button x:Name="Repeat" Background="{x:Null}" FontSize="18" BorderBrush="{x:Null}" Click="Repeat_Clicked" FocusVisualStyle="{x:Null}">
                                                 <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Text="&#xe8ee;" Padding="0, 0, 0, 2"/>
                                             </Button>
                                         </Border>
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Bottom" MinHeight="27">
-                                        <Border  x:Name="BorderSingle" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True" Margin="0,0,10,0">
+                                        <Border  x:Name="BorderSingle" Style="{StaticResource UnselectedButton}" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True" Margin="0,0,10,0">
                                             <Button x:Name="Single" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Click="Single_Clicked" FocusVisualStyle="{x:Null}">
                                                 <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Text="&#xe8ed;" Margin="0" Padding="0, 0, 0, 2"/>
                                             </Button>
                                         </Border>
-                                        <Border x:Name="BorderConsume" BorderThickness="0,0,0,0" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True">
+                                        <Border x:Name="BorderConsume" Style="{StaticResource UnselectedButton}" BorderBrush="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" SnapsToDevicePixels="True">
                                             <Button x:Name="Consume" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Click="Consume_Clicked" FocusVisualStyle="{x:Null}">
                                                 <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Text="&#xe75c;" Margin="0" Padding="0, 0, 0, 2"/>
                                             </Button>
