@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Threading;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace unison
@@ -9,19 +8,15 @@ namespace unison
     public class SnapcastHandler
     {
         private readonly Process _snapcast = new();
-        public bool Started { get; private set; }
-
-        public SnapcastHandler()
-        {
-        }
+        public bool HasStarted { get; private set; }
 
         public void OnConnectionChanged(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.snapcast_startup)
             {
                 var mpd = (MPDHandler)Application.Current.Properties["mpd"];
-                if (mpd._connected)
-                    Start();
+                if (mpd.IsConnected())
+                    LaunchOrExit();
             }
         }
 
@@ -35,12 +30,12 @@ namespace unison
             {
                 MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
                 MainWin.OnSnapcastChanged();
-            }, DispatcherPriority.ContextIdle);
+            });
         }
 
-        public void Start()
+        public void LaunchOrExit(bool ForceExit = false)
         {
-            if (!Started)
+            if (!HasStarted && !ForceExit)
             {
                 _snapcast.StartInfo.FileName = Properties.Settings.Default.snapcast_path + @"\snapclient.exe";
                 _snapcast.StartInfo.Arguments = $"--host {Properties.Settings.Default.mpd_host}";
@@ -53,28 +48,18 @@ namespace unison
                 {
                     MessageBox.Show($"[Snapcast error]\nInvalid path: {err.Message}\n\nCurrent path: {Properties.Settings.Default.snapcast_path}\nYou can reset it in the settings if needed.",
                                     "unison", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Trace.WriteLine(err.Message);
                     return;
                 }
-                Started = true;
-                UpdateInterface();
+                HasStarted = true;
             }
-            else
+            else if (HasStarted)
             {
                 _snapcast.Kill();
-                Started = false;
-                UpdateInterface();
+                HasStarted = false;
             }
-        }
 
-        public void Stop()
-        {
-            if (Started)
-            {
-                _snapcast.Kill();
-                Started = false;
+            if (!ForceExit)
                 UpdateInterface();
-            }
         }
     }
 }

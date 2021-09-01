@@ -9,35 +9,122 @@ using System.Windows.Controls.Primitives;
 
 namespace unison
 {
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
-        public readonly Settings SettingsWindow = new Settings();
-
-        private readonly MPDHandler mpd;
-
-        DispatcherTimer timer = new DispatcherTimer();
+        private readonly Settings _settingsWin;
+        private readonly DispatcherTimer _timer;
+        private readonly MPDHandler _mpd;
 
         public MainWindow()
         {
             InitHwnd();
             InitializeComponent();
-
             WindowState = WindowState.Minimized;
 
-            mpd = (MPDHandler)Application.Current.Properties["mpd"];
+            _settingsWin = new Settings();
+            _timer = new DispatcherTimer();
+            _mpd = (MPDHandler)Application.Current.Properties["mpd"];
 
-            timer.Interval = TimeSpan.FromSeconds(0.5);
-            timer.Tick += Timer_Tick;
-            timer.Start();
+            _timer.Interval = TimeSpan.FromSeconds(0.5);
+            _timer.Tick += Timer_Tick;
+            _timer.Start();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (mpd.GetCurrentSong() == null)
+            if (_mpd.GetCurrentSong() == null)
                 return;
 
-            CurrentTime.Text = FormatSeconds(mpd._currentTime);
-            TimeSlider.Value = mpd._currentTime / mpd.GetCurrentSong().Time * 100;
+            CurrentTime.Text = FormatSeconds(_mpd.GetCurrentTime());
+            TimeSlider.Value = _mpd.GetCurrentTime() / _mpd.GetCurrentSong().Time * 100;
+        }
+
+        public void OnConnectionChanged(object sender, EventArgs e)
+        {
+            Connection.Text = (_mpd.IsConnected() ? "✔️" : "❌") + $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
+            _settingsWin.UpdateConnectionStatus();
+            if (_mpd.IsConnected())
+                Snapcast.IsEnabled = true;
+        }
+
+        public void OnSongChanged(object sender, EventArgs e)
+        {
+            if (_mpd.GetCurrentSong() == null)
+                return;
+
+            if (!_mpd.GetCurrentSong().HasName)
+                SongTitle.Text = _mpd.GetCurrentSong().Title;
+            else
+                SongTitle.Text = _mpd.GetCurrentSong().Name;
+            SongTitle.ToolTip = _mpd.GetCurrentSong().Path;
+            SongArtist.Text = _mpd.GetCurrentSong().Artist;
+            SongAlbum.Text = _mpd.GetCurrentSong().Album;
+            SongGenre.Text = _mpd.GetCurrentSong().Genre;
+
+            if (_mpd.GetCurrentSong().Date != null)
+                SongAlbum.Text += $" ({ _mpd.GetCurrentSong().Date})";
+            Format.Text = _mpd.GetCurrentSong().Path.Substring(_mpd.GetCurrentSong().Path.LastIndexOf(".") + 1);
+
+            if (_mpd.GetCurrentSong().Time == -1)
+            {
+                CurrentTime.Text = "";
+                EndTime.Text = "";
+                _timer.Stop();
+                TimeSlider.Value = 50;
+                TimeSlider.IsEnabled = false;
+            }
+            else
+            {
+                if (!_timer.IsEnabled)
+                    _timer.Start();
+                EndTime.Text = FormatSeconds(_mpd.GetCurrentSong().Time);
+            }
+        }
+
+        public void OnStatusChanged(object sender, EventArgs e)
+        {
+            if (_mpd.GetStatus() == null)
+                return;
+
+            if (VolumeSlider.Value != _mpd.GetStatus().Volume)
+            {
+                VolumeSlider.Value = _mpd.GetStatus().Volume;
+                VolumeSlider.ToolTip = _mpd.GetStatus().Volume;
+            }
+
+            if (_mpd.IsPlaying())
+                PlayPause.Text = "\xedb4";
+            else
+                PlayPause.Text = "\xedb5";
+
+            UpdateButton(ref BorderRandom, _mpd.GetStatus().Random);
+            UpdateButton(ref BorderRepeat, _mpd.GetStatus().Repeat);
+            UpdateButton(ref BorderSingle, _mpd.GetStatus().Single);
+            UpdateButton(ref BorderConsume, _mpd.GetStatus().Consume);
+        }
+
+        public void OnCoverChanged(object sender, EventArgs e)
+        {
+            if (_mpd.GetCover() == null)
+            {
+                NoCover.Visibility = Visibility.Visible;
+                Cover.Visibility = Visibility.Collapsed;
+            }
+            else if (Cover.Source != _mpd.GetCover())
+            {
+                Cover.Source = _mpd.GetCover();
+                Cover.Visibility = Visibility.Visible;
+                NoCover.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        public void OnSnapcastChanged()
+        {
+            SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
+            if (snapcast.HasStarted)
+                SnapcastText.Text = "Stop Snapcast";
+            else
+                SnapcastText.Text = "Start Snapcast";
         }
 
         public void UpdateButton(ref Border border, bool b)
@@ -56,119 +143,34 @@ namespace unison
             return timespan.ToString(@"mm\:ss");
         }
 
-        public void OnConnectionChanged(object sender, EventArgs e)
-        {
-            Connection.Text = (mpd._connected ? "✔️" : "❌") + $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
-            SettingsWindow.UpdateConnectionStatus();
-            if (mpd._connected)
-                Snapcast.IsEnabled = true;
-        }
+        public void Pause_Clicked(object sender, RoutedEventArgs e) => _mpd.PlayPause();
+        public void Previous_Clicked(object sender, RoutedEventArgs e) =>  _mpd.Prev();
+        public void Next_Clicked(object sender, RoutedEventArgs e) => _mpd.Next();
 
-        public void OnSongChanged(object sender, EventArgs e)
-        {
-            if (mpd.GetCurrentSong() == null)
-                return;
-
-            if (!mpd.GetCurrentSong().HasName)
-                SongTitle.Text = mpd.GetCurrentSong().Title;
-            else
-                SongTitle.Text = mpd.GetCurrentSong().Title;
-            SongTitle.ToolTip = mpd.GetCurrentSong().Path;
-            SongArtist.Text = mpd.GetCurrentSong().Artist;
-            SongAlbum.Text = mpd.GetCurrentSong().Album;
-            SongGenre.Text = mpd.GetCurrentSong().Genre;
-
-            if (mpd.GetCurrentSong().Date != null)
-                SongAlbum.Text += $" ({ mpd.GetCurrentSong().Date})";
-            Format.Text = mpd.GetCurrentSong().Path.Substring(mpd.GetCurrentSong().Path.LastIndexOf(".") + 1);
-
-            EndTime.Text = FormatSeconds(mpd.GetCurrentSong().Time);
-        }
-
-        public void OnStatusChanged(object sender, EventArgs e)
-        {
-            if (mpd.GetStatus() == null)
-                return;
-
-            if (VolumeSlider.Value != mpd._currentVolume)
-            {
-                VolumeSlider.Value = mpd._currentVolume;
-                VolumeSlider.ToolTip = mpd._currentVolume;
-            }
-
-            if (mpd.IsPlaying())
-                PlayPause.Text = "\xedb4";
-            else
-                PlayPause.Text = "\xedb5";
-
-            UpdateButton(ref BorderRandom, mpd._currentRandom);
-            UpdateButton(ref BorderRepeat, mpd._currentRepeat);
-            UpdateButton(ref BorderSingle, mpd._currentSingle);
-            UpdateButton(ref BorderConsume, mpd._currentConsume);
-        }
-
-        public void OnCoverChanged(object sender, EventArgs e)
-        {
-            if (mpd.GetCover() == null)
-            {
-                NoCover.Visibility = Visibility.Visible;
-                Cover.Visibility = Visibility.Collapsed;
-            }
-            else if (Cover.Source != mpd.GetCover())
-            {
-                Cover.Source = mpd.GetCover();
-                Cover.Visibility = Visibility.Visible;
-                NoCover.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        public void OnSnapcastChanged()
-        {
-            SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
-            if (snapcast.Started)
-                SnapcastText.Text = "Stop Snapcast";
-            else
-                SnapcastText.Text = "Start Snapcast";
-        }
-
-        public void Pause_Clicked(object sender, RoutedEventArgs e) => mpd.PlayPause();
-        public void Previous_Clicked(object sender, RoutedEventArgs e) =>  mpd.Prev();
-        public void Next_Clicked(object sender, RoutedEventArgs e) => mpd.Next();
-
-        public void Random_Clicked(object sender, RoutedEventArgs e) => mpd.Random();
-        public void Repeat_Clicked(object sender, RoutedEventArgs e) => mpd.Repeat();
-        public void Single_Clicked(object sender, RoutedEventArgs e) => mpd.Single();
-        public void Consume_Clicked(object sender, RoutedEventArgs e) => mpd.Consume();
-        public void ChangeVolume(int value) => mpd.SetVolume(value);
+        public void Random_Clicked(object sender, RoutedEventArgs e) => _mpd.Random();
+        public void Repeat_Clicked(object sender, RoutedEventArgs e) => _mpd.Repeat();
+        public void Single_Clicked(object sender, RoutedEventArgs e) => _mpd.Single();
+        public void Consume_Clicked(object sender, RoutedEventArgs e) => _mpd.Consume();
+        public void ChangeVolume(int value) => _mpd.SetVolume(value);
 
         public void Snapcast_Clicked(object sender, RoutedEventArgs e)
         {
             SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
-            if (!snapcast.Started)
-                snapcast.Start();
-            else
-                snapcast.Stop();
+            snapcast.LaunchOrExit();
         }
 
         public void Settings_Clicked(object sender, RoutedEventArgs e)
         {
-            SettingsWindow.Show();
-            SettingsWindow.Activate();
+            _settingsWin.Show();
+            _settingsWin.Activate();
 
-            if (SettingsWindow.WindowState == WindowState.Minimized)
-                SettingsWindow.WindowState = WindowState.Normal;
-        }
-
-        private void Window_Closing(object sender, CancelEventArgs e)
-        {
-            e.Cancel = true;
-            WindowState = WindowState.Minimized;
-            Hide();
+            if (_settingsWin.WindowState == WindowState.Minimized)
+                _settingsWin.WindowState = WindowState.Normal;
         }
 
         private void TimeSlider_DragStarted(object sender, DragStartedEventArgs e)
         {
-            timer.Stop();
+            _timer.Stop();
         }
 
         private void TimeSlider_DragCompleted(object sender, MouseButtonEventArgs e)
@@ -176,18 +178,18 @@ namespace unison
             Slider slider = (Slider)sender;
 
             double SongPercentage = slider.Value;
-            double SongTime = mpd._totalTime;
+            double SongTime = _mpd.GetCurrentSong().Time;
             double SeekTime = SongPercentage / 100 * SongTime;
 
-            mpd.SetTime(SeekTime);
-            timer.Start();
+            _mpd.SetTime(SeekTime);
+            _timer.Start();
         }
 
         private void VolumeSlider_DragCompleted(object sender, MouseButtonEventArgs e)
         {
             Slider slider = (Slider)sender;
-            mpd.SetVolume((int)slider.Value);
-            slider.ToolTip = mpd._currentVolume;
+            _mpd.SetVolume((int)slider.Value);
+            slider.ToolTip = (int)slider.Value;
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -203,11 +205,11 @@ namespace unison
             helper.EnsureHandle();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            e.Cancel = true;
+            WindowState = WindowState.Minimized;
+            Hide();
         }
     }
 }

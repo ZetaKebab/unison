@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -31,14 +30,15 @@ namespace unison
         private const uint VK_VOLUME_DOWN = 0xAE;
         private const uint VK_ENTER = 0x0D;
 
+        private MainWindow _appWindow;
+        private readonly MPDHandler _mpd;
+
         private IntPtr _windowHandle;
         private HwndSource _source;
 
-        private readonly MPDHandler mpd;
-
         public HotkeyHandler()
         {
-            mpd = (MPDHandler)Application.Current.Properties["mpd"];
+            _mpd = (MPDHandler)Application.Current.Properties["mpd"];
         }
 
         public void Activate(Window win)
@@ -65,49 +65,45 @@ namespace unison
             if (msg == WM_HOTKEY && wParam.ToInt32() == HOTKEY_ID)
             {
                 uint vkey = ((uint)lParam >> 16) & 0xFFFF;
-                MainWindow AppWindow = (MainWindow)Application.Current.MainWindow;
                 switch (vkey)
                 {
                     case VK_MEDIA_NEXT_TRACK:
-                        mpd.Next();
+                        _mpd.Next();
                         break;
                     case VK_MEDIA_PREV_TRACK:
-                        mpd.Prev();
+                        _mpd.Prev();
                         break;
                     case VK_VOLUME_DOWN:
-                        mpd._currentVolume -= Properties.Settings.Default.volume_offset;
-                        if (mpd._currentVolume < 0)
-                            mpd._currentVolume = 0;
-                        mpd.SetVolume(mpd._currentVolume);
+                        _mpd.VolumeDown();
                         break;
                     case VK_VOLUME_UP:
-                        mpd._currentVolume += Properties.Settings.Default.volume_offset;
-                        if (mpd._currentVolume > 100)
-                            mpd._currentVolume = 100;
-                        mpd.SetVolume(mpd._currentVolume);
+                        _mpd.VolumeUp();
                         break;
                     case VK_MEDIA_PLAY_PAUSE:
-                        mpd.PlayPause();
+                        _mpd.PlayPause();
                         break;
                     case VK_ENTER:
-                        if (AppWindow.WindowState == WindowState.Minimized)
+                        if (_appWindow == null)
+                            _appWindow = (MainWindow)Application.Current.MainWindow;
+
+                        if (_appWindow.WindowState == WindowState.Minimized)
                         {
-                            AppWindow.Show();
-                            AppWindow.Activate();
-                            AppWindow.WindowState = WindowState.Normal;
+                            _appWindow.Show();
+                            _appWindow.Activate();
+                            _appWindow.WindowState = WindowState.Normal;
                         }
                         else
                         {
-                            if (AppWindow.IsActive)
+                            if (_appWindow.IsActive)
                             {
-                                AppWindow.Hide();
-                                AppWindow.WindowState = WindowState.Minimized;
+                                _appWindow.Hide();
+                                _appWindow.WindowState = WindowState.Minimized;
                             }
                             else  // not minimized but not in front
                             {
-                                AppWindow.Show();
-                                AppWindow.Activate();
-                                AppWindow.WindowState = WindowState.Normal;
+                                _appWindow.Show();
+                                _appWindow.Activate();
+                                _appWindow.WindowState = WindowState.Normal;
                             }
                         }
                         break;

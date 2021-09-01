@@ -13,8 +13,8 @@ namespace unison
 {
     public partial class Settings : Window
     {
-        private string defaultSnapcastPath = "snapclient_0.25.0-1_win64";
-        private string defaultSnapcastPort = "1704";
+        private readonly string defaultSnapcastPath = "snapclient_0.25.0-1_win64";
+        private readonly string defaultSnapcastPort = "1704";
 
         public static string GetVersion => Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
 
@@ -71,7 +71,7 @@ namespace unison
         public void UpdateConnectionStatus()
         {
             MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
-            if (mpd._connected)
+            if (mpd.IsConnected())
                 ConnectionStatus.Text = "Connected to MPD " + mpd.GetVersion() + ".";
             else
                 ConnectionStatus.Text = "Not connected.";

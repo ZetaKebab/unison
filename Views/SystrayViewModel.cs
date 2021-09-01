@@ -8,6 +8,8 @@ namespace unison
 {
     public class SystrayViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public static string GetAppText => "unison v" + Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
 
         public static ICommand ShowWindowCommand => new DelegateCommand
@@ -26,10 +28,7 @@ namespace unison
 
         public static ICommand ExitApplicationCommand => new DelegateCommand
         {
-            CommandAction = () =>
-            {
-                Application.Current.Shutdown();
-            },
+            CommandAction = () => Application.Current.Shutdown(),
             CanExecuteFunc = () => true
         };
 
@@ -38,7 +37,7 @@ namespace unison
             get
             {
                 SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
-                return snapcast.Started ? "Stop Snapcast" : "Start Snapcast";
+                return snapcast.HasStarted ? "Stop Snapcast" : "Start Snapcast";
             }
         }
 
@@ -51,7 +50,9 @@ namespace unison
                     CommandAction = () =>
                     {
                         Application.Current.Dispatcher.BeginInvoke(new Action(() => OnPropertyChanged("SnapcastText")));
-                        ((MainWindow)Application.Current.MainWindow).Snapcast_Clicked(null, null);
+
+                        SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
+                        snapcast.LaunchOrExit();
                     },
                     CanExecuteFunc = () => true
                 };
@@ -64,16 +65,11 @@ namespace unison
             {
                 return new DelegateCommand
                 {
-                    CommandAction = () =>
-                    {
-                        ((MainWindow)Application.Current.MainWindow).Settings_Clicked(null, null);
-                    },
+                    CommandAction = () => ((MainWindow)Application.Current.MainWindow).Settings_Clicked(null, null),
                     CanExecuteFunc = () => true
                 };
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public virtual void OnPropertyChanged(string propertyName)
         {

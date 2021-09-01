@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using MpcNET;
 using MpcNET.Commands.Database;
 using MpcNET.Commands.Playback;
@@ -21,46 +20,29 @@ namespace unison
 {
     public class MPDHandler
     {
-        public bool _connected;
+        private bool _connected;
         public string _version;
-        public int _currentVolume;
-        public bool _currentRandom;
-        public bool _currentRepeat;
-        public bool _currentSingle;
-        public bool _currentConsume;
-        public double _currentTime;
-        public double _totalTime;
-        BitmapFrame _cover;
+        private int _currentVolume;
+        private bool _currentRandom;
+        private bool _currentRepeat;
+        private bool _currentSingle;
+        private bool _currentConsume;
+        private double _currentTime;
+        private double _totalTime;
 
-        public event EventHandler ConnectionChanged;
-        public event EventHandler StatusChanged;
-        public event EventHandler SongChanged;
-        public event EventHandler CoverChanged;
-
-        public static MpdStatus BOGUS_STATUS = new MpdStatus(0, false, false, false, false, -1, -1, -1, MpdState.Unknown, -1, -1, -1, -1, TimeSpan.Zero, TimeSpan.Zero, -1, -1, -1, -1, -1, "", "");
-        public MpdStatus CurrentStatus { get; private set; } = BOGUS_STATUS;
-
-        IMpdFile CurrentSong { get; set; }
-
+        private MpdStatus _currentStatus;
+        private IMpdFile _currentSong;
+        private BitmapFrame _cover;
         private readonly System.Timers.Timer _elapsedTimer;
-        private async void ElapsedTimer(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            if ((_currentTime < _totalTime) && (CurrentStatus.State == MpdState.Play))
-            {
-                _currentTime += 0.5;
-                await Task.Delay(5);
-            }
-            else
-            {
-                _elapsedTimer.Stop();
-            }
-        }
+
+        private event EventHandler ConnectionChanged;
+        private event EventHandler StatusChanged;
+        private event EventHandler SongChanged;
+        private event EventHandler CoverChanged;
 
         private MpcConnection _connection;
         private MpcConnection _commandConnection;
-
         private IPEndPoint _mpdEndpoint;
-
         private CancellationTokenSource cancelToken;
 
         public MPDHandler()
@@ -78,6 +60,14 @@ namespace unison
             CoverChanged += OnCoverChanged;
         }
 
+        private void ElapsedTimer(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if ((_currentTime < _totalTime || _totalTime == -1) && (_currentStatus.State == MpdState.Play))
+                _currentTime += 0.5;
+            else
+                _elapsedTimer.Stop();
+        }
+
         static void OnConnectionChanged(object sender, EventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -87,8 +77,7 @@ namespace unison
 
                 SnapcastHandler Snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
                 Snapcast.OnConnectionChanged(sender, e);
-
-            }, DispatcherPriority.ContextIdle);
+            });
         }
 
         static void OnStatusChanged(object sender, EventArgs e)
@@ -97,7 +86,7 @@ namespace unison
             {
                 MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
                 MainWin.OnStatusChanged(sender, e);
-            }, DispatcherPriority.ContextIdle);
+            });
         }
 
         static void OnSongChanged(object sender, EventArgs e)
@@ -106,7 +95,7 @@ namespace unison
             {
                 MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
                 MainWin.OnSongChanged(sender, e);
-            }, DispatcherPriority.ContextIdle);
+            });
         }
 
         static void OnCoverChanged(object sender, EventArgs e)
@@ -115,7 +104,7 @@ namespace unison
             {
                 MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
                 MainWin.OnCoverChanged(sender, e);
-            }, DispatcherPriority.ContextIdle);
+            });
         }
 
         private void Initialize()
@@ -125,7 +114,7 @@ namespace unison
 
         public async void Connect()
         {
-            var token = cancelToken.Token;
+            CancellationToken token = cancelToken.Token;
             try
             {
                 _connection = await ConnectInternal(token);
@@ -162,6 +151,7 @@ namespace unison
                 if (!result.IsResponseValid)
                 {
                     string mpdError = result.Response?.Result?.MpdError;
+                    Trace.WriteLine(mpdError);
                 }
             }
 
@@ -216,29 +206,6 @@ namespace unison
             }
         }
 
-        private async Task UpdateStatusCommand()
-        {
-            if (_commandConnection == null) return;
-
-            try
-            {
-                MpdStatus response =  await SafelySendCommandAsync(new StatusCommand());
-
-                if (response != null)
-                {
-                    CurrentStatus = response;
-                    UpdateStatus();
-                }
-                else
-                    throw new Exception();
-            }
-            catch (Exception e)
-            {
-                Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
-                Connect();
-            }
-        }
-
         bool _isUpdatingStatus = false;
         private async Task UpdateStatusAsync()
         {
@@ -252,7 +219,7 @@ namespace unison
                 IMpdMessage<MpdStatus> response = await _connection.SendAsync(new StatusCommand());
                 if (response != null && response.IsResponseValid)
                 {
-                    CurrentStatus = response.Response.Content;
+                    _currentStatus = response.Response.Content;
                     UpdateStatus();
                 }
                 else
@@ -279,7 +246,7 @@ namespace unison
                 IMpdMessage<IMpdFile> response = await _connection.SendAsync(new CurrentSongCommand());
                 if (response != null && response.IsResponseValid)
                 {
-                    CurrentSong = response.Response.Content;
+                    _currentSong = response.Response.Content;
                     UpdateSong();
                 }
                 else
@@ -299,7 +266,7 @@ namespace unison
         {
             try
             {
-                var response = await _commandConnection.SendAsync(command);
+                IMpdMessage<T> response = await _commandConnection.SendAsync(command);
                 if (!response.IsResponseValid)
                 {
                     // If we have an MpdError string, only show that as the error to avoid extra noise
@@ -347,7 +314,7 @@ namespace unison
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Exception caught while getting albumart: " + e);
+                Trace.WriteLine("Exception caught while getting albumart: " + e);
                 return;
             }
 
@@ -368,17 +335,17 @@ namespace unison
         {
             if (!_connected)
                 return;
-            if (CurrentSong == null)
+            if (_currentSong == null)
                 return;
 
-            _currentTime = CurrentStatus.Elapsed.TotalSeconds;
-            _totalTime = CurrentSong.Time;
+            _currentTime = _currentStatus.Elapsed.TotalSeconds;
+            _totalTime = _currentSong.Time;
             if (!_elapsedTimer.Enabled)
                 _elapsedTimer.Start();
 
             SongChanged?.Invoke(this, EventArgs.Empty);
 
-            string uri = Regex.Escape(CurrentSong.Path);
+            string uri = Regex.Escape(_currentSong.Path);
             GetAlbumBitmap(uri);
         }
 
@@ -391,23 +358,26 @@ namespace unison
         {
             if (!_connected)
                 return;
-
-            if (CurrentStatus == null)
+            if (_currentStatus == null)
                 return;
 
-            _currentRandom = CurrentStatus.Random;
-            _currentRepeat = CurrentStatus.Repeat;
-            _currentConsume = CurrentStatus.Consume;
-            _currentSingle = CurrentStatus.Single;
-            _currentVolume = CurrentStatus.Volume;
+            _currentRandom = _currentStatus.Random;
+            _currentRepeat = _currentStatus.Repeat;
+            _currentConsume = _currentStatus.Consume;
+            _currentSingle = _currentStatus.Single;
+            _currentVolume = _currentStatus.Volume;
 
             StatusChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public IMpdFile GetCurrentSong() => CurrentSong;
-        public MpdStatus GetStatus() => CurrentStatus;
+        public IMpdFile GetCurrentSong() => _currentSong;
+        public MpdStatus GetStatus() => _currentStatus;
         public BitmapFrame GetCover() => _cover;
         public string GetVersion() => _version;
+        public double GetCurrentTime() => _currentTime;
+
+        public bool IsConnected() => _connected;
+        public bool IsPlaying() => _currentStatus?.State == MpdState.Play;
 
         public async void Prev() => await SafelySendCommandAsync(new PreviousCommand());
         public async void Next() => await SafelySendCommandAsync(new NextCommand());
@@ -418,9 +388,23 @@ namespace unison
         public async void Single() => await SafelySendCommandAsync(new SingleCommand(!_currentSingle));
         public async void Consume() => await SafelySendCommandAsync(new ConsumeCommand(!_currentConsume));
 
-        public async void SetVolume(int value) => await SafelySendCommandAsync(new SetVolumeCommand((byte)value));
         public async void SetTime(double value) => await SafelySendCommandAsync(new SeekCurCommand(value));
+        public async void SetVolume(int value) => await SafelySendCommandAsync(new SetVolumeCommand((byte)value));
+        
+        public void VolumeUp()
+        {
+            _currentVolume += Properties.Settings.Default.volume_offset;
+            if (_currentVolume > 100)
+                _currentVolume = 100;
+            SetVolume(_currentVolume);
+        }
 
-        public bool IsPlaying() => CurrentStatus?.State == MpdState.Play;
+        public void VolumeDown()
+        {
+            _currentVolume -= Properties.Settings.Default.volume_offset;
+            if (_currentVolume < 0)
+                _currentVolume = 0;
+            SetVolume(_currentVolume);
+        }
     }
 }

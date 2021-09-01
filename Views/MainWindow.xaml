@@ -4,8 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
-        xmlns:clr="clr-namespace:System;assembly=mscorlib"
-        xmlns:local="clr-namespace:unison"
         mc:Ignorable="d"
         Title="unison"
         Closing="Window_Closing" Icon="/images/icon-full.ico" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">

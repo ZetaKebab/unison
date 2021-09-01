@@ -5,35 +5,35 @@ namespace unison
 {
     public partial class App : Application
     {
-        private TaskbarIcon Systray;
-        private HotkeyHandler Hotkeys;
-        private SnapcastHandler Snapcast;
-        private MPDHandler MPD;
+        private TaskbarIcon _systray;
+        private HotkeyHandler _hotkeys;
+        private SnapcastHandler _snapcast;
+        private MPDHandler _mpd;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            MPD = new MPDHandler();
-            Current.Properties["mpd"] = MPD;
+            _mpd = new MPDHandler();
+            Current.Properties["mpd"] = _mpd;
 
-            Hotkeys = new HotkeyHandler();
-            Current.Properties["hotkeys"] = Hotkeys;
+            _hotkeys = new HotkeyHandler();
+            Current.Properties["hotkeys"] = _hotkeys;
 
-            Snapcast = new SnapcastHandler();
-            Current.Properties["snapcast"] = Snapcast;
+            _snapcast = new SnapcastHandler();
+            Current.Properties["snapcast"] = _snapcast;
 
             Current.MainWindow = new MainWindow();
 
-            Systray = (TaskbarIcon)FindResource("SystrayTaskbar");
-            Current.Properties["systray"] = Systray;
+            _systray = (TaskbarIcon)FindResource("SystrayTaskbar");
+            Current.Properties["systray"] = _systray;
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            Systray.Dispose();
-            Snapcast.Stop();
-            Hotkeys.RemoveHotKeys();
+            _systray.Dispose();
+            _snapcast.LaunchOrExit(true);
+            _hotkeys.RemoveHotKeys();
             base.OnExit(e);
         }
     }
