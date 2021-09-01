@@ -17,7 +17,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" MinHeight="270">
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" MinHeight="270" MinWidth="650">
         <Grid x:Name="TopLayout" Margin="10,0,10,0" VerticalAlignment="Stretch" Width="Auto" Height="Auto">
             <Grid x:Name="Display" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="225,0,0,0" Height="Auto" Width="Auto">
                 <GroupBox Height="220" VerticalAlignment="Center">
@@ -32,10 +32,10 @@
                                 <TextBlock x:Name="SongTitle" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal" FontSize="20" Text="Title"/>
                                 <TextBlock x:Name="SongArtist" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold" FontSize="18"  Text="Artist"/>
                                 <TextBlock x:Name="SongAlbum" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal" FontSize="16"  Text="Album"/>
-                                <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Margin="0,2,0,0">
+                                <TextBlock x:Name="SongInfo" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Margin="0,2,0,0">
                                     <Run x:Name="SongGenre"/>
-                                    <Run> – </Run>
-                                    <Run x:Name="Format"/>
+                                    <Run x:Name="SongInfoDash"> – </Run>
+                                    <Run x:Name="SongFormat"/>
                                 </TextBlock>
                             </StackPanel>
                         </Grid>
@@ -61,7 +61,7 @@
                                     </Button>
                                 </StackPanel>
                                 <Grid VerticalAlignment="Stretch" Margin="0,18,0,0">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,2,0,0">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10,2,10,0">
                                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xe992;" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16"/>
                                         <Slider x:Name="VolumeSlider" Maximum="100" Value="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="180" FlowDirection="LeftToRight" PreviewMouseUp="VolumeSlider_DragCompleted" FocusVisualStyle="{x:Null}"/>
                                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xe995;" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="7.5,0,0,0" FontSize="16"/>

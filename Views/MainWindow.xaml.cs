@@ -52,19 +52,32 @@ namespace unison
             if (_mpd.GetCurrentSong() == null)
                 return;
 
-            if (!_mpd.GetCurrentSong().HasName)
+            if (_mpd.GetCurrentSong().HasTitle && _mpd.GetCurrentSong().Title.Length > 0)
                 SongTitle.Text = _mpd.GetCurrentSong().Title;
-            else
+            else if (_mpd.GetCurrentSong().HasName && _mpd.GetCurrentSong().Name.Length > 0)
                 SongTitle.Text = _mpd.GetCurrentSong().Name;
+            else
+            {
+                int start = _mpd.GetCurrentSong().Path.LastIndexOf("/") + 1;
+                int end = _mpd.GetCurrentSong().Path.LastIndexOf(".");
+                SongTitle.Text = _mpd.GetCurrentSong().Path.Substring(start, end - start);
+            }
+
             SongTitle.ToolTip = _mpd.GetCurrentSong().Path;
             SongArtist.Text = _mpd.GetCurrentSong().Artist;
             SongAlbum.Text = _mpd.GetCurrentSong().Album;
-            SongGenre.Text = _mpd.GetCurrentSong().Genre;
 
             if (_mpd.GetCurrentSong().Date != null)
                 SongAlbum.Text += $" ({ _mpd.GetCurrentSong().Date})";
-            Format.Text = _mpd.GetCurrentSong().Path.Substring(_mpd.GetCurrentSong().Path.LastIndexOf(".") + 1);
 
+            SongGenre.Text = _mpd.GetCurrentSong().Genre;
+            SongFormat.Text = _mpd.GetCurrentSong().Path.Substring(_mpd.GetCurrentSong().Path.LastIndexOf(".") + 1);
+            if (SongGenre.Text.Length == 0 || SongFormat.Text.Length == 0)
+                SongInfoDash.Text = "";
+            else
+                SongInfoDash.Text = " – ";
+
+            TimeSlider.IsEnabled = true;
             if (_mpd.GetCurrentSong().Time == -1)
             {
                 CurrentTime.Text = "";
@@ -92,15 +105,37 @@ namespace unison
                 VolumeSlider.ToolTip = _mpd.GetStatus().Volume;
             }
 
-            if (_mpd.IsPlaying())
-                PlayPause.Text = "\xedb4";
-            else
-                PlayPause.Text = "\xedb5";
-
             UpdateButton(ref BorderRandom, _mpd.GetStatus().Random);
             UpdateButton(ref BorderRepeat, _mpd.GetStatus().Repeat);
             UpdateButton(ref BorderSingle, _mpd.GetStatus().Single);
             UpdateButton(ref BorderConsume, _mpd.GetStatus().Consume);
+
+            if (_mpd.IsPlaying())
+                PlayPause.Text = "\xedb4";
+            else
+            {
+                PlayPause.Text = "\xedb5";
+                if (_mpd.GetStatus().State == MpcNET.MpdState.Stop)
+                {
+                    DefaultState();
+                }
+            }
+        }
+
+        private void DefaultState()
+        {
+            SongTitle.Text = "";
+            SongArtist.Text = "";
+            SongAlbum.Text = "";
+            SongGenre.Text = "";
+            SongInfoDash.Text = "";
+            SongFormat.Text = "";
+            CurrentTime.Text = "";
+            EndTime.Text = "";
+            TimeSlider.Value = 50;
+            TimeSlider.IsEnabled = false;
+            NoCover.Visibility = Visibility.Visible;
+            Cover.Visibility = Visibility.Collapsed;
         }
 
         public void OnCoverChanged(object sender, EventArgs e)
