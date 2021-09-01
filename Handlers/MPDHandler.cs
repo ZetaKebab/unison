@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using MpcNET;
 using MpcNET.Commands.Database;
 using MpcNET.Commands.Playback;
@@ -34,6 +35,7 @@ namespace unison
         private IMpdFile _currentSong;
         private BitmapFrame _cover;
         private readonly System.Timers.Timer _elapsedTimer;
+        private DispatcherTimer _retryTimer;
 
         private event EventHandler ConnectionChanged;
         private event EventHandler StatusChanged;
@@ -49,7 +51,11 @@ namespace unison
         {
             cancelToken = new CancellationTokenSource();
 
-            Initialize();
+            Initialize(null, null);
+
+            _retryTimer = new DispatcherTimer();
+            _retryTimer.Interval = TimeSpan.FromSeconds(5);
+            _retryTimer.Tick += Initialize;
 
             _elapsedTimer = new System.Timers.Timer(500);
             _elapsedTimer.Elapsed += new System.Timers.ElapsedEventHandler(ElapsedTimer);
@@ -68,8 +74,13 @@ namespace unison
                 _elapsedTimer.Stop();
         }
 
-        static void OnConnectionChanged(object sender, EventArgs e)
+        void OnConnectionChanged(object sender, EventArgs e)
         {
+            if (!_connected)
+                _retryTimer.Start();
+            else
+                _retryTimer.Stop();
+
             Application.Current.Dispatcher.Invoke(() =>
             {
                 MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
@@ -107,9 +118,10 @@ namespace unison
             });
         }
 
-        private void Initialize()
+        private void Initialize(object sender, EventArgs e)
         {
-            Connect();
+            if (!_connected)
+                Connect();
         }
 
         public async void Connect()
@@ -124,11 +136,19 @@ namespace unison
             {
                 Trace.WriteLine("exception: " + exception);
             }
-            if (_connection.IsConnected)
+            if (_connection != null && _commandConnection != null)
             {
-                _connected = true;
-                _version = _connection.Version;
+                if (_connection.IsConnected && _commandConnection.IsConnected)
+                {
+                    _connected = true;
+                    _version = _connection.Version;
+                    ConnectionChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+            else
+            {
                 ConnectionChanged?.Invoke(this, EventArgs.Empty);
+                return;
             }
 
             await UpdateStatusAsync();
@@ -179,11 +199,22 @@ namespace unison
                     }
                     catch (Exception e)
                     {
-                        System.Diagnostics.Debug.WriteLine($"Error in Idle connection thread: {e.Message}");
+                        Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
+                        Disconnected();
                     }
                 }
 
             }).ConfigureAwait(false);
+        }
+
+        private void Disconnected()
+        {
+            _connected = false;
+
+            _connection = null;
+            _commandConnection = null;
+
+            ConnectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private async Task HandleIdleResponseAsync(string subsystems)
@@ -262,8 +293,22 @@ namespace unison
             _isUpdatingSong = false;
         }
 
+        public void SendCommand<T>(IMpcCommand<T> command)
+        {
+            Task.Run(async () =>
+            {
+                await SafelySendCommandAsync(command);
+            });
+        }
+
         public async Task<T> SafelySendCommandAsync<T>(IMpcCommand<T> command)
         {
+            if (_commandConnection == null)
+            {
+                Trace.WriteLine("[SafelySendCommandAsync] no command connection");
+                return default(T);
+            }
+
             try
             {
                 IMpdMessage<T> response = await _commandConnection.SendAsync(command);
@@ -379,17 +424,17 @@ namespace unison
         public bool IsConnected() => _connected;
         public bool IsPlaying() => _currentStatus?.State == MpdState.Play;
 
-        public async void Prev() => await SafelySendCommandAsync(new PreviousCommand());
-        public async void Next() => await SafelySendCommandAsync(new NextCommand());
-        public async void PlayPause() =>await SafelySendCommandAsync(new PauseResumeCommand());
+        public void Prev() => SendCommand(new PreviousCommand());
+        public void Next() => SendCommand(new NextCommand());
+        public void PlayPause() => SendCommand(new PauseResumeCommand());
 
-        public async void Random() => await SafelySendCommandAsync(new RandomCommand(!_currentRandom));
-        public async void Repeat() => await SafelySendCommandAsync(new RepeatCommand(!_currentRepeat));
-        public async void Single() => await SafelySendCommandAsync(new SingleCommand(!_currentSingle));
-        public async void Consume() => await SafelySendCommandAsync(new ConsumeCommand(!_currentConsume));
+        public void Random() => SendCommand(new RandomCommand(!_currentRandom));
+        public void Repeat() => SendCommand(new RepeatCommand(!_currentRepeat));
+        public void Single() => SendCommand(new SingleCommand(!_currentSingle));
+        public void Consume() => SendCommand(new ConsumeCommand(!_currentConsume));
 
-        public async void SetTime(double value) => await SafelySendCommandAsync(new SeekCurCommand(value));
-        public async void SetVolume(int value) => await SafelySendCommandAsync(new SetVolumeCommand((byte)value));
+        public void SetTime(double value) => SendCommand(new SeekCurCommand(value));
+        public void SetVolume(int value) => SendCommand(new SetVolumeCommand((byte)value));
         
         public void VolumeUp()
         {

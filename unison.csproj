@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>images\icon-full.ico</ApplicationIcon>
+    <ApplicationIcon>Ressources\icon-full.ico</ApplicationIcon>
     <Win32Resource></Win32Resource>
     <StartupObject>unison.App</StartupObject>
     <Version>0.0.1</Version>
@@ -18,9 +18,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="images\icon-full.ico" />
-    <None Remove="images\icon-mini.ico" />
-    <None Remove="images\nocover.png" />
+    <None Remove="Ressources\icon-full.ico" />
+    <None Remove="Ressources\icon-mini.ico" />
+    <None Remove="Ressources\nocover.png" />
     <None Remove="LICENSE" />
     <None Remove="snapclient_0.25.0-1_win64\FLAC.dll" />
     <None Remove="snapclient_0.25.0-1_win64\ogg.dll" />
@@ -36,13 +36,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\icon-full.ico">
+    <Resource Include="Ressources\icon-full.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\icon-mini.ico">
+    <Resource Include="Ressources\icon-mini.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\nocover.png">
+    <Resource Include="Ressources\nocover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="LICENSE">

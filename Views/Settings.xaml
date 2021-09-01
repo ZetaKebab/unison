@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
         mc:Ignorable="d"
-        Closing="Window_Closing" Title="Settings" ResizeMode="CanMinimize" Icon="/images/icon-full.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
+        Closing="Window_Closing" Title="Settings" ResizeMode="CanMinimize" Icon="/Ressources/icon-full.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
     <Grid>
         <StackPanel Orientation="Vertical">
             <TabControl Margin="10">
@@ -29,10 +29,10 @@
                                         <TextBox x:Name="MpdPort" MaxLength="5" PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
                                     </StackPanel>
 
-                                    <StackPanel Margin="0,5,0,0">
+                                    <!--<StackPanel Margin="0,5,0,0">
                                         <TextBlock Text="Password" TextWrapping="Wrap" Margin="5,0,0,0"/>
                                         <TextBox x:Name="MpdPassword" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
-                                    </StackPanel>
+                                    </StackPanel>-->
 
                                     <TextBlock x:Name="ConnectionStatus" Text="Not connected." TextWrapping="Wrap" Margin="5,10,0,0"/>
                                     <Button x:Name="ConnectButton" Content="Connect" Margin="0,10,0,0" Width="120" Click="MPDConnect_Clicked"/>

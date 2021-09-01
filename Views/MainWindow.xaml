@@ -6,7 +6,7 @@
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
         mc:Ignorable="d"
         Title="unison"
-        Closing="Window_Closing" Icon="/images/icon-full.ico" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
+        Closing="Window_Closing" Icon="/Ressources/icon-full.ico" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
 
     <Window.Resources>
         <Style TargetType="Border" x:Key="UnselectedButton">
@@ -103,8 +103,8 @@
                         <StackPanel.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=mask}"/>
                         </StackPanel.OpacityMask>
-                        <Image x:Name="Cover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/images/nocover.png" Visibility="Collapsed" />
-                        <Image x:Name="NoCover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/images/nocover.png" />
+                        <Image x:Name="Cover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Ressources/nocover.png" Visibility="Collapsed" />
+                        <Image x:Name="NoCover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Ressources/nocover.png" />
                     </StackPanel>
                 </Grid>
             </Border>

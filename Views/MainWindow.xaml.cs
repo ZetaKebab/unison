@@ -41,10 +41,19 @@ namespace unison
 
         public void OnConnectionChanged(object sender, EventArgs e)
         {
-            Connection.Text = (_mpd.IsConnected() ? "✔️" : "❌") + $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
-            _settingsWin.UpdateConnectionStatus();
             if (_mpd.IsConnected())
+            {
                 Snapcast.IsEnabled = true;
+                Connection.Text = "✔️";
+            }
+            else
+            {
+                _timer.Stop();
+                DefaultState();
+                Connection.Text = "❌";
+            }
+            _settingsWin.UpdateConnectionStatus();
+            Connection.Text += $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
         }
 
         public void OnSongChanged(object sender, EventArgs e)
@@ -132,6 +141,7 @@ namespace unison
             SongFormat.Text = "";
             CurrentTime.Text = "";
             EndTime.Text = "";
+            PlayPause.Text = "\xedb5";
             TimeSlider.Value = 50;
             TimeSlider.IsEnabled = false;
             NoCover.Visibility = Visibility.Visible;

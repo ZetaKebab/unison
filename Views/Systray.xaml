@@ -7,7 +7,7 @@
     <ContextMenu x:Shared="false" x:Key="SystrayMenu">
         <MenuItem IsEnabled="False">
             <MenuItem.Icon>
-                <Image Source="/images/icon-full.ico" Width="16" Height="16"/>
+                <Image Source="/Ressources/icon-full.ico" Width="16" Height="16"/>
             </MenuItem.Icon>
             <MenuItem.Header>
                 <TextBlock Text="{Binding GetAppText}" />
@@ -42,7 +42,7 @@
         </MenuItem>
     </ContextMenu>
 
-    <tb:TaskbarIcon x:Key="SystrayTaskbar" IconSource="/images/icon-mini.ico" ToolTipText="{Binding GetAppText}" DoubleClickCommand="{Binding ShowWindowCommand}" ContextMenu="{StaticResource SystrayMenu}">
+    <tb:TaskbarIcon x:Key="SystrayTaskbar" IconSource="/Ressources/icon-mini.ico" ToolTipText="{Binding GetAppText}" DoubleClickCommand="{Binding ShowWindowCommand}" ContextMenu="{StaticResource SystrayMenu}">
         <tb:TaskbarIcon.DataContext>
             <local:SystrayViewModel />
         </tb:TaskbarIcon.DataContext>
