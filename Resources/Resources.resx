@@ -219,6 +219,18 @@
   <data name="ShowWindow" xml:space="preserve">
     <value>Show window</value>
   </data>
+  <data name="Snapcast_Popup1" xml:space="preserve">
+    <value>Snapcast error</value>
+  </data>
+  <data name="Snapcast_Popup2" xml:space="preserve">
+    <value>Invalid path:</value>
+  </data>
+  <data name="Snapcast_Popup3" xml:space="preserve">
+    <value>Current path:</value>
+  </data>
+  <data name="Snapcast_Popup4" xml:space="preserve">
+    <value>You can reset it in the settings if needed.</value>
+  </data>
   <data name="StartSnapcast" xml:space="preserve">
     <value>Start Snapcast</value>
   </data>

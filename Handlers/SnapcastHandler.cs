@@ -46,7 +46,10 @@ namespace unison
                 }
                 catch (Exception err)
                 {
-                    MessageBox.Show($"[Snapcast error]\nInvalid path: {err.Message}\n\nCurrent path: {Properties.Settings.Default.snapcast_path}\nYou can reset it in the settings if needed.",
+                    MessageBox.Show($"[{unison.Resources.Resources.Snapcast_Popup1}]\n" +
+                                    $"{unison.Resources.Resources.Snapcast_Popup2} {err.Message}\n\n" +
+                                    $"{unison.Resources.Resources.Snapcast_Popup3} {Properties.Settings.Default.snapcast_path}\n" +
+                                    $"{unison.Resources.Resources.Snapcast_Popup4}",
                                     "unison", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }

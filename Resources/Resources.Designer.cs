@@ -367,6 +367,42 @@ namespace unison.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Snapcast error.
+        /// </summary>
+        public static string Snapcast_Popup1 {
+            get {
+                return ResourceManager.GetString("Snapcast_Popup1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid path:.
+        /// </summary>
+        public static string Snapcast_Popup2 {
+            get {
+                return ResourceManager.GetString("Snapcast_Popup2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current path:.
+        /// </summary>
+        public static string Snapcast_Popup3 {
+            get {
+                return ResourceManager.GetString("Snapcast_Popup3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can reset it in the settings if needed..
+        /// </summary>
+        public static string Snapcast_Popup4 {
+            get {
+                return ResourceManager.GetString("Snapcast_Popup4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start Snapcast.
         /// </summary>
         public static string StartSnapcast {

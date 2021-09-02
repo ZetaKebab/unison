@@ -219,6 +219,18 @@
   <data name="ShowWindow" xml:space="preserve">
     <value>Montrer la fenêtre</value>
   </data>
+  <data name="Snapcast_Popup1" xml:space="preserve">
+    <value>Erreur Snapcast</value>
+  </data>
+  <data name="Snapcast_Popup2" xml:space="preserve">
+    <value>Chemin invalide :</value>
+  </data>
+  <data name="Snapcast_Popup3" xml:space="preserve">
+    <value>Chemin actuel :</value>
+  </data>
+  <data name="Snapcast_Popup4" xml:space="preserve">
+    <value>Vous pouvez le réinitialiser dans la configuration.</value>
+  </data>
   <data name="StartSnapcast" xml:space="preserve">
     <value>Démarrer Snapcast</value>
   </data>

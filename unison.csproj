@@ -7,7 +7,7 @@
     <ApplicationIcon>Resources\icon-full.ico</ApplicationIcon>
     <Win32Resource></Win32Resource>
     <StartupObject>unison.App</StartupObject>
-    <Version>0.0.1</Version>
+    <Version>1.0</Version>
     <Company />
     <Authors>Théo Marchal</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>

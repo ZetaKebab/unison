@@ -36,6 +36,9 @@ namespace unison
         private readonly System.Timers.Timer _elapsedTimer;
         private DispatcherTimer _retryTimer;
 
+        bool _isUpdatingStatus = false;
+        bool _isUpdatingSong = false;
+
         private event EventHandler ConnectionChanged;
         private event EventHandler StatusChanged;
         private event EventHandler SongChanged;
@@ -117,6 +120,44 @@ namespace unison
             });
         }
 
+        public void SendCommand<T>(IMpcCommand<T> command)
+        {
+            Task.Run(async () =>
+            {
+                await SafelySendCommandAsync(command);
+            });
+        }
+
+        public async Task<T> SafelySendCommandAsync<T>(IMpcCommand<T> command)
+        {
+            if (_commandConnection == null)
+            {
+                Trace.WriteLine("[SafelySendCommandAsync] no command connection");
+                return default(T);
+            }
+
+            try
+            {
+                IMpdMessage<T> response = await _commandConnection.SendAsync(command);
+                if (!response.IsResponseValid)
+                {
+                    var mpdError = response.Response?.Result?.MpdError;
+                    if (mpdError != null && mpdError != "")
+                        throw new Exception(mpdError);
+                    else
+                        throw new Exception($"Invalid server response: {response}.");
+                }
+
+                return response.Response.Content;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine($"Sending {command.GetType().Name} failed: {e.Message}");
+            }
+
+            return default(T);
+        }
+
         private void Initialize(object sender, EventArgs e)
         {
             if (!_connected)
@@ -177,6 +218,16 @@ namespace unison
             return connection;
         }
 
+        private void Disconnected()
+        {
+            _connected = false;
+
+            _connection = null;
+            _commandConnection = null;
+
+            ConnectionChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         private void Loop(CancellationToken token)
         {
             Task.Run(async () =>
@@ -205,16 +256,6 @@ namespace unison
             }).ConfigureAwait(false);
         }
 
-        private void Disconnected()
-        {
-            _connected = false;
-
-            _connection = null;
-            _commandConnection = null;
-
-            ConnectionChanged?.Invoke(this, EventArgs.Empty);
-        }
-
         private async Task HandleIdleResponseAsync(string subsystems)
         {
             try
@@ -224,9 +265,7 @@ namespace unison
                     await UpdateStatusAsync();
 
                     if (subsystems.Contains("player"))
-                    {
                         await UpdateSongAsync();
-                    }
                 }
             }
             catch (Exception e)
@@ -235,12 +274,11 @@ namespace unison
             }
         }
 
-        bool _isUpdatingStatus = false;
         private async Task UpdateStatusAsync()
         {
-            if (_connection == null) return;
-
-            if (_isUpdatingStatus) return;
+            if (_connection == null || _isUpdatingStatus)
+                return;
+ 
             _isUpdatingStatus = true;
 
             try
@@ -258,15 +296,15 @@ namespace unison
             {
                 Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
             }
+
             _isUpdatingStatus = false;
         }
 
-        bool _isUpdatingSong = false;
         private async Task UpdateSongAsync()
         {
-            if (_connection == null) return;
+            if (_connection == null || _isUpdatingSong)
+                return;
 
-            if (_isUpdatingSong) return;
             _isUpdatingSong = true;
 
             try
@@ -278,57 +316,17 @@ namespace unison
                     UpdateSong();
                 }
                 else
-                {
                     throw new Exception();
-                }
             }
             catch (Exception e)
             {
                 Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
             }
+
             _isUpdatingSong = false;
         }
 
-        public void SendCommand<T>(IMpcCommand<T> command)
-        {
-            Task.Run(async () =>
-            {
-                await SafelySendCommandAsync(command);
-            });
-        }
-
-        public async Task<T> SafelySendCommandAsync<T>(IMpcCommand<T> command)
-        {
-            if (_commandConnection == null)
-            {
-                Trace.WriteLine("[SafelySendCommandAsync] no command connection");
-                return default(T);
-            }
-
-            try
-            {
-                IMpdMessage<T> response = await _commandConnection.SendAsync(command);
-                if (!response.IsResponseValid)
-                {
-                    // If we have an MpdError string, only show that as the error to avoid extra noise
-                    var mpdError = response.Response?.Result?.MpdError;
-                    if (mpdError != null && mpdError != "")
-                        throw new Exception(mpdError);
-                    else
-                        throw new Exception($"Invalid server response: {response}.");
-                }
-
-                return response.Response.Content;
-            }
-            catch (Exception e)
-            {
-                Trace.WriteLine($"Sending {command.GetType().Name} failed: {e.Message}");
-            }
-
-            return default(T);
-        }
-
-        private async void GetAlbumBitmap(string path, CancellationToken token = default)
+        private async void GetAlbumCover(string path, CancellationToken token = default)
         {
             List<byte> data = new List<byte>();
             try
@@ -370,11 +368,23 @@ namespace unison
             UpdateCover();
         }
 
+        public void UpdateStatus()
+        {
+            if (!_connected || _currentStatus == null)
+                return;
+
+            _currentRandom = _currentStatus.Random;
+            _currentRepeat = _currentStatus.Repeat;
+            _currentConsume = _currentStatus.Consume;
+            _currentSingle = _currentStatus.Single;
+            _currentVolume = _currentStatus.Volume;
+
+            StatusChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         public void UpdateSong()
         {
-            if (!_connected)
-                return;
-            if (_currentSong == null)
+            if (!_connected || _currentSong == null)
                 return;
 
             _currentTime = _currentStatus.Elapsed.TotalSeconds;
@@ -385,28 +395,12 @@ namespace unison
             SongChanged?.Invoke(this, EventArgs.Empty);
 
             string uri = Regex.Escape(_currentSong.Path);
-            GetAlbumBitmap(uri);
+            GetAlbumCover(uri);
         }
 
         public void UpdateCover()
         {
             CoverChanged?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void UpdateStatus()
-        {
-            if (!_connected)
-                return;
-            if (_currentStatus == null)
-                return;
-
-            _currentRandom = _currentStatus.Random;
-            _currentRepeat = _currentStatus.Repeat;
-            _currentConsume = _currentStatus.Consume;
-            _currentSingle = _currentStatus.Single;
-            _currentVolume = _currentStatus.Volume;
-
-            StatusChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public IMpdFile GetCurrentSong() => _currentSong;
