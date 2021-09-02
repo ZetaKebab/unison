@@ -214,7 +214,7 @@ namespace unison.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shortcut.
+        ///   Looks up a localized string similar to Shortcuts.
         /// </summary>
         public static string Settings_Shortcuts {
             get {
