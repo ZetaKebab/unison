@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Ressources\icon-full.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\icon-full.ico</ApplicationIcon>
     <Win32Resource></Win32Resource>
     <StartupObject>unison.App</StartupObject>
     <Version>0.0.1</Version>
@@ -18,9 +18,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Ressources\icon-full.ico" />
-    <None Remove="Ressources\icon-mini.ico" />
-    <None Remove="Ressources\nocover.png" />
+    <None Remove="Resources\icon-full.ico" />
+    <None Remove="Resources\icon-mini.ico" />
+    <None Remove="Resources\nocover.png" />
     <None Remove="LICENSE" />
     <None Remove="snapclient_0.25.0-1_win64\FLAC.dll" />
     <None Remove="snapclient_0.25.0-1_win64\ogg.dll" />
@@ -36,13 +36,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Ressources\icon-full.ico">
+    <Resource Include="Resources\icon-full.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Ressources\icon-mini.ico">
+    <Resource Include="Resources\icon-mini.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Ressources\nocover.png">
+    <Resource Include="Resources\nocover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="LICENSE">
@@ -86,6 +86,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Resources.fr-FR.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

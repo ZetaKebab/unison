@@ -2,24 +2,25 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:tb="http://www.hardcodet.net/taskbar"
                     xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
+                    xmlns:properties="clr-namespace:unison.Resources"
                     xmlns:local="clr-namespace:unison">
 
     <ContextMenu x:Shared="false" x:Key="SystrayMenu">
         <MenuItem IsEnabled="False">
             <MenuItem.Icon>
-                <Image Source="/Ressources/icon-full.ico" Width="16" Height="16"/>
+                <Image Source="/Resources/icon-full.ico" Width="16" Height="16"/>
             </MenuItem.Icon>
             <MenuItem.Header>
                 <TextBlock Text="{Binding GetAppText}" />
             </MenuItem.Header>
         </MenuItem>
         <Separator />
-        <MenuItem Header="Show window" Command="{Binding ShowWindowCommand}">
+        <MenuItem Header="{x:Static properties:Resources.ShowWindow}" Command="{Binding ShowWindowCommand}">
             <MenuItem.Icon>
                 <Image Width="16" Height="16" emoji:Image.Source="▶️" />
             </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Name="test_snapcast_item" Header="{Binding SnapcastText}" Command="{Binding Snapcast}">
+        <MenuItem Header="{Binding SnapcastText}" Command="{Binding Snapcast}">
             <MenuItem.Icon>
                 <Image Width="16" Height="16" emoji:Image.Source="🔊" />
             </MenuItem.Icon>
@@ -29,20 +30,20 @@
                 <Image Width="16" Height="16" emoji:Image.Source="🔀" />
             </MenuItem.Icon>
         </MenuItem>-->
-        <MenuItem Header="Settings" Command="{Binding Settings}">
+        <MenuItem Header="{x:Static properties:Resources.Settings}" Command="{Binding Settings}">
             <MenuItem.Icon>
                 <Image Width="16" Height="16" emoji:Image.Source="🛠️" />
             </MenuItem.Icon>
         </MenuItem>
         <Separator />
-        <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}">
+        <MenuItem Header="{x:Static properties:Resources.Exit}" Command="{Binding ExitApplicationCommand}">
             <MenuItem.Icon>
                 <Image Width="16" Height="16" emoji:Image.Source="❌" />
             </MenuItem.Icon>
         </MenuItem>
     </ContextMenu>
 
-    <tb:TaskbarIcon x:Key="SystrayTaskbar" IconSource="/Ressources/icon-mini.ico" ToolTipText="{Binding GetAppText}" DoubleClickCommand="{Binding ShowWindowCommand}" ContextMenu="{StaticResource SystrayMenu}">
+    <tb:TaskbarIcon x:Key="SystrayTaskbar" IconSource="/Resources/icon-mini.ico" ToolTipText="{Binding GetAppText}" DoubleClickCommand="{Binding ShowWindowCommand}" ContextMenu="{StaticResource SystrayMenu}">
         <tb:TaskbarIcon.DataContext>
             <local:SystrayViewModel />
         </tb:TaskbarIcon.DataContext>

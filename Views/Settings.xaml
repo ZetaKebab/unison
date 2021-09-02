@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
+        xmlns:properties="clr-namespace:unison.Resources" 
         mc:Ignorable="d"
-        Closing="Window_Closing" Title="Settings" ResizeMode="CanMinimize" Icon="/Ressources/icon-full.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
+        Closing="Window_Closing" Title="{x:Static properties:Resources.Settings}" ResizeMode="CanMinimize" Icon="/Resources/icon-full.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
     <Grid>
         <StackPanel Orientation="Vertical">
             <TabControl Margin="10">
@@ -14,18 +15,21 @@
                         <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
                             <GroupBox.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <emoji:TextBlock Text="📶 Connection"/>
+                                    <TextBlock>
+                                        <emoji:EmojiInline Text="📶"/>
+                                        <Run Text="{x:Static properties:Resources.Settings_Connection}"/>
+                                    </TextBlock>
                                 </StackPanel>
                             </GroupBox.Header>
                             <Grid VerticalAlignment="Top">
                                 <StackPanel>
                                     <StackPanel>
-                                        <TextBlock Text="Host" TextWrapping="Wrap" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_Host}" TextWrapping="Wrap" Margin="5,0,0,0"/>
                                         <TextBox x:Name="MpdHost" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
                                     </StackPanel>
 
                                     <StackPanel Margin="0,5,0,0">
-                                        <TextBlock Text="Port" TextWrapping="Wrap" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_Port}" TextWrapping="Wrap" Margin="5,0,0,0"/>
                                         <TextBox x:Name="MpdPort" MaxLength="5" PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
                                     </StackPanel>
 
@@ -34,8 +38,8 @@
                                         <TextBox x:Name="MpdPassword" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
                                     </StackPanel>-->
 
-                                    <TextBlock x:Name="ConnectionStatus" Text="Not connected." TextWrapping="Wrap" Margin="5,10,0,0"/>
-                                    <Button x:Name="ConnectButton" Content="Connect" Margin="0,10,0,0" Width="120" Click="MPDConnect_Clicked"/>
+                                    <TextBlock x:Name="ConnectionStatus" Text="{x:Static properties:Resources.Settings_ConnectionStatusOffline}" TextWrapping="Wrap" Margin="5,10,0,0"/>
+                                    <Button x:Name="ConnectButton" Content="{x:Static properties:Resources.Settings_ConnectButton}" Margin="0,10,0,0" Width="120" Click="MPDConnect_Clicked"/>
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
@@ -54,19 +58,19 @@
                                 <StackPanel>
                                     <StackPanel>
                                         <CheckBox x:Name="SnapcastStartup" Margin="5, 5, 0, 0">
-                                            <TextBlock Text="Launch at startup" TextWrapping="Wrap"/>
+                                            <TextBlock Text="{x:Static properties:Resources.Settings_SnapcastLauch}" TextWrapping="Wrap"/>
                                         </CheckBox>
                                         <CheckBox x:Name="SnapcastWindow" Margin="5,2.5,0,0">
-                                            <TextBlock Text="Show Snapcast window" TextWrapping="Wrap"/>
+                                            <TextBlock Text="{x:Static properties:Resources.Settings_SnapcastWindow}" TextWrapping="Wrap"/>
                                         </CheckBox>
-                                        <TextBlock Text="Port" TextWrapping="Wrap" Margin="5,5,0,0"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_SnapcastPort}" TextWrapping="Wrap" Margin="5,5,0,0"/>
                                         <TextBox x:Name="SnapcastPort" MaxLength="5" PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" Width="250" Margin="10,2,5,0" HorizontalAlignment="Left"/>
-                                        <TextBlock Text="Executable path" TextWrapping="Wrap" Margin="5,5,0,0"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_SnapcastPath}" TextWrapping="Wrap" Margin="5,5,0,0"/>
                                         <TextBox x:Name="SnapcastPath" TextWrapping="Wrap" Width="250" Margin="10,2,5,0" HorizontalAlignment="Left"/>
                                         <TextBlock TextWrapping="Wrap" Margin="5,5,0,0" TextAlignment="Left" Width="250">
-                                            You can change to your own locally installed version of the Snapcast client with an <Run FontStyle="Italic" FontWeight="DemiBold">absolute</Run> path.
+                                            <Run Text="{x:Static properties:Resources.Settings_SnapcastInfo1}" /><Run Text="{x:Static properties:Resources.Settings_SnapcastInfo2}" FontStyle="Italic" FontWeight="DemiBold" /><Run Text="{x:Static properties:Resources.Settings_SnapcastInfo3}" />
                                         </TextBlock>
-                                        <Button Content="Reset" Margin="0,10,0,0" Width="120" Click="SnapcastReset_Clicked"/>
+                                        <Button Content="{x:Static properties:Resources.Settings_SnapcastResetButton}" Margin="0,10,0,0" Width="120" Click="SnapcastReset_Clicked"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>
@@ -74,21 +78,24 @@
                     </DockPanel>
                 </TabItem>
 
-                <TabItem Header="Shortcuts">
+                <TabItem Header="{x:Static properties:Resources.Settings_Shortcuts}">
                     <DockPanel Margin="8">
                         <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
                             <GroupBox.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <emoji:TextBlock Text="⌨️ Shortcuts"/>
+                                    <TextBlock>
+                                        <emoji:EmojiInline Text="⌨️ "/>
+                                        <Run Text="{x:Static properties:Resources.Settings_Shortcuts}"></Run>
+                                    </TextBlock>
                                 </StackPanel>
                             </GroupBox.Header>
                             <Grid>
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Volume offset" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_VolumeOffset}" TextWrapping="Wrap"/>
                                         <TextBox x:Name="VolumeOffset" TextWrapping="Wrap" Width="25" PreviewTextInput="NumberValidationTextBox" Margin="8,2,0,0"/>
                                     </StackPanel>
-                                    <Grid MinWidth="220" Margin="0,5,0,0">
+                                    <Grid MinWidth="300" Margin="0,5,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
@@ -101,12 +108,12 @@
                                             <RowDefinition/>
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="Next track" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" Margin="1"/>
-                                        <TextBlock Text="Previous track" TextWrapping="Wrap" Grid.Column="0" Grid.Row="1" Margin="1"/>
-                                        <TextBlock Text="Play / Pause" TextWrapping="Wrap" Grid.Column="0" Grid.Row="2" Margin="1"/>
-                                        <TextBlock Text="Volume up" TextWrapping="Wrap" Grid.Column="0" Grid.Row="3" Margin="1"/>
-                                        <TextBlock Text="Volume down" TextWrapping="Wrap" Grid.Column="0" Grid.Row="4" Margin="1"/>
-                                        <TextBlock Text="Show window" TextWrapping="Wrap" Grid.Column="0" Grid.Row="5" Margin="1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_NextTrack}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" Margin="1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_PreviousTrack}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="1" Margin="1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_PlayPause}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="2" Margin="1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_VolumeUp}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="3" Margin="1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_VolumeDown}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="4" Margin="1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_ShowWindow}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="5" Margin="1"/>
 
                                         <TextBlock Text="ctrl + media_next" TextWrapping="Wrap" Grid.Column="1" Grid.Row="0" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
                                         <TextBlock Text="ctrl + media_prev" TextWrapping="Wrap" Grid.Column="1" Grid.Row="1" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
@@ -121,7 +128,7 @@
                     </DockPanel>
                 </TabItem>
 
-                <TabItem Header="About" Height="20" VerticalAlignment="Bottom">
+                <TabItem Header="{x:Static properties:Resources.Settings_About}" Height="20" VerticalAlignment="Bottom">
                     <DockPanel Margin="8">
                         <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
                             <GroupBox.Header>
@@ -130,23 +137,23 @@
                             <Grid VerticalAlignment="Top">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock TextWrapping="Wrap" Margin="0,0,0,10" VerticalAlignment="Top">
-                                        <Run Text="Version:"/>
+                                        <Run Text="{x:Static properties:Resources.Settings_Version}"/>
                                         <Run Text="{Binding GetVersion, Mode = OneWay}"/>
                                     </TextBlock>
                                     <TextBlock TextWrapping="Wrap" VerticalAlignment="Top">
-                                        unison is free software. It is built with the following technologies:<LineBreak/>
-                                        ※ <Hyperlink NavigateUri="https://github.com/Difegue/Stylophone" RequestNavigate="Hyperlink_RequestNavigate">Stylophone</Hyperlink>'s updated MpcNET<LineBreak/>
+                                        <Run Text="{x:Static properties:Resources.Settings_AboutInfo}" /><LineBreak/>
+                                        ※ <Hyperlink NavigateUri="https://github.com/Difegue/Stylophone" RequestNavigate="Hyperlink_RequestNavigate">Stylophone</Hyperlink><Run Text="{x:Static properties:Resources.Settings_MpcNET}" /><LineBreak/>
                                         ※ <Hyperlink NavigateUri="https://github.com/hardcodet/wpf-notifyicon" RequestNavigate="Hyperlink_RequestNavigate">wpf-notifyicon</Hyperlink><LineBreak/>
                                         ※ <Hyperlink NavigateUri="https://github.com/samhocevar/emoji.wpf" RequestNavigate="Hyperlink_RequestNavigate">Emoji.WPF</Hyperlink>
                                     </TextBlock>
                                     <TextBlock Margin="0,10,0,0">
-                                        Source code freely available
+                                        <Run Text="{x:Static properties:Resources.Settings_SourceCode1}" />
                                         <Hyperlink NavigateUri="https://git.n700.ovh/keb/unison" RequestNavigate="Hyperlink_RequestNavigate">
-                                            here
+                                            <Run Text="{x:Static properties:Resources.Settings_SourceCode2}" />
                                         </Hyperlink>.
                                     </TextBlock>
                                     <TextBlock Margin="0,10,0,0">
-                                        Made by
+                                        <Run Text="{x:Static properties:Resources.Settings_MadeBy}" />
                                         <Hyperlink NavigateUri="https://marchal.dev" RequestNavigate="Hyperlink_RequestNavigate">
                                             Théo Marchal
                                         </Hyperlink>.
@@ -157,7 +164,10 @@
 
                         <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0" Margin="0,10,0,0">
                             <GroupBox.Header>
-                                <emoji:TextBlock Text="📝 License"/>
+                                <TextBlock>
+                                    <emoji:EmojiInline Text="📝 "/>
+                                    <Run Text="{x:Static properties:Resources.Settings_License}" />
+                                </TextBlock>
                             </GroupBox.Header>
                             <Grid VerticalAlignment="Top">
                                 <TextBlock Text="{Binding GetLicense, Mode = OneWay}" TextWrapping="Wrap" Width="500" TextAlignment="Justify" />

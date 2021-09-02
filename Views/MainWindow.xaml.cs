@@ -19,6 +19,7 @@ namespace unison
         {
             InitHwnd();
             InitializeComponent();
+            DefaultState(true);
             WindowState = WindowState.Minimized;
 
             _settingsWin = new Settings();
@@ -44,16 +45,18 @@ namespace unison
             if (_mpd.IsConnected())
             {
                 Snapcast.IsEnabled = true;
-                Connection.Text = "✔️";
+                ConnectionOkIcon.Visibility = Visibility.Visible;
+                ConnectionFailIcon.Visibility = Visibility.Collapsed;
             }
             else
             {
                 _timer.Stop();
-                DefaultState();
-                Connection.Text = "❌";
+                DefaultState(true);
+                ConnectionOkIcon.Visibility = Visibility.Collapsed;
+                ConnectionFailIcon.Visibility = Visibility.Visible;
             }
             _settingsWin.UpdateConnectionStatus();
-            Connection.Text += $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
+            Connection.Text = $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
         }
 
         public void OnSongChanged(object sender, EventArgs e)
@@ -120,10 +123,10 @@ namespace unison
             UpdateButton(ref BorderConsume, _mpd.GetStatus().Consume);
 
             if (_mpd.IsPlaying())
-                PlayPause.Text = "\xedb4";
+                PlayPause.Text = (string)Application.Current.FindResource("playButton");
             else
             {
-                PlayPause.Text = "\xedb5";
+                PlayPause.Text = (string)Application.Current.FindResource("pauseButton");
                 if (_mpd.GetStatus().State == MpcNET.MpdState.Stop)
                 {
                     DefaultState();
@@ -131,7 +134,7 @@ namespace unison
             }
         }
 
-        private void DefaultState()
+        private void DefaultState(bool LostConnection = false)
         {
             SongTitle.Text = "";
             SongArtist.Text = "";
@@ -141,11 +144,18 @@ namespace unison
             SongFormat.Text = "";
             CurrentTime.Text = "";
             EndTime.Text = "";
-            PlayPause.Text = "\xedb5";
+            PlayPause.Text = (string)Application.Current.FindResource("pauseButton");
             TimeSlider.Value = 50;
             TimeSlider.IsEnabled = false;
             NoCover.Visibility = Visibility.Visible;
             Cover.Visibility = Visibility.Collapsed;
+
+            if (LostConnection)
+            {
+                ConnectionOkIcon.Visibility = Visibility.Collapsed;
+                ConnectionFailIcon.Visibility = Visibility.Visible;
+            }
+            Connection.Text = $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
         }
 
         public void OnCoverChanged(object sender, EventArgs e)
@@ -167,9 +177,9 @@ namespace unison
         {
             SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
             if (snapcast.HasStarted)
-                SnapcastText.Text = "Stop Snapcast";
+                SnapcastText.Text = unison.Resources.Resources.StopSnapcast; 
             else
-                SnapcastText.Text = "Start Snapcast";
+                SnapcastText.Text = unison.Resources.Resources.StartSnapcast;
         }
 
         public void UpdateButton(ref Border border, bool b)

@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
+        xmlns:properties="clr-namespace:unison.Resources"
         mc:Ignorable="d"
-        Title="unison"
-        Closing="Window_Closing" Icon="/Ressources/icon-full.ico" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
+        Title="unison" Closing="Window_Closing" Icon="/Resources/icon-full.ico" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
 
     <Window.Resources>
         <Style TargetType="Border" x:Key="UnselectedButton">
@@ -103,8 +103,8 @@
                         <StackPanel.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=mask}"/>
                         </StackPanel.OpacityMask>
-                        <Image x:Name="Cover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Ressources/nocover.png" Visibility="Collapsed" />
-                        <Image x:Name="NoCover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Ressources/nocover.png" />
+                        <Image x:Name="Cover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Resources/nocover.png" Visibility="Collapsed" />
+                        <Image x:Name="NoCover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Resources/nocover.png" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -113,10 +113,19 @@
             <Button x:Name="Snapcast" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Snapcast_Clicked" Margin="10,0,0,0" Padding="5, 2" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" FocusVisualStyle="{x:Null}" IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
                     <emoji:TextBlock Text="🔊" Padding="0,0,0,2"/>
-                    <TextBlock x:Name="SnapcastText" Text="Start Snapcast" Margin="5, 0, 0, 0"/>
+                    <TextBlock x:Name="SnapcastText" Text="{x:Static properties:Resources.StartSnapcast}" Margin="5, 0, 0, 0"/>
                 </StackPanel>
             </Button>
-            <TextBlock x:Name="Connection" HorizontalAlignment="Center" Text="Not connected" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" MinWidth="350" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid x:Name="ConnectionOkIcon" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xf385;" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xf386;" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Grid>
+                <Grid x:Name="ConnectionFailIcon" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xf384;" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Grid>
+                <TextBlock x:Name="Connection" HorizontalAlignment="Center" Text="Not connected" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Margin="5,0,0,0" />
+            </StackPanel>
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
                 <!--<Button x:Name="Shuffle" Padding="5, 2" HorizontalAlignment="Right" Margin="0,0,10,0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
                     <StackPanel Orientation="Horizontal">
@@ -127,7 +136,7 @@
                 <Button x:Name="Settings" Padding="5, 2" Click="Settings_Clicked" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" FocusVisualStyle="{x:Null}">
                     <StackPanel Orientation="Horizontal">
                         <emoji:TextBlock Text="🛠️"  Padding="0,0,0,2"/>
-                        <TextBlock Text="Settings" Margin="5, 0, 0, 0"/>
+                        <TextBlock Text="{x:Static properties:Resources.Settings}" Margin="5, 0, 0, 0"/>
                     </StackPanel>
                 </Button>
             </StackPanel>

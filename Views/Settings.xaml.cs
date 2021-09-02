@@ -13,9 +13,6 @@ namespace unison
 {
     public partial class Settings : Window
     {
-        private readonly string defaultSnapcastPath = "snapclient_0.25.0-1_win64";
-        private readonly string defaultSnapcastPort = "1704";
-
         public static string GetVersion => Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
 
         public static string GetLicense
@@ -72,23 +69,23 @@ namespace unison
         {
             MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
             if (mpd.IsConnected())
-                ConnectionStatus.Text = "Connected to MPD " + mpd.GetVersion() + ".";
+                ConnectionStatus.Text = $"{unison.Resources.Resources.Settings_ConnectionStatusConnected} {mpd.GetVersion()}.";
             else
-                ConnectionStatus.Text = "Not connected.";
+                ConnectionStatus.Text = unison.Resources.Resources.Settings_ConnectionStatusOffline;
         }
 
         private void MPDConnect_Clicked(object sender, RoutedEventArgs e)
         {
             SaveSettings();
-            ConnectionStatus.Text = "Connecting...";
+            ConnectionStatus.Text = unison.Resources.Resources.Settings_ConnectionStatusConnecting;
             MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
             mpd.Connect();
         }
 
         private void SnapcastReset_Clicked(object sender, RoutedEventArgs e)
         {
-            SnapcastPath.Text = defaultSnapcastPath;
-            SnapcastPort.Text = defaultSnapcastPort;
+            SnapcastPath.Text = (string)Application.Current.FindResource("snapcastPath");
+            SnapcastPort.Text = (string)Application.Current.FindResource("snapcastPort");
         }
 
         public void SaveSettings()

@@ -12,7 +12,6 @@ using System.Windows.Threading;
 using MpcNET;
 using MpcNET.Commands.Database;
 using MpcNET.Commands.Playback;
-using MpcNET.Commands.Reflection;
 using MpcNET.Commands.Status;
 using MpcNET.Message;
 using MpcNET.Types;
@@ -165,7 +164,7 @@ namespace unison
             MpcConnection connection = new MpcConnection(_mpdEndpoint);
             await connection.ConnectAsync(token);
 
-            if (!string.IsNullOrEmpty(Properties.Settings.Default.mpd_password))
+            /*if (!string.IsNullOrEmpty(Properties.Settings.Default.mpd_password))
             {
                 IMpdMessage<string> result = await connection.SendAsync(new PasswordCommand(Properties.Settings.Default.mpd_password));
                 if (!result.IsResponseValid)
@@ -173,7 +172,7 @@ namespace unison
                     string mpdError = result.Response?.Result?.MpdError;
                     Trace.WriteLine(mpdError);
                 }
-            }
+            }*/
 
             return connection;
         }
@@ -189,7 +188,6 @@ namespace unison
                         if (token.IsCancellationRequested || _connection == null)
                             break;
 
-                        Trace.WriteLine("loop");
                         var idleChanges = await _connection.SendAsync(new IdleCommand("stored_playlist playlist player mixer output options"));
 
                         if (idleChanges.IsResponseValid)
@@ -259,7 +257,6 @@ namespace unison
             catch (Exception e)
             {
                 Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
-                Connect();
             }
             _isUpdatingStatus = false;
         }
@@ -288,7 +285,6 @@ namespace unison
             catch (Exception e)
             {
                 Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
-                Connect();
             }
             _isUpdatingSong = false;
         }
@@ -337,7 +333,7 @@ namespace unison
             List<byte> data = new List<byte>();
             try
             {
-                if (_connection == null) // We got cancelled
+                if (_connection == null)
                     return;
 
                 long totalBinarySize = 9999;
@@ -346,15 +342,16 @@ namespace unison
                 do
                 {
                     var albumReq = await _connection.SendAsync(new AlbumArtCommand(path, currentSize));
-                    if (!albumReq.IsResponseValid) break;
+                    if (!albumReq.IsResponseValid)
+                        break;
 
                     var response = albumReq.Response.Content;
-                    if (response.Binary == 0) break; // MPD isn't giving us any more data, let's roll with what we have.
+                    if (response.Binary == 0)
+                        break;
 
                     totalBinarySize = response.Size;
                     currentSize += response.Binary;
                     data.AddRange(response.Data);
-                    //Debug.WriteLine($"Downloading albumart: {currentSize}/{totalBinarySize}");
                 } while (currentSize < totalBinarySize && !token.IsCancellationRequested);
             }
             catch (Exception e)
@@ -364,10 +361,7 @@ namespace unison
             }
 
             if (data.Count == 0)
-            {
-                Trace.WriteLine("empty cover");
                 _cover = null;
-            }
             else
             {
                 using MemoryStream stream = new MemoryStream(data.ToArray());

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Globalization;
+using System.Windows;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace unison
@@ -12,6 +13,9 @@ namespace unison
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            //debug language
+            //unison.Resources.Resources.Culture = CultureInfo.GetCultureInfo("fr-FR");
+
             base.OnStartup(e);
 
             _mpd = new MPDHandler();

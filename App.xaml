@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Views/Systray.xaml" />
+                <ResourceDictionary Source="Resources/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">

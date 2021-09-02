@@ -37,7 +37,7 @@ namespace unison
             get
             {
                 SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
-                return snapcast.HasStarted ? "Stop Snapcast" : "Start Snapcast";
+                return snapcast.HasStarted ? unison.Resources.Resources.StopSnapcast : unison.Resources.Resources.StartSnapcast;
             }
         }
 
