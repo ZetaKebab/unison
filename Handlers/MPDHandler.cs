@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using MpcNET;
 using MpcNET.Commands.Database;
 using MpcNET.Commands.Playback;
+using MpcNET.Commands.Queue;
 using MpcNET.Commands.Status;
 using MpcNET.Message;
 using MpcNET.Types;
@@ -438,6 +439,15 @@ namespace unison
             if (_currentVolume < 0)
                 _currentVolume = 0;
             SetVolume(_currentVolume);
+        }
+
+        public void ClearQueue() => SendCommand(new ClearCommand());
+        public void PlayCommand() => SendCommand(new PlayCommand(0));
+
+        public void AddSong(string Uri)
+        {
+            Debug.WriteLine("AddCommand path: " + Uri);
+            SendCommand(new AddCommand(Uri));
         }
     }
 }

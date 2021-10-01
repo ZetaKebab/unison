@@ -12,6 +12,7 @@ namespace unison
     public partial class MainWindow : Window
     {
         private readonly Settings _settingsWin;
+        private readonly Radios _radiosWin;
         private readonly DispatcherTimer _timer;
         private readonly MPDHandler _mpd;
 
@@ -23,6 +24,7 @@ namespace unison
             WindowState = WindowState.Minimized;
 
             _settingsWin = new Settings();
+            _radiosWin = new Radios();
             _timer = new DispatcherTimer();
             _mpd = (MPDHandler)Application.Current.Properties["mpd"];
 
@@ -212,6 +214,15 @@ namespace unison
         {
             SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
             snapcast.LaunchOrExit();
+        }
+
+        public async void Radios_Clicked(object sender, RoutedEventArgs e)
+        {
+            _radiosWin.Show();
+            _radiosWin.Activate();
+
+            if (_radiosWin.WindowState == WindowState.Minimized)
+                _radiosWin.WindowState = WindowState.Normal;
         }
 
         public void Settings_Clicked(object sender, RoutedEventArgs e)

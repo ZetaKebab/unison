@@ -110,12 +110,20 @@
             </Border>
         </Grid>
         <Grid x:Name="BottomLayout" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Width="Auto" MinHeight="40">
-            <Button x:Name="Snapcast" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Snapcast_Clicked" Margin="10,0,0,0" Padding="5, 2" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" FocusVisualStyle="{x:Null}" IsEnabled="False">
-                <StackPanel Orientation="Horizontal">
-                    <emoji:TextBlock Text="🔊" Padding="0,0,0,2"/>
-                    <TextBlock x:Name="SnapcastText" Text="{x:Static properties:Resources.StartSnapcast}" Margin="5, 0, 0, 0"/>
-                </StackPanel>
-            </Button>
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
+                <Button x:Name="Snapcast" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Snapcast_Clicked" Margin="10,0,0,0" Padding="5, 2" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" FocusVisualStyle="{x:Null}" IsEnabled="False">
+                    <StackPanel Orientation="Horizontal">
+                        <emoji:TextBlock Text="🔊" Padding="0,0,0,2"/>
+                        <TextBlock x:Name="SnapcastText" Text="{x:Static properties:Resources.StartSnapcast}" Margin="5, 0, 0, 0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="Radio" Padding="5, 2" HorizontalAlignment="Left" Click="Radios_Clicked"  Margin="5,0,10,0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+                    <StackPanel Orientation="Horizontal">
+                        <emoji:TextBlock Text="📻" Padding="0,0,0,2"/>
+                        <TextBlock Text="Radios" Margin="5, 0, 0, 0"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid x:Name="ConnectionOkIcon" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xf385;" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" VerticalAlignment="Center" HorizontalAlignment="Center" />
