@@ -364,7 +364,14 @@ namespace unison
             else
             {
                 using MemoryStream stream = new MemoryStream(data.ToArray());
-                _cover = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                try
+                {
+                    _cover = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                }
+                catch (System.NotSupportedException e)
+                {
+                    _cover = null;
+                }
             }
             UpdateCover();
         }

@@ -70,11 +70,12 @@ namespace unison
                 SongTitle.Text = _mpd.GetCurrentSong().Title;
             else if (_mpd.GetCurrentSong().HasName && _mpd.GetCurrentSong().Name.Length > 0)
                 SongTitle.Text = _mpd.GetCurrentSong().Name;
-            else
+            else if (_mpd.GetCurrentSong().Path != null)
             {
                 int start = _mpd.GetCurrentSong().Path.LastIndexOf("/") + 1;
                 int end = _mpd.GetCurrentSong().Path.LastIndexOf(".");
-                SongTitle.Text = _mpd.GetCurrentSong().Path.Substring(start, end - start);
+                if (start > 0 && end > 0 && end > start)
+                    SongTitle.Text = _mpd.GetCurrentSong().Path.Substring(start, end - start);
             }
 
             SongTitle.ToolTip = _mpd.GetCurrentSong().Path;
@@ -216,7 +217,7 @@ namespace unison
             snapcast.LaunchOrExit();
         }
 
-        public async void Radios_Clicked(object sender, RoutedEventArgs e)
+        public void Radios_Clicked(object sender, RoutedEventArgs e)
         {
             _radiosWin.Show();
             _radiosWin.Activate();
