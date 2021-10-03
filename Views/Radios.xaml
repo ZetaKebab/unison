@@ -52,10 +52,9 @@
                     <emoji:TextBlock TextAlignment="Center" Text="{Binding Country}"/>
                 </DataTemplate>
             </Grid.Resources>
-            <DataGrid Name="RadioListGrid" CanUserAddRows="False" CanUserDeleteRows="False"
-                          IsReadOnly="True" MouseDoubleClick="Row_DoubleClick" SelectionMode="Single" CanUserReorderColumns="False"
-                          HeadersVisibility="Column" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserResizeRows="False"
-                          >
+            <DataGrid Name="RadioListGrid" MouseDoubleClick="Row_DoubleClick" CanUserAddRows="False" CanUserDeleteRows="False"
+                          CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True"
+                          HeadersVisibility="Column" GridLinesVisibility="None" VirtualizingPanel.ScrollUnit="Pixel">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="🏳️" CellTemplate="{StaticResource CountryTemplate}" MinWidth="25" />
                     <DataGridTextColumn Header="{x:Static properties:Resources.Radio_Name}" Binding="{Binding Name}" MinWidth="50"/>
@@ -71,5 +70,7 @@
                 </DataGrid.CellStyle>
             </DataGrid>
         </Grid>
+        
+        
     </StackPanel>
 </Window>
