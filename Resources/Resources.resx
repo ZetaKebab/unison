@@ -120,6 +120,30 @@
   <data name="Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="Radio_Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Radio_Loading" xml:space="preserve">
+    <value>Loading stations...</value>
+  </data>
+  <data name="Radio_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Radio_NotFound" xml:space="preserve">
+    <value>No stations found!</value>
+  </data>
+  <data name="Radio_Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Radio_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Radio_SearchStation" xml:space="preserve">
+    <value>Search station</value>
+  </data>
+  <data name="Radio_Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>

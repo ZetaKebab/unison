@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
-        xmlns:local="clr-namespace:unison"
+        xmlns:properties="clr-namespace:unison.Resources" 
         mc:Ignorable="d"
         Title="Radios" Closing="Window_Closing" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
 
@@ -14,7 +14,7 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock>
                             <emoji:EmojiInline Text="📻"/>
-                            <Run Text="Search station"/>
+                            <Run Text="{x:Static properties:Resources.Radio_SearchStation}"/>
                     </TextBlock>
                 </StackPanel>
             </GroupBox.Header>
@@ -22,24 +22,24 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                         <StackPanel HorizontalAlignment="Stretch">
-                            <TextBlock Text="Name"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5,0,0,0" />
+                            <TextBlock Text="{x:Static properties:Resources.Radio_Name}"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5,0,0,0" />
                             <TextBox x:Name="NameSearch" KeyDown="SearchHandler" Text="" TextWrapping="Wrap" HorizontalAlignment="Left" Width="200" Margin="5,6,0,0"/>
                         </StackPanel>
 
                         <StackPanel HorizontalAlignment="Stretch" Margin="20,0,0,0">
-                            <TextBlock Text="Tags"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                            <TextBlock Text="{x:Static properties:Resources.Radio_Tags}"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
                             <TextBox x:Name="TagSearch" KeyDown="SearchHandler" Text="" TextWrapping="Wrap" HorizontalAlignment="Left" Width="300" Margin="0,6,0,0"/>
                         </StackPanel>
 
                         <StackPanel HorizontalAlignment="Stretch" Margin="20,0,0,0">
-                            <TextBlock Text="Country" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                            <TextBlock Text="{x:Static properties:Resources.Radio_Country}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
                             <ComboBox x:Name="CountryList" SelectedIndex="0" KeyDown="SearchHandler" Width="240" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,2,0,0" ScrollViewer.CanContentScroll="False"/>
                         </StackPanel>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5,7.5,0,0">
-                        <Button Content="Search" Click="Search_Clicked"/>
-                        <Button Content="Reset" Click="Reset_Clicked" Margin="10,0,0,0"/>
+                        <Button Content="{x:Static properties:Resources.Radio_Search}" Click="Search_Clicked" Padding="5, 2"/>
+                        <Button Content="{x:Static properties:Resources.Radio_Reset}" Click="Reset_Clicked" Margin="10,0,0,0" Padding="5, 2"/>
                         <TextBlock x:Name="SearchStatus" Text="" Margin="15,1,0,0" FontStyle="Italic" />
                     </StackPanel>
                 </StackPanel>
@@ -54,10 +54,11 @@
             </Grid.Resources>
             <DataGrid Name="RadioListGrid" CanUserAddRows="False" CanUserDeleteRows="False"
                           IsReadOnly="True" MouseDoubleClick="Row_DoubleClick" SelectionMode="Single" CanUserReorderColumns="False"
-                          HeadersVisibility="Column" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserResizeRows="False">
+                          HeadersVisibility="Column" GridLinesVisibility="None" AutoGenerateColumns="False" CanUserResizeRows="False"
+                          >
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="🏳️" CellTemplate="{StaticResource CountryTemplate}" MinWidth="25" />
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" MinWidth="50"/>
+                    <DataGridTextColumn Header="{x:Static properties:Resources.Radio_Name}" Binding="{Binding Name}" MinWidth="50"/>
                     <DataGridTextColumn Header="Codec" Binding="{Binding Codec}" MinWidth="47"/>
                     <DataGridTextColumn Header="Bitrate" Binding="{Binding Bitrate}" MinWidth="47"/>
                     <DataGridTextColumn Header="Tags" Binding="{Binding Tags}" MinWidth="50"/>

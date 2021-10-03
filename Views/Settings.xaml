@@ -144,7 +144,8 @@
                                         <Run Text="{x:Static properties:Resources.Settings_AboutInfo}" /><LineBreak/>
                                         ※ <Hyperlink NavigateUri="https://github.com/Difegue/Stylophone" RequestNavigate="Hyperlink_RequestNavigate">Stylophone</Hyperlink><Run Text="{x:Static properties:Resources.Settings_MpcNET}" /><LineBreak/>
                                         ※ <Hyperlink NavigateUri="https://github.com/hardcodet/wpf-notifyicon" RequestNavigate="Hyperlink_RequestNavigate">wpf-notifyicon</Hyperlink><LineBreak/>
-                                        ※ <Hyperlink NavigateUri="https://github.com/samhocevar/emoji.wpf" RequestNavigate="Hyperlink_RequestNavigate">Emoji.WPF</Hyperlink>
+                                        ※ <Hyperlink NavigateUri="https://github.com/samhocevar/emoji.wpf" RequestNavigate="Hyperlink_RequestNavigate">Emoji.WPF</Hyperlink><LineBreak/>
+                                         ※ <Hyperlink NavigateUri="https://github.com/tof4/RadioBrowser" RequestNavigate="Hyperlink_RequestNavigate">RadioBrowser</Hyperlink>
                                     </TextBlock>
                                     <TextBlock Margin="0,10,0,0">
                                         <Run Text="{x:Static properties:Resources.Settings_SourceCode1}" />

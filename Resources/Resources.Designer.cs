@@ -70,6 +70,78 @@ namespace unison.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Country.
+        /// </summary>
+        public static string Radio_Country {
+            get {
+                return ResourceManager.GetString("Radio_Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading stations....
+        /// </summary>
+        public static string Radio_Loading {
+            get {
+                return ResourceManager.GetString("Radio_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Radio_Name {
+            get {
+                return ResourceManager.GetString("Radio_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No stations found!.
+        /// </summary>
+        public static string Radio_NotFound {
+            get {
+                return ResourceManager.GetString("Radio_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Radio_Reset {
+            get {
+                return ResourceManager.GetString("Radio_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Radio_Search {
+            get {
+                return ResourceManager.GetString("Radio_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search station.
+        /// </summary>
+        public static string Radio_SearchStation {
+            get {
+                return ResourceManager.GetString("Radio_SearchStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string Radio_Tags {
+            get {
+                return ResourceManager.GetString("Radio_Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string Settings {

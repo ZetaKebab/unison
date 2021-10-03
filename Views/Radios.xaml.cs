@@ -99,7 +99,7 @@ namespace unison
 
         public async Task SearchAdvanced(string name, string country, string tags)
         {
-            SearchStatus.Text = "Loading stations...";
+            SearchStatus.Text = unison.Resources.Resources.Radio_Loading;
 
             List<StationInfo> advancedSearch = await _radioBrowser.Search.AdvancedAsync(new AdvancedSearchOptions
             {
@@ -127,7 +127,7 @@ namespace unison
                 FitToContent();
             }
             else
-                SearchStatus.Text = "No stations found!";
+                SearchStatus.Text = unison.Resources.Resources.Radio_NotFound;
         }
 
         private void FitToContent()
