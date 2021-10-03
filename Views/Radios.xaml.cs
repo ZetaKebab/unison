@@ -15,7 +15,7 @@ namespace unison
 {
     public class CountryListItem
     {
-        public uint Count { get; set; }        
+        public uint Count { get; set; }
         public string Name { get; set; }
 
         public override string ToString()
@@ -31,6 +31,7 @@ namespace unison
         public string Name { get; set; }
         public string Codec { get; set; }
         public string Tags { get; set; }
+        public int Bitrate { get; set; }
         public Uri Url { get; set; }
 
         private string _country;
@@ -45,21 +46,6 @@ namespace unison
             set
             {
                 _country = value;
-            }
-        }
-
-        private string _bitrate;
-        public string Bitrate
-        {
-            get
-            {
-                if (_bitrate == "0")
-                    return "—";
-                return _bitrate.ToString();
-            }
-            set
-            {
-                _bitrate = value;
             }
         }
     }
@@ -119,7 +105,7 @@ namespace unison
                         Name = CleanString(station.Name),
                         Country = station.CountryCode,
                         Codec = station.Codec,
-                        Bitrate = station.Bitrate.ToString(),
+                        Bitrate = station.Bitrate,
                         Url = station.Url,
                         Tags = string.Join(", ", station.Tags)
                     });
@@ -144,7 +130,7 @@ namespace unison
             {
                 station = grid.Items[grid.SelectedIndex] as StationListItem;
             }
-            catch (System.ArgumentOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
                 Debug.WriteLine("Error: Invalid index.");
                 return;
@@ -157,9 +143,7 @@ namespace unison
             }
 
             _mpd = (MPDHandler)Application.Current.Properties["mpd"];
-            _mpd.ClearQueue();
-            _mpd.AddSong(station.Url.AbsoluteUri);
-            _mpd.PlayCommand();
+            _mpd.ClearAddAndPlay(station.Url.AbsoluteUri);
         }
 
         private async void Search_Clicked(object sender, RoutedEventArgs e)

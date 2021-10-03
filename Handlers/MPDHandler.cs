@@ -13,6 +13,7 @@ using MpcNET;
 using MpcNET.Commands.Database;
 using MpcNET.Commands.Playback;
 using MpcNET.Commands.Queue;
+using MpcNET.Commands.Reflection;
 using MpcNET.Commands.Status;
 using MpcNET.Message;
 using MpcNET.Types;
@@ -455,6 +456,12 @@ namespace unison
         {
             Debug.WriteLine("AddCommand path: " + Uri);
             SendCommand(new AddCommand(Uri));
+        }
+
+        public void ClearAddAndPlay(string Uri)
+        {
+            CommandList commandList = new CommandList(new IMpcCommand<object>[] { new ClearCommand(), new AddCommand(Uri), new PlayCommand(0) });
+            SendCommand(commandList);
         }
     }
 }
