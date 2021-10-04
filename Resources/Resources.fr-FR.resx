@@ -237,6 +237,9 @@
   <data name="Settings_VolumeDown" xml:space="preserve">
     <value>Baisse de volume</value>
   </data>
+  <data name="Settings_VolumeMute" xml:space="preserve">
+    <value>Volume en sourdine</value>
+  </data>
   <data name="Settings_VolumeOffset" xml:space="preserve">
     <value>Écart de volume</value>
   </data>

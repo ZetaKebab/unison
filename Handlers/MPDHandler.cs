@@ -25,6 +25,7 @@ namespace unison
         private bool _connected;
         public string _version;
         private int _currentVolume;
+        private int _previousVolume;
         private bool _currentRandom;
         private bool _currentRepeat;
         private bool _currentSingle;
@@ -446,6 +447,21 @@ namespace unison
             _currentVolume -= Properties.Settings.Default.volume_offset;
             if (_currentVolume < 0)
                 _currentVolume = 0;
+            SetVolume(_currentVolume);
+        }
+
+        public void VolumeMute()
+        {
+            if (_currentVolume == 0)
+            {
+                _currentVolume = _previousVolume;
+                _previousVolume = 0;
+            }
+            else
+            {
+                _previousVolume = _currentVolume;
+                _currentVolume = 0;
+            }
             SetVolume(_currentVolume);
         }
 

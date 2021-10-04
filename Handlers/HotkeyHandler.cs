@@ -28,6 +28,7 @@ namespace unison
         private const uint VK_MEDIA_PLAY_PAUSE = 0xB3;
         private const uint VK_VOLUME_UP = 0xAF;
         private const uint VK_VOLUME_DOWN = 0xAE;
+        private const uint VK_VOLUME_MUTE = 0xAD;
         private const uint VK_ENTER = 0x0D;
 
         private MainWindow _appWindow;
@@ -54,6 +55,7 @@ namespace unison
                 RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL, VK_MEDIA_PLAY_PAUSE);
                 RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL, VK_VOLUME_UP);
                 RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL, VK_VOLUME_DOWN);
+                RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL, VK_VOLUME_MUTE);
                 RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL | MOD_ALT, VK_ENTER);
             }
         }
@@ -78,6 +80,9 @@ namespace unison
                         break;
                     case VK_VOLUME_UP:
                         _mpd.VolumeUp();
+                        break;
+                    case VK_VOLUME_MUTE:
+                        _mpd.VolumeMute();
                         break;
                     case VK_MEDIA_PLAY_PAUSE:
                         _mpd.PlayPause();

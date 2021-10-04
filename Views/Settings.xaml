@@ -107,20 +107,23 @@
                                             <RowDefinition/>
                                             <RowDefinition/>
                                             <RowDefinition/>
+                                            <RowDefinition/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Text="{x:Static properties:Resources.Settings_NextTrack}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" Margin="1"/>
                                         <TextBlock Text="{x:Static properties:Resources.Settings_PreviousTrack}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="1" Margin="1"/>
                                         <TextBlock Text="{x:Static properties:Resources.Settings_PlayPause}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="2" Margin="1"/>
                                         <TextBlock Text="{x:Static properties:Resources.Settings_VolumeUp}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="3" Margin="1"/>
                                         <TextBlock Text="{x:Static properties:Resources.Settings_VolumeDown}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="4" Margin="1"/>
-                                        <TextBlock Text="{x:Static properties:Resources.Settings_ShowWindow}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="5" Margin="1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_VolumeMute}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="5" Margin="1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_ShowWindow}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="6" Margin="1"/>
 
                                         <TextBlock Text="ctrl + media_next" TextWrapping="Wrap" Grid.Column="1" Grid.Row="0" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
                                         <TextBlock Text="ctrl + media_prev" TextWrapping="Wrap" Grid.Column="1" Grid.Row="1" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
                                         <TextBlock Text="ctrl + media_play" TextWrapping="Wrap" Grid.Column="1" Grid.Row="2" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
                                         <TextBlock Text="ctrl + volume_up" TextWrapping="Wrap" Grid.Column="1" Grid.Row="3" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
                                         <TextBlock Text="ctrl + volume_down" TextWrapping="Wrap" Grid.Column="1" Grid.Row="4" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
-                                        <TextBlock Text="ctrl + alt + enter" TextWrapping="Wrap" Grid.Column="1" Grid.Row="5" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                        <TextBlock Text="ctrl + volume_mute" TextWrapping="Wrap" Grid.Column="1" Grid.Row="5" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                        <TextBlock Text="ctrl + alt + enter" TextWrapping="Wrap" Grid.Column="1" Grid.Row="6" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
                                     </Grid>
                                 </StackPanel>
                             </Grid>

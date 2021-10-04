@@ -237,6 +237,9 @@
   <data name="Settings_VolumeDown" xml:space="preserve">
     <value>Volume down</value>
   </data>
+  <data name="Settings_VolumeMute" xml:space="preserve">
+    <value>Volume mute</value>
+  </data>
   <data name="Settings_VolumeOffset" xml:space="preserve">
     <value>Volume offset</value>
   </data>

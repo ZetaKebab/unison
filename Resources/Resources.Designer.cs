@@ -421,6 +421,15 @@ namespace unison.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Volume mute.
+        /// </summary>
+        public static string Settings_VolumeMute {
+            get {
+                return ResourceManager.GetString("Settings_VolumeMute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Volume offset.
         /// </summary>
         public static string Settings_VolumeOffset {
