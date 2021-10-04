@@ -28,7 +28,7 @@
                     </GroupBox.Header>
                     <Grid>
                         <Grid x:Name="CurrentSong" Margin="10,0,10,0" VerticalAlignment="Top" MinHeight="80">
-                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center" MouseDown="MouseDownClipboard">
                                 <TextBlock x:Name="SongTitle" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal" FontSize="20" Text="Title"/>
                                 <TextBlock x:Name="SongArtist" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold" FontSize="18"  Text="Artist"/>
                                 <TextBlock x:Name="SongAlbum" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Normal" FontSize="16"  Text="Album"/>

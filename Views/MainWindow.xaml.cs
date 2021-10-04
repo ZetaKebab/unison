@@ -266,6 +266,17 @@ namespace unison
             hk.Activate(this);
         }
 
+        private void MouseDownClipboard(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                string CopyText = SongTitle.Text + " - " + SongArtist.Text + "\n";
+                CopyText += SongAlbum.Text + "\n";
+                CopyText += SongTitle.ToolTip;
+                Clipboard.SetText(CopyText);
+            }
+        }
+
         public void InitHwnd()
         {
             WindowInteropHelper helper = new(this);
