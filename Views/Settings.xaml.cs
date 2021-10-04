@@ -101,6 +101,12 @@ namespace unison
             Properties.Settings.Default.Save();
         }
 
+        private void ConnectHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+                MPDConnect_Clicked(null, null);
+        }
+
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             e.Cancel = true;

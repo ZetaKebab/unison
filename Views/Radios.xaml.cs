@@ -162,9 +162,7 @@ namespace unison
         private void SearchHandler(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
-            {
                 Search_Clicked(null, null);
-            }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
