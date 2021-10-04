@@ -142,6 +142,15 @@ namespace unison.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Radios.
+        /// </summary>
+        public static string Radios {
+            get {
+                return ResourceManager.GetString("Radios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string Settings {

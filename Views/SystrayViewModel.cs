@@ -59,6 +59,18 @@ namespace unison
             }
         }
 
+        public ICommand Radios
+        {
+            get
+            {
+                return new DelegateCommand
+                {
+                    CommandAction = () => ((MainWindow)Application.Current.MainWindow).Radios_Clicked(null, null),
+                    CanExecuteFunc = () => true
+                };
+            }
+        }
+
         public ICommand Settings
         {
             get

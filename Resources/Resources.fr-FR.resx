@@ -120,6 +120,9 @@
   <data name="Exit" xml:space="preserve">
     <value>Quitter</value>
   </data>
+  <data name="Radios" xml:space="preserve">
+    <value>Radios</value>
+  </data>
   <data name="Radio_Country" xml:space="preserve">
     <value>Pays</value>
   </data>

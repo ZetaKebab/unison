@@ -369,7 +369,7 @@ namespace unison
                 {
                     _cover = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                 }
-                catch (System.NotSupportedException e)
+                catch (System.NotSupportedException)
                 {
                     _cover = null;
                 }

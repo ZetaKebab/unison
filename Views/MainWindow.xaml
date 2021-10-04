@@ -120,7 +120,7 @@
                 <Button x:Name="Radio" Padding="5, 2" HorizontalAlignment="Left" Click="Radios_Clicked"  Margin="5,0,10,0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
                     <StackPanel Orientation="Horizontal">
                         <emoji:TextBlock Text="📻" Padding="0,0,0,2"/>
-                        <TextBlock Text="Radios" Margin="5, 0, 0, 0"/>
+                        <TextBlock Text="{x:Static properties:Resources.Radios}" Margin="5, 0, 0, 0"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
