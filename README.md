@@ -7,6 +7,7 @@
 * lightweight window that can be toggled with shortcuts
 * music control through shortcuts
 * [Snapcast](https://mjaggard.github.io/snapcast/) integration
+* Radio stations
 
 ## Features
 
@@ -26,6 +27,12 @@ You can control your music at anytime with the shortcuts. They can of course be 
 
 The main goal of embedding Snapcast is the ability to listen locally to music when I'm not using my main audio system. The computer running unison can then play music easily.
 
+### Radio stations
+
+Through [Radio-Browser](https://www.radio-browser.info), a community database, you can play radio-streams directly from unison. There are more than 28,000 stations recorded on this service, so it should be a nice way to discover new music and cultures.
+
+![Radio stations](Screenshots/screen4.png)
+
 ## Caveats
 
 ### Missing features
@@ -37,7 +44,6 @@ The main goal of embedding Snapcast is the ability to listen locally to music wh
 ### Wanted features
 
 * A complete shuffle system based on set criteria, aka a smart playlist.
-* Radio integration.
 
 ## Translations
 
