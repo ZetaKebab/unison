@@ -135,6 +135,9 @@ namespace unison
                     DefaultState();
                 }
             }
+
+            _mpd.QueryStats();
+            _settingsWin.UpdateStats();
         }
 
         private void DefaultState(bool LostConnection = false)

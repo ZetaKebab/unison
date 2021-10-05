@@ -88,6 +88,18 @@ namespace unison
             SnapcastPort.Text = (string)Application.Current.FindResource("snapcastPort");
         }
 
+        public void UpdateStats()
+        {
+            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
+            StatSong.Text = mpd.GetStats().Songs.ToString();
+            StatAlbum.Text = mpd.GetStats().Albums.ToString();
+            StatArtist.Text = mpd.GetStats().Artists.ToString();
+            StatTotalPlaytime.Text = mpd.GetStats().TotalPlaytime.ToString();
+            StatUptime.Text = mpd.GetStats().Uptime.ToString();
+            StatTotalTimePlayed.Text = mpd.GetStats().TotalTimePlayed.ToString();
+            StatDatabaseUpdate.Text = mpd.GetStats().DatabaseUpdate.ToString();
+        }
+
         public void SaveSettings()
         {
             Properties.Settings.Default.mpd_host = MpdHost.Text;

@@ -20,6 +20,17 @@ using MpcNET.Types;
 
 namespace unison
 {
+    public class Statistics
+    {
+        public int Songs { get; set; }
+        public int Albums { get; set; }
+        public int Artists { get; set; }
+        public string TotalPlaytime { get; set; }
+        public string Uptime { get; set; }
+        public string TotalTimePlayed { get; set; }
+        public string DatabaseUpdate { get; set; }
+    }
+
     public class MPDHandler
     {
         private bool _connected;
@@ -36,6 +47,7 @@ namespace unison
         private MpdStatus _currentStatus;
         private IMpdFile _currentSong;
         private BitmapFrame _cover;
+        public Statistics _stats;
         private readonly System.Timers.Timer _elapsedTimer;
         private DispatcherTimer _retryTimer;
 
@@ -57,6 +69,8 @@ namespace unison
             cancelToken = new CancellationTokenSource();
 
             Initialize(null, null);
+
+            _stats = new Statistics();
 
             _retryTimer = new DispatcherTimer();
             _retryTimer.Interval = TimeSpan.FromSeconds(5);
@@ -417,6 +431,7 @@ namespace unison
         public MpdStatus GetStatus() => _currentStatus;
         public BitmapFrame GetCover() => _cover;
         public string GetVersion() => _version;
+        public Statistics GetStats() => _stats;
         public double GetCurrentTime() => _currentTime;
 
         public bool IsConnected() => _connected;
@@ -478,6 +493,26 @@ namespace unison
         {
             CommandList commandList = new CommandList(new IMpcCommand<object>[] { new ClearCommand(), new AddCommand(Uri), new PlayCommand(0) });
             SendCommand(commandList);
+        }
+
+        public async void QueryStats()
+        {
+            Dictionary<string, string> response = await SafelySendCommandAsync(new StatsCommand());
+
+            _stats.Songs = int.Parse(response["songs"]);
+            _stats.Albums = int.Parse(response["albums"]);
+            _stats.Artists = int.Parse(response["artists"]);
+
+            TimeSpan time;
+            time = TimeSpan.FromSeconds(int.Parse(response["uptime"]));
+            _stats.Uptime = time.ToString(@"dd\:hh\:mm\:ss");
+            time = TimeSpan.FromSeconds(int.Parse(response["db_playtime"]));
+            _stats.TotalPlaytime = time.ToString(@"dd\:hh\:mm\:ss");
+            time = TimeSpan.FromSeconds(int.Parse(response["playtime"]));
+            _stats.TotalTimePlayed = time.ToString(@"dd\:hh\:mm\:ss");
+
+            DateTime date = new DateTime(1970, 1, 1).AddSeconds(int.Parse(response["db_update"])).ToLocalTime();
+            _stats.DatabaseUpdate = date.ToString("dd-MM-yyyy @ HH:mm");
         }
     }
 }

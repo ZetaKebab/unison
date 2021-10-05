@@ -46,6 +46,29 @@
                     </DockPanel>
                 </TabItem>
 
+                <TabItem Header="Stats">
+                    <DockPanel Margin="8">
+                        <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
+                            <GroupBox.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <emoji:TextBlock Text="📊 Stats"/>
+                                </StackPanel>
+                            </GroupBox.Header>
+                            <Grid VerticalAlignment="Top">
+                                <TextBlock>
+                                    <Run Text="Songs: "></Run><Run x:Name="StatSong"/><LineBreak/>
+                                    <Run Text="Albums: "></Run><Run x:Name="StatAlbum"/><LineBreak/>
+                                    <Run Text="Artists: "></Run><Run x:Name="StatArtist"/><LineBreak/>
+                                    <Run Text="Total playtime: "></Run><Run x:Name="StatTotalPlaytime"/><LineBreak/><LineBreak/>
+                                    <Run Text="MPD uptime: "></Run><Run x:Name="StatUptime"/><LineBreak/>
+                                    <Run Text="Total time played: "></Run><Run x:Name="StatTotalTimePlayed"/><LineBreak/>
+                                    <Run Text="Last database update: "></Run><Run x:Name="StatDatabaseUpdate"/>
+                                </TextBlock>
+                            </Grid>
+                        </GroupBox>
+                    </DockPanel>
+                </TabItem>
+
                 <TabItem Header="Snapcast">
                     <DockPanel Margin="8">
                         <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
