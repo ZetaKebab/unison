@@ -502,6 +502,78 @@ namespace unison.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stats.
+        /// </summary>
+        public static string Stats {
+            get {
+                return ResourceManager.GetString("Stats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Albums:.
+        /// </summary>
+        public static string Stats_Albums {
+            get {
+                return ResourceManager.GetString("Stats_Albums", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artists:.
+        /// </summary>
+        public static string Stats_Artists {
+            get {
+                return ResourceManager.GetString("Stats_Artists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last database update:.
+        /// </summary>
+        public static string Stats_LastDatabaseUpdate {
+            get {
+                return ResourceManager.GetString("Stats_LastDatabaseUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Songs:.
+        /// </summary>
+        public static string Stats_Songs {
+            get {
+                return ResourceManager.GetString("Stats_Songs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total playtime:.
+        /// </summary>
+        public static string Stats_TotalPlaytime {
+            get {
+                return ResourceManager.GetString("Stats_TotalPlaytime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total time played:.
+        /// </summary>
+        public static string Stats_TotalTimePlayed {
+            get {
+                return ResourceManager.GetString("Stats_TotalTimePlayed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MPD uptime:.
+        /// </summary>
+        public static string Stats_Uptime {
+            get {
+                return ResourceManager.GetString("Stats_Uptime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stop Snapcast.
         /// </summary>
         public static string StopSnapcast {

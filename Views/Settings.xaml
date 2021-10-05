@@ -14,12 +14,10 @@
                     <DockPanel Margin="8">
                         <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
                             <GroupBox.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock>
-                                        <emoji:EmojiInline Text="📶"/>
-                                        <Run Text="{x:Static properties:Resources.Settings_Connection}"/>
-                                    </TextBlock>
-                                </StackPanel>
+                                <TextBlock>
+                                    <emoji:EmojiInline Text="📶"/>
+                                    <Run Text="{x:Static properties:Resources.Settings_Connection}"/>
+                                </TextBlock>
                             </GroupBox.Header>
                             <Grid VerticalAlignment="Top">
                                 <StackPanel>
@@ -46,23 +44,24 @@
                     </DockPanel>
                 </TabItem>
 
-                <TabItem Header="Stats">
+                <TabItem Header="{x:Static properties:Resources.Stats}">
                     <DockPanel Margin="8">
                         <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
                             <GroupBox.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <emoji:TextBlock Text="📊 Stats"/>
-                                </StackPanel>
+                                <TextBlock>
+                                    <emoji:EmojiInline Text="📊"/>
+                                    <Run Text="{x:Static properties:Resources.Stats}"/>
+                                </TextBlock>
                             </GroupBox.Header>
                             <Grid VerticalAlignment="Top">
                                 <TextBlock>
-                                    <Run Text="Songs: "></Run><Run x:Name="StatSong"/><LineBreak/>
-                                    <Run Text="Albums: "></Run><Run x:Name="StatAlbum"/><LineBreak/>
-                                    <Run Text="Artists: "></Run><Run x:Name="StatArtist"/><LineBreak/>
-                                    <Run Text="Total playtime: "></Run><Run x:Name="StatTotalPlaytime"/><LineBreak/><LineBreak/>
-                                    <Run Text="MPD uptime: "></Run><Run x:Name="StatUptime"/><LineBreak/>
-                                    <Run Text="Total time played: "></Run><Run x:Name="StatTotalTimePlayed"/><LineBreak/>
-                                    <Run Text="Last database update: "></Run><Run x:Name="StatDatabaseUpdate"/>
+                                    <Run Text="{x:Static properties:Resources.Stats_Songs}"/><Run Text=" "/><Run x:Name="StatSong"/><LineBreak/>
+                                    <Run Text="{x:Static properties:Resources.Stats_Albums}"/><Run Text=" "/><Run x:Name="StatAlbum"/><LineBreak/>
+                                    <Run Text="{x:Static properties:Resources.Stats_Artists}"/><Run Text=" "/><Run x:Name="StatArtist"/><LineBreak/>
+                                    <Run Text="{x:Static properties:Resources.Stats_TotalPlaytime}"/><Run Text=" "/><Run x:Name="StatTotalPlaytime"/><LineBreak/><LineBreak/>
+                                    <Run Text="{x:Static properties:Resources.Stats_Uptime}"/><Run Text=" "/><Run x:Name="StatUptime"/><LineBreak/>
+                                    <Run Text="{x:Static properties:Resources.Stats_TotalTimePlayed}"/><Run Text=" "/><Run x:Name="StatTotalTimePlayed"/><LineBreak/>
+                                    <Run Text="{x:Static properties:Resources.Stats_LastDatabaseUpdate}"/><Run Text=" "/><Run x:Name="StatDatabaseUpdate"/>
                                 </TextBlock>
                             </Grid>
                         </GroupBox>
@@ -73,9 +72,7 @@
                     <DockPanel Margin="8">
                         <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
                             <GroupBox.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <emoji:TextBlock Text="🔊 Snapcast"/>
-                                </StackPanel>
+                                <emoji:TextBlock Text="🔊 Snapcast"/>
                             </GroupBox.Header>
                             <Grid VerticalAlignment="Top">
                                 <StackPanel>
@@ -105,17 +102,15 @@
                     <DockPanel Margin="8">
                         <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
                             <GroupBox.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock>
-                                        <emoji:EmojiInline Text="⌨️ "/>
-                                        <Run Text="{x:Static properties:Resources.Settings_Shortcuts}"></Run>
-                                    </TextBlock>
-                                </StackPanel>
+                                <TextBlock>
+                                    <emoji:EmojiInline Text="⌨️ "/>
+                                    <Run Text="{x:Static properties:Resources.Settings_Shortcuts}"></Run>
+                                </TextBlock>
                             </GroupBox.Header>
                             <Grid>
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{x:Static properties:Resources.Settings_VolumeOffset}" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_VolumeOffset}" TextWrapping="Wrap" Margin="0,2,0,0"/>
                                         <TextBox x:Name="VolumeOffset" TextWrapping="Wrap" Width="25" PreviewTextInput="NumberValidationTextBox" Margin="8,2,0,0"/>
                                     </StackPanel>
                                     <Grid MinWidth="300" Margin="0,5,0,0">

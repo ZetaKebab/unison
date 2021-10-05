@@ -512,7 +512,7 @@ namespace unison
             _stats.TotalTimePlayed = time.ToString(@"dd\:hh\:mm\:ss");
 
             DateTime date = new DateTime(1970, 1, 1).AddSeconds(int.Parse(response["db_update"])).ToLocalTime();
-            _stats.DatabaseUpdate = date.ToString("dd-MM-yyyy @ HH:mm");
+            _stats.DatabaseUpdate = date.ToString("dd/MM/yyyy @ HH:mm");
         }
     }
 }

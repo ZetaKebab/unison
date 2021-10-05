@@ -264,6 +264,30 @@
   <data name="StartSnapcast" xml:space="preserve">
     <value>Start Snapcast</value>
   </data>
+  <data name="Stats" xml:space="preserve">
+    <value>Stats</value>
+  </data>
+  <data name="Stats_Albums" xml:space="preserve">
+    <value>Albums:</value>
+  </data>
+  <data name="Stats_Artists" xml:space="preserve">
+    <value>Artists:</value>
+  </data>
+  <data name="Stats_LastDatabaseUpdate" xml:space="preserve">
+    <value>Last database update:</value>
+  </data>
+  <data name="Stats_Songs" xml:space="preserve">
+    <value>Songs:</value>
+  </data>
+  <data name="Stats_TotalPlaytime" xml:space="preserve">
+    <value>Total playtime:</value>
+  </data>
+  <data name="Stats_TotalTimePlayed" xml:space="preserve">
+    <value>Total time played:</value>
+  </data>
+  <data name="Stats_Uptime" xml:space="preserve">
+    <value>MPD uptime:</value>
+  </data>
   <data name="StopSnapcast" xml:space="preserve">
     <value>Stop Snapcast</value>
   </data>
