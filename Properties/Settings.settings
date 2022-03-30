@@ -18,7 +18,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="snapcast_path" Type="System.String" Scope="User">
-      <Value Profile="(Default)">snapclient_0.25.0-1_win64</Value>
+      <Value Profile="(Default)">snapclient_0.26.0-1_win64</Value>
     </Setting>
     <Setting Name="snapcast_port" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1704</Value>

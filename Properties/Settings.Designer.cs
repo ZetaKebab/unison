@@ -73,7 +73,19 @@ namespace unison.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("snapclient_0.25.0-1_win64")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool snapcast_window {
+            get {
+                return ((bool)(this["snapcast_window"]));
+            }
+            set {
+                this["snapcast_window"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("snapclient_0.26.0-1_win64")]
         public string snapcast_path {
             get {
                 return ((string)(this["snapcast_path"]));
@@ -104,18 +116,6 @@ namespace unison.Properties {
             }
             set {
                 this["volume_offset"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool snapcast_window {
-            get {
-                return ((bool)(this["snapcast_window"]));
-            }
-            set {
-                this["snapcast_window"] = value;
             }
         }
     }
