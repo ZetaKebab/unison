@@ -250,15 +250,6 @@ namespace unison.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;s updated MpcNET.
-        /// </summary>
-        public static string Settings_MpcNET {
-            get {
-                return ResourceManager.GetString("Settings_MpcNET", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Next track.
         /// </summary>
         public static string Settings_NextTrack {

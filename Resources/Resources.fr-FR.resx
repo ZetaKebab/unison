@@ -180,9 +180,6 @@
   <data name="Settings_MadeBy" xml:space="preserve">
     <value>Créé par</value>
   </data>
-  <data name="Settings_MpcNET" xml:space="preserve">
-    <value> et sa version de MpcNET</value>
-  </data>
   <data name="Settings_NextTrack" xml:space="preserve">
     <value>Piste suivante</value>
   </data>
