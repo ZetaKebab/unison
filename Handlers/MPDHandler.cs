@@ -348,14 +348,14 @@ namespace unison
             List<byte> data = new List<byte>();
             try
             {
-                if (_connection == null)
-                    return;
-
                 long totalBinarySize = 9999;
                 long currentSize = 0;
 
                 do
                 {
+                    if (_connection == null)
+                        return;
+
                     var albumReq = await _connection.SendAsync(new AlbumArtCommand(path, currentSize));
                     if (!albumReq.IsResponseValid)
                         break;
