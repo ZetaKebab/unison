@@ -54,6 +54,8 @@ namespace unison
         bool _isUpdatingStatus = false;
         bool _isUpdatingSong = false;
 
+        bool _invalidIp = false;
+
         private event EventHandler ConnectionChanged;
         private event EventHandler StatusChanged;
         private event EventHandler SongChanged;
@@ -95,7 +97,7 @@ namespace unison
 
         void OnConnectionChanged(object sender, EventArgs e)
         {
-            if (!_connected)
+            if (!_connected && !_invalidIp)
                 _retryTimer.Start();
             else
                 _retryTimer.Stop();
@@ -189,12 +191,13 @@ namespace unison
                 _connection = await ConnectInternal(token);
                 _commandConnection = await ConnectInternal(token);
             }
-            catch(MpcNET.Exceptions.MpcConnectException exception)
+            catch(MpcNET.Exceptions.MpcConnectException)
             {
-                Trace.WriteLine("exception: " + exception);
+                _invalidIp = true;
             }
             if (_connection != null && _commandConnection != null)
             {
+                _invalidIp = false;
                 if (_connection.IsConnected && _commandConnection.IsConnected)
                 {
                     _connected = true;
@@ -217,6 +220,21 @@ namespace unison
         private async Task<MpcConnection> ConnectInternal(CancellationToken token)
         {
             IPAddress.TryParse(Properties.Settings.Default.mpd_host, out IPAddress ipAddress);
+
+            if (ipAddress == null)
+            {
+                IPAddress[] addrList;
+                try
+                {
+                    addrList = Dns.GetHostAddresses(Properties.Settings.Default.mpd_host);
+                    if (addrList.Length > 0)
+                        ipAddress = addrList[0];
+                }
+                catch (Exception)
+                {
+                    throw new MpcNET.Exceptions.MpcConnectException("No correct IP provided by user.");
+                }
+            }
 
             _mpdEndpoint = new IPEndPoint(ipAddress, Properties.Settings.Default.mpd_port);
             MpcConnection connection = new MpcConnection(_mpdEndpoint);
