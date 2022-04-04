@@ -26,5 +26,47 @@
     <Setting Name="volume_offset" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
+    <Setting Name="nextTrack_mod" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="nextTrack_vk" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">176</Value>
+    </Setting>
+    <Setting Name="previousTrack_mod" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="previousTrack_vk" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">177</Value>
+    </Setting>
+    <Setting Name="playPause_mod" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="playPause_vk" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">179</Value>
+    </Setting>
+    <Setting Name="volumeUp_mod" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="volumeUp_vk" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">175</Value>
+    </Setting>
+    <Setting Name="volumeDown_mod" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="volumeDown_vk" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">174</Value>
+    </Setting>
+    <Setting Name="volumeMute_mod" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="volumeMute_vk" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">173</Value>
+    </Setting>
+    <Setting Name="showWindow_mod" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="showWindow_vk" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">13</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

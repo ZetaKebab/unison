@@ -37,13 +37,12 @@ Through [Radio-Browser](https://www.radio-browser.info), a community database, y
 
 ### Missing features
 
-* Custom shortcuts.
 * MPD passwords: I don't really see the point, but if asked, I will integrate them.
-* Any sort of playlist and queue management. I use other software to do it, but I might implement them at some point.
 
 ### Wanted features
 
 * A complete shuffle system based on set criteria, aka a smart playlist.
+* Any sort of playlist and queue management. I use other software to do it, but I will implement them at some point.
 
 ## Translations
 

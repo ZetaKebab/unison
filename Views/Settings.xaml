@@ -109,11 +109,12 @@
                             </GroupBox.Header>
                             <Grid>
                                 <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                                         <TextBlock Text="{x:Static properties:Resources.Settings_VolumeOffset}" TextWrapping="Wrap" Margin="0,2,0,0"/>
                                         <TextBox x:Name="VolumeOffset" TextWrapping="Wrap" Width="25" PreviewTextInput="NumberValidationTextBox" Margin="8,2,0,0"/>
                                     </StackPanel>
-                                    <Grid MinWidth="300" Margin="0,5,0,0">
+
+                                    <Grid MinWidth="420" Margin="0,5,0,0" x:Name="RebindKeyWrapper">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
@@ -126,23 +127,79 @@
                                             <RowDefinition/>
                                             <RowDefinition/>
                                             <RowDefinition/>
+                                            <RowDefinition/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="{x:Static properties:Resources.Settings_NextTrack}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" Margin="1"/>
-                                        <TextBlock Text="{x:Static properties:Resources.Settings_PreviousTrack}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="1" Margin="1"/>
-                                        <TextBlock Text="{x:Static properties:Resources.Settings_PlayPause}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="2" Margin="1"/>
-                                        <TextBlock Text="{x:Static properties:Resources.Settings_VolumeUp}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="3" Margin="1"/>
-                                        <TextBlock Text="{x:Static properties:Resources.Settings_VolumeDown}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="4" Margin="1"/>
-                                        <TextBlock Text="{x:Static properties:Resources.Settings_VolumeMute}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="5" Margin="1"/>
-                                        <TextBlock Text="{x:Static properties:Resources.Settings_ShowWindow}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="6" Margin="1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_NextTrack}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" Margin="1,1,1,1" Grid.RowSpan="2"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_PreviousTrack}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="2" Margin="1,1,1,1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_PlayPause}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="3" Margin="1,1,1,1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_VolumeUp}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="4" Margin="1,1,1,1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_VolumeDown}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="5" Margin="1,1,1,1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_VolumeMute}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="6" Margin="1,1,1,1"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_ShowWindow}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="7" Margin="1,1,1,1"/>
 
-                                        <TextBlock Text="ctrl + media_next" TextWrapping="Wrap" Grid.Column="1" Grid.Row="0" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
-                                        <TextBlock Text="ctrl + media_prev" TextWrapping="Wrap" Grid.Column="1" Grid.Row="1" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
-                                        <TextBlock Text="ctrl + media_play" TextWrapping="Wrap" Grid.Column="1" Grid.Row="2" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
-                                        <TextBlock Text="ctrl + volume_up" TextWrapping="Wrap" Grid.Column="1" Grid.Row="3" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
-                                        <TextBlock Text="ctrl + volume_down" TextWrapping="Wrap" Grid.Column="1" Grid.Row="4" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
-                                        <TextBlock Text="ctrl + volume_mute" TextWrapping="Wrap" Grid.Column="1" Grid.Row="5" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
-                                        <TextBlock Text="ctrl + alt + enter" TextWrapping="Wrap" Grid.Column="1" Grid.Row="6" Margin="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                        <StackPanel x:Name="Shortcut_NextTrack" Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Margin="0,0,0,2" Grid.RowSpan="2">
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"/>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            </Button>
+                                        </StackPanel>
+
+                                        <StackPanel x:Name="Shortcut_PreviousTrack" Orientation="Horizontal" Grid.Column="1" Grid.Row="2" Margin="0,0,0,2">
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            </Button>
+                                        </StackPanel>
+
+                                        <StackPanel x:Name="Shortcut_PlayPause" Orientation="Horizontal" Grid.Column="1" Grid.Row="3" Margin="0,0,0,2">
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            </Button>
+                                        </StackPanel>
+
+                                        <StackPanel x:Name="Shortcut_VolumeUp" Orientation="Horizontal" Grid.Column="1" Grid.Row="4" Margin="0,0,0,2">
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            </Button>
+                                        </StackPanel>
+
+                                        <StackPanel x:Name="Shortcut_VolumeDown" Orientation="Horizontal" Grid.Column="1" Grid.Row="5" Margin="0,0,0,2">
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            </Button>
+                                        </StackPanel>
+
+                                        <StackPanel x:Name="Shortcut_VolumeMute" Orientation="Horizontal" Grid.Column="1" Grid.Row="6" Margin="0,0,0,2">
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            </Button>
+                                        </StackPanel>
+
+                                        <StackPanel x:Name="Shortcut_ShowWindow" Orientation="Horizontal" Grid.Column="1" Grid.Row="7">
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
+                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            </Button>
+                                        </StackPanel>
                                     </Grid>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                        <TextBlock Text="Please note that if the input key is not recognized, this is due to a limitation on how virtual keys work." TextWrapping="Wrap" Margin="0,2,0,0" MaxWidth="420" />
+                                    </StackPanel>
+
+                                    <Button Content="{x:Static properties:Resources.Settings_SnapcastResetButton}" Margin="0,5,0,0" Width="120" Click="ShortcutsReset_Clicked"/>
+
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
