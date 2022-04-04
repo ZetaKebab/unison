@@ -59,8 +59,21 @@ namespace unison
         {
             InitializeComponent();
 
-            _radioBrowser = new RadioBrowserClient();
-            Initialize();
+            try
+            {
+                _radioBrowser = new RadioBrowserClient();
+                Initialize();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Exception while connecting to RadioBrowser: " + e.Message);
+                return;
+            }
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
+                MainWin.OnRadioBrowserConnected();
+            });
         }
 
         public async void Initialize()
@@ -85,35 +98,42 @@ namespace unison
 
         public async Task SearchAdvanced(string name, string country, string tags)
         {
-            SearchStatus.Text = unison.Resources.Resources.Radio_Loading;
-
-            List<StationInfo> advancedSearch = await _radioBrowser.Search.AdvancedAsync(new AdvancedSearchOptions
+            try
             {
-                Name = name,
-                Country = country,
-                TagList = tags
-            });
+                SearchStatus.Text = unison.Resources.Resources.Radio_Loading;
 
-            RadioListGrid.Items.Clear();
-            if (advancedSearch.Count > 0)
-            {
-                SearchStatus.Text = "";
-                foreach (StationInfo station in advancedSearch)
+                List<StationInfo> advancedSearch = await _radioBrowser.Search.AdvancedAsync(new AdvancedSearchOptions
                 {
-                    RadioListGrid.Items.Add(new StationListItem
+                    Name = name,
+                    Country = country,
+                    TagList = tags
+                });
+
+                RadioListGrid.Items.Clear();
+                if (advancedSearch.Count > 0)
+                {
+                    SearchStatus.Text = "";
+                    foreach (StationInfo station in advancedSearch)
                     {
-                        Name = CleanString(station.Name),
-                        Country = station.CountryCode,
-                        Codec = station.Codec,
-                        Bitrate = station.Bitrate,
-                        Url = station.Url,
-                        Tags = string.Join(", ", station.Tags)
-                    });
+                        RadioListGrid.Items.Add(new StationListItem
+                        {
+                            Name = CleanString(station.Name),
+                            Country = station.CountryCode,
+                            Codec = station.Codec,
+                            Bitrate = station.Bitrate,
+                            Url = station.Url,
+                            Tags = string.Join(", ", station.Tags)
+                        });
+                    }
+                    FitToContent();
                 }
-                FitToContent();
+                else
+                    SearchStatus.Text = unison.Resources.Resources.Radio_NotFound;
             }
-            else
-                SearchStatus.Text = unison.Resources.Resources.Radio_NotFound;
+            catch (Exception except)
+            {
+                Debug.WriteLine("Error on RadioBrowser search advanced: " + except.Message);
+            }
         }
 
         private void FitToContent()
@@ -148,8 +168,15 @@ namespace unison
 
         private async void Search_Clicked(object sender, RoutedEventArgs e)
         {
-            CountryListItem a = (CountryListItem)CountryList.SelectedItem;
-            await SearchAdvanced(NameSearch.Text, a?.Name, TagSearch.Text);
+            try
+            {
+                CountryListItem a = (CountryListItem)CountryList.SelectedItem;
+                await SearchAdvanced(NameSearch.Text, a?.Name, TagSearch.Text);
+            }
+            catch (Exception except)
+            {
+                Debug.WriteLine("Error on RadioBrowser search: " + except.Message);
+            }
         }
 
         private void Reset_Clicked(object sender, RoutedEventArgs e)

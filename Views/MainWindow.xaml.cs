@@ -188,6 +188,11 @@ namespace unison
                 SnapcastText.Text = unison.Resources.Resources.StartSnapcast;
         }
 
+        public void OnRadioBrowserConnected()
+        {
+            Radio.IsEnabled = true;
+        }
+
         public void UpdateButton(ref Border border, bool b)
         {
             border.Style = b ? (Style)Resources["SelectedButton"] : (Style)Resources["UnselectedButton"];

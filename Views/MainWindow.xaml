@@ -117,7 +117,7 @@
                         <TextBlock x:Name="SnapcastText" Text="{x:Static properties:Resources.StartSnapcast}" Margin="5, 0, 0, 0"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="Radio" Padding="5, 2" HorizontalAlignment="Left" Click="Radios_Clicked"  Margin="5,0,10,0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" FocusVisualStyle="{x:Null}">
+                <Button x:Name="Radio" Padding="5, 2" HorizontalAlignment="Left" Click="Radios_Clicked"  Margin="5,0,10,0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" FocusVisualStyle="{x:Null}" IsEnabled="False">
                     <StackPanel Orientation="Horizontal">
                         <emoji:TextBlock Text="📻" Padding="0,0,0,2"/>
                         <TextBlock Text="{x:Static properties:Resources.Radios}" Margin="5, 0, 0, 0"/>
