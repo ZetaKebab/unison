@@ -170,7 +170,7 @@
                                     </TextBlock>
                                     <TextBlock Margin="0,10,0,0">
                                         <Run Text="{x:Static properties:Resources.Settings_SourceCode1}" />
-                                        <Hyperlink NavigateUri="https://git.n700.ovh/keb/unison" RequestNavigate="Hyperlink_RequestNavigate">
+                                        <Hyperlink NavigateUri="https://github.com/ZetaKebab/unison" RequestNavigate="Hyperlink_RequestNavigate">
                                             <Run Text="{x:Static properties:Resources.Settings_SourceCode2}" />
                                         </Hyperlink>.
                                     </TextBlock>
