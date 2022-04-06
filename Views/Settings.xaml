@@ -4,9 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
-        xmlns:properties="clr-namespace:unison.Resources" 
+        xmlns:properties="clr-namespace:unison.Resources" xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Closing="Window_Closing" Title="{x:Static properties:Resources.Settings}" ResizeMode="CanMinimize" Icon="/Resources/icon-full.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
+
+    <Window.Resources>
+        <x:Array x:Key="ShortcutItems" Type="sys:String">
+            <sys:String>None</sys:String>
+            <sys:String>Alt</sys:String>
+            <sys:String>Control</sys:String>
+            <sys:String>Shift</sys:String>
+        </x:Array>
+    </Window.Resources>
+
     <Grid>
         <StackPanel Orientation="Vertical">
             <TabControl Margin="10">
@@ -138,58 +148,58 @@
                                         <TextBlock Text="{x:Static properties:Resources.Settings_ShowWindow}" TextWrapping="Wrap" Grid.Column="0" Grid.Row="7" Margin="1,1,1,1"/>
 
                                         <StackPanel x:Name="Shortcut_NextTrack" Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Margin="0,0,0,2" Grid.RowSpan="2">
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"/>
-                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
 
                                         <StackPanel x:Name="Shortcut_PreviousTrack" Orientation="Horizontal" Grid.Column="1" Grid.Row="2" Margin="0,0,0,2">
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"></ComboBox>
-                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
 
                                         <StackPanel x:Name="Shortcut_PlayPause" Orientation="Horizontal" Grid.Column="1" Grid.Row="3" Margin="0,0,0,2">
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"></ComboBox>
-                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
 
                                         <StackPanel x:Name="Shortcut_VolumeUp" Orientation="Horizontal" Grid.Column="1" Grid.Row="4" Margin="0,0,0,2">
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"></ComboBox>
-                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
 
                                         <StackPanel x:Name="Shortcut_VolumeDown" Orientation="Horizontal" Grid.Column="1" Grid.Row="5" Margin="0,0,0,2">
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"></ComboBox>
-                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
 
                                         <StackPanel x:Name="Shortcut_VolumeMute" Orientation="Horizontal" Grid.Column="1" Grid.Row="6" Margin="0,0,0,2">
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"></ComboBox>
-                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
 
                                         <StackPanel x:Name="Shortcut_ShowWindow" Orientation="Horizontal" Grid.Column="1" Grid.Row="7">
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Bold"></ComboBox>
-                                            <ComboBox Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Bold"></ComboBox>
-                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <TextBlock Text="[key]" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Bold" VerticalAlignment="Stretch"/>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
+                                            <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
                                     </Grid>

@@ -173,7 +173,7 @@ namespace unison
             
             public uint GetMOD() { return (uint)mod; }
             public uint GetVK() { return (uint)vk; }
-            
+
             public void SetMOD(MOD modmod) { mod = modmod; }
             public void SetVK(VK vkvk) { vk = vkvk; }
         }
@@ -191,12 +191,16 @@ namespace unison
         public HotkeyPair _VolumeDown;
         public HotkeyPair _VolumeMute;
         public HotkeyPair _ShowWindow;
+        public HotkeyPair[] _Shortcuts;
 
         public HotkeyHandler()
         {
             _mpd = (MPDHandler)Application.Current.Properties["mpd"];
+            Initialize();
+        }
 
-            // get shortcuts from settings
+        public void Initialize()
+        {
             _NextTrack = new HotkeyPair((MOD)Properties.Settings.Default.nextTrack_mod, (VK)Properties.Settings.Default.nextTrack_vk);
             _PreviousTrack = new HotkeyPair((MOD)Properties.Settings.Default.previousTrack_mod, (VK)Properties.Settings.Default.previousTrack_vk);
             _PlayPause = new HotkeyPair((MOD)Properties.Settings.Default.playPause_mod, (VK)Properties.Settings.Default.playPause_vk);
@@ -204,6 +208,7 @@ namespace unison
             _VolumeDown = new HotkeyPair((MOD)Properties.Settings.Default.volumeDown_mod, (VK)Properties.Settings.Default.volumeDown_vk);
             _VolumeMute = new HotkeyPair((MOD)Properties.Settings.Default.volumeMute_mod, (VK)Properties.Settings.Default.volumeMute_vk);
             _ShowWindow = new HotkeyPair((MOD)Properties.Settings.Default.showWindow_mod, (VK)Properties.Settings.Default.showWindow_vk);
+            _Shortcuts = new HotkeyPair[] { _NextTrack, _PreviousTrack, _PlayPause, _VolumeUp, _VolumeDown, _VolumeMute, _ShowWindow };
         }
 
         public void Activate(Window win)
