@@ -37,7 +37,7 @@ namespace unison
         {
             _systray.Dispose();
             _snapcast.LaunchOrExit(true);
-            _hotkeys.RemoveHotKeys();
+            _hotkeys.RemoveHotkeys();
             base.OnExit(e);
         }
     }

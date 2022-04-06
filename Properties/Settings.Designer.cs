@@ -118,5 +118,173 @@ namespace unison.Properties {
                 this["volume_offset"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public uint nextTrack_mod {
+            get {
+                return ((uint)(this["nextTrack_mod"]));
+            }
+            set {
+                this["nextTrack_mod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("176")]
+        public uint nextTrack_vk {
+            get {
+                return ((uint)(this["nextTrack_vk"]));
+            }
+            set {
+                this["nextTrack_vk"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public uint previousTrack_mod {
+            get {
+                return ((uint)(this["previousTrack_mod"]));
+            }
+            set {
+                this["previousTrack_mod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("177")]
+        public uint previousTrack_vk {
+            get {
+                return ((uint)(this["previousTrack_vk"]));
+            }
+            set {
+                this["previousTrack_vk"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public uint playPause_mod {
+            get {
+                return ((uint)(this["playPause_mod"]));
+            }
+            set {
+                this["playPause_mod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("179")]
+        public uint playPause_vk {
+            get {
+                return ((uint)(this["playPause_vk"]));
+            }
+            set {
+                this["playPause_vk"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public uint volumeUp_mod {
+            get {
+                return ((uint)(this["volumeUp_mod"]));
+            }
+            set {
+                this["volumeUp_mod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("175")]
+        public uint volumeUp_vk {
+            get {
+                return ((uint)(this["volumeUp_vk"]));
+            }
+            set {
+                this["volumeUp_vk"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public uint volumeDown_mod {
+            get {
+                return ((uint)(this["volumeDown_mod"]));
+            }
+            set {
+                this["volumeDown_mod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("174")]
+        public uint volumeDown_vk {
+            get {
+                return ((uint)(this["volumeDown_vk"]));
+            }
+            set {
+                this["volumeDown_vk"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public uint volumeMute_mod {
+            get {
+                return ((uint)(this["volumeMute_mod"]));
+            }
+            set {
+                this["volumeMute_mod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("173")]
+        public uint volumeMute_vk {
+            get {
+                return ((uint)(this["volumeMute_vk"]));
+            }
+            set {
+                this["volumeMute_vk"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public uint showWindow_mod {
+            get {
+                return ((uint)(this["showWindow_mod"]));
+            }
+            set {
+                this["showWindow_mod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("13")]
+        public uint showWindow_vk {
+            get {
+                return ((uint)(this["showWindow_vk"]));
+            }
+            set {
+                this["showWindow_vk"] = value;
+            }
+        }
     }
 }

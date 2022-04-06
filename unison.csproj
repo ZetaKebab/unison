@@ -7,7 +7,7 @@
     <ApplicationIcon>Resources\icon-full.ico</ApplicationIcon>
     <Win32Resource></Win32Resource>
     <StartupObject>unison.App</StartupObject>
-    <Version>1.1</Version>
+    <Version>1.2</Version>
     <Company />
     <Authors>Théo Marchal</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -22,13 +22,6 @@
     <None Remove="Resources\icon-mini.ico" />
     <None Remove="Resources\nocover.png" />
     <None Remove="LICENSE" />
-    <None Remove="snapclient_0.25.0-1_win64\FLAC.dll" />
-    <None Remove="snapclient_0.25.0-1_win64\ogg.dll" />
-    <None Remove="snapclient_0.25.0-1_win64\opus.dll" />
-    <None Remove="snapclient_0.25.0-1_win64\README.txt" />
-    <None Remove="snapclient_0.25.0-1_win64\snapclient.exe" />
-    <None Remove="snapclient_0.25.0-1_win64\soxr.dll" />
-    <None Remove="snapclient_0.25.0-1_win64\vorbis.dll" />
     <None Include="LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -47,27 +40,6 @@
     </Resource>
     <Content Include="LICENSE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="snapclient_0.25.0-1_win64\README.txt">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="snapclient_0.25.0-1_win64\FLAC.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="snapclient_0.25.0-1_win64\ogg.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="snapclient_0.25.0-1_win64\opus.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="snapclient_0.25.0-1_win64\snapclient.exe">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="snapclient_0.25.0-1_win64\soxr.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="snapclient_0.25.0-1_win64\vorbis.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

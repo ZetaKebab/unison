@@ -1,15 +1,28 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
     <system:String x:Key="snapcastPath">snapclient_0.26.0-1_win64</system:String>
     <system:String x:Key="snapcastPort">1704</system:String>
 
-    <system:String x:Key="connectionOk1">&#xf385;</system:String>
-    <system:String x:Key="connectionOk2">&#xf386;</system:String>
-    <system:String x:Key="connectionFail">&#xf384;</system:String>
-
     <system:String x:Key="playButton">&#xedb4;</system:String>
     <system:String x:Key="pauseButton">&#xedb5;</system:String>
+
+    <system:String x:Key="volume_offset">5</system:String>
+    
+    <system:UInt32 x:Key="nextTrack_mod">2</system:UInt32>
+    <system:UInt32 x:Key="nextTrack_vk">176</system:UInt32>
+    <system:UInt32 x:Key="previousTrack_mod">2</system:UInt32>
+    <system:UInt32 x:Key="previousTrack_vk">177</system:UInt32>
+    <system:UInt32 x:Key="playPause_mod">2</system:UInt32>
+    <system:UInt32 x:Key="playPause_vk">179</system:UInt32>
+    <system:UInt32 x:Key="volumeUp_mod">2</system:UInt32>
+    <system:UInt32 x:Key="volumeUp_vk">175</system:UInt32>
+    <system:UInt32 x:Key="volumeDown_mod">2</system:UInt32>
+    <system:UInt32 x:Key="volumeDown_vk">174</system:UInt32>
+    <system:UInt32 x:Key="volumeMute_mod">2</system:UInt32>
+    <system:UInt32 x:Key="volumeMute_vk">173</system:UInt32>
+    <system:UInt32 x:Key="showWindow_mod">3</system:UInt32>
+    <system:UInt32 x:Key="showWindow_vk">13</system:UInt32>
 
 </ResourceDictionary>
