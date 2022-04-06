@@ -223,7 +223,7 @@ namespace unison
         {
             Button button = (Button)sender;
             TextBlock textBlock = (TextBlock)button.Content;
-            textBlock.Text = "Enter key...";
+            textBlock.Text = unison.Resources.Resources.Settings_ShortcutsKey;
             textBlock.FontWeight = FontWeights.Bold;
             button.PreviewKeyDown += DetectPressedKey;
         }

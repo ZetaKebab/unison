@@ -195,6 +195,12 @@
   <data name="Settings_Shortcuts" xml:space="preserve">
     <value>Raccourcis</value>
   </data>
+  <data name="Settings_ShortcutsInfo" xml:space="preserve">
+    <value>Veuillez noter que si votre touche n'est pas reconnue, cela est du à la manière dont les touches virtuelles sont gérées par Windows.</value>
+  </data>
+  <data name="Settings_ShortcutsKey" xml:space="preserve">
+    <value>Appuyez sur une touche...</value>
+  </data>
   <data name="Settings_ShowWindow" xml:space="preserve">
     <value>Afficher la fenêtre</value>
   </data>

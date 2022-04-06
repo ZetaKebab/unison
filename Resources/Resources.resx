@@ -195,6 +195,12 @@
   <data name="Settings_Shortcuts" xml:space="preserve">
     <value>Shortcuts</value>
   </data>
+  <data name="Settings_ShortcutsInfo" xml:space="preserve">
+    <value>Please note that if the input key is not recognized, this is due to a limitation on how virtual keys work.</value>
+  </data>
+  <data name="Settings_ShortcutsKey" xml:space="preserve">
+    <value>Enter a key...</value>
+  </data>
   <data name="Settings_ShowWindow" xml:space="preserve">
     <value>Show window</value>
   </data>

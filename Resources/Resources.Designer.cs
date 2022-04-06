@@ -295,6 +295,24 @@ namespace unison.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please note that if the input key is not recognized, this is due to a limitation on how virtual keys work..
+        /// </summary>
+        public static string Settings_ShortcutsInfo {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutsInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a key....
+        /// </summary>
+        public static string Settings_ShortcutsKey {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutsKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show window.
         /// </summary>
         public static string Settings_ShowWindow {
