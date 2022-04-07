@@ -83,7 +83,7 @@ namespace unison
             SongAlbum.Text = _mpd.GetCurrentSong().Album;
 
             if (_mpd.GetCurrentSong().Date != null)
-                SongAlbum.Text += $" ({ _mpd.GetCurrentSong().Date})";
+                SongAlbum.Text += $" ({_mpd.GetCurrentSong().Date.Split("-")[0]})";
 
             SongGenre.Text = _mpd.GetCurrentSong().Genre;
             SongFormat.Text = _mpd.GetCurrentSong().Path.Substring(_mpd.GetCurrentSong().Path.LastIndexOf(".") + 1);
