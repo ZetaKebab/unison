@@ -14,7 +14,7 @@ namespace unison
         {
             if (Properties.Settings.Default.snapcast_startup)
             {
-                var mpd = (MPDHandler)Application.Current.Properties["mpd"];
+                MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
                 if (mpd.IsConnected())
                     LaunchOrExit();
             }
@@ -37,8 +37,10 @@ namespace unison
         {
             if (!HasStarted && !ForceExit)
             {
+                MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
+
                 _snapcast.StartInfo.FileName = Properties.Settings.Default.snapcast_path + @"\snapclient.exe";
-                _snapcast.StartInfo.Arguments = $"--host {Properties.Settings.Default.mpd_host}";
+                _snapcast.StartInfo.Arguments = $"--host {mpd._ipAddress}";
                 _snapcast.StartInfo.CreateNoWindow = !Properties.Settings.Default.snapcast_window;
                 try
                 {

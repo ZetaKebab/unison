@@ -54,6 +54,7 @@ namespace unison
         bool _isUpdatingStatus = false;
         bool _isUpdatingSong = false;
 
+        public IPAddress _ipAddress;
         bool _invalidIp = false;
 
         private event EventHandler ConnectionChanged;
@@ -191,9 +192,11 @@ namespace unison
                 _connection = await ConnectInternal(token);
                 _commandConnection = await ConnectInternal(token);
             }
-            catch(MpcNET.Exceptions.MpcConnectException)
+            catch (MpcNET.Exceptions.MpcConnectException e)
             {
                 _invalidIp = true;
+                Trace.WriteLine($"Error in connect: {e.Message}");
+                return;
             }
             if (_connection != null && _commandConnection != null)
             {
@@ -219,16 +222,21 @@ namespace unison
 
         private async Task<MpcConnection> ConnectInternal(CancellationToken token)
         {
-            IPAddress.TryParse(Properties.Settings.Default.mpd_host, out IPAddress ipAddress);
+            IPAddress.TryParse(Properties.Settings.Default.mpd_host, out _ipAddress);
 
-            if (ipAddress == null)
+            if (_ipAddress == null)
             {
-                IPAddress[] addrList;
                 try
                 {
-                    addrList = Dns.GetHostAddresses(Properties.Settings.Default.mpd_host);
+                    IPAddress[] addrList = Dns.GetHostAddresses(Properties.Settings.Default.mpd_host);
                     if (addrList.Length > 0)
-                        ipAddress = addrList[0];
+                    {
+                        foreach (IPAddress addr in addrList)
+                        {
+                            if (addr.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                                _ipAddress = addr;
+                        }
+                    }
                 }
                 catch (Exception)
                 {
@@ -236,7 +244,7 @@ namespace unison
                 }
             }
 
-            _mpdEndpoint = new IPEndPoint(ipAddress, Properties.Settings.Default.mpd_port);
+            _mpdEndpoint = new IPEndPoint(_ipAddress, Properties.Settings.Default.mpd_port);
             MpcConnection connection = new MpcConnection(_mpdEndpoint);
             await connection.ConnectAsync(token);
 
@@ -256,10 +264,8 @@ namespace unison
         private void Disconnected()
         {
             _connected = false;
-
             _connection = null;
             _commandConnection = null;
-
             ConnectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
@@ -279,7 +285,10 @@ namespace unison
                         if (idleChanges.IsResponseValid)
                             await HandleIdleResponseAsync(idleChanges.Response.Content);
                         else
-                            throw new Exception(idleChanges.Response?.Content);
+                        {
+                            Trace.WriteLine($"Error in Idle connection thread: {idleChanges.Response?.Content}");
+                            //throw new Exception(idleChanges.Response?.Content);
+                        }
                     }
                     catch (Exception e)
                     {
