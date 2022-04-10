@@ -33,12 +33,12 @@
                                 <StackPanel>
                                     <StackPanel>
                                         <TextBlock Text="{x:Static properties:Resources.Settings_Host}" TextWrapping="Wrap" Margin="5,0,0,0"/>
-                                        <TextBox x:Name="MpdHost" KeyDown="ConnectHandler" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
+                                        <TextBox x:Name="MpdHost" KeyDown="ConnectHandler" TextChanged="MpdConnectTextBox" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
                                     </StackPanel>
 
                                     <StackPanel Margin="0,5,0,0">
                                         <TextBlock Text="{x:Static properties:Resources.Settings_Port}" TextWrapping="Wrap" Margin="5,0,0,0"/>
-                                        <TextBox x:Name="MpdPort" KeyDown="ConnectHandler" MaxLength="5" PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
+                                        <TextBox x:Name="MpdPort" KeyDown="ConnectHandler" PreviewTextInput="NumberValidationTextBox" MaxLength="5" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
                                     </StackPanel>
 
                                     <!--<StackPanel Margin="0,5,0,0">

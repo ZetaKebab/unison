@@ -37,6 +37,7 @@ namespace unison
 
         HotkeyHandler _hotkeys = (HotkeyHandler)Application.Current.Properties["hotkeys"];
 
+
         public Settings()
         {
             InitHwnd();
@@ -61,6 +62,134 @@ namespace unison
 
             InitializeShortcuts();
         }
+
+        public void UpdateConnectionStatus()
+        {
+            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
+            if (mpd.IsConnected())
+            {
+                ConnectionStatus.Text = $"{unison.Resources.Resources.Settings_ConnectionStatusConnected} {mpd.GetVersion()}.";
+                ConnectButton.IsEnabled = false;
+            }
+            else
+            {
+                ConnectionStatus.Text = unison.Resources.Resources.Settings_ConnectionStatusOffline;
+                ConnectButton.IsEnabled = true;
+            }
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void MpdConnectTextBox(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (textBox.Text == Properties.Settings.Default.mpd_host)
+                ConnectButton.IsEnabled = false;
+            else
+                ConnectButton.IsEnabled = true;
+
+            e.Handled = true;
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            ProcessStartInfo psi = new(e.Uri.AbsoluteUri);
+            psi.UseShellExecute = true;
+            Process.Start(psi);
+            e.Handled = true;
+        }
+
+        private void MPDConnect_Clicked(object sender, RoutedEventArgs e)
+        {
+            if (!ConnectButton.IsEnabled)
+                return;
+
+            SaveSettings();
+
+            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
+            if (mpd.IsConnected())
+                mpd = new MPDHandler();
+
+            ConnectButton.IsEnabled = false;
+            ConnectionStatus.Text = unison.Resources.Resources.Settings_ConnectionStatusConnecting;
+
+            System.Threading.Tasks.Task.Run(() => { mpd.Connect(); });
+        }
+
+        private void SnapcastReset_Clicked(object sender, RoutedEventArgs e)
+        {
+            SnapcastPath.Text = (string)Application.Current.FindResource("snapcastPath");
+            SnapcastPort.Text = (string)Application.Current.FindResource("snapcastPort");
+        }
+
+        public void UpdateStats()
+        {
+            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
+            StatSong.Text = mpd.GetStats().Songs.ToString();
+            StatAlbum.Text = mpd.GetStats().Albums.ToString();
+            StatArtist.Text = mpd.GetStats().Artists.ToString();
+            StatTotalPlaytime.Text = mpd.GetStats().TotalPlaytime.ToString();
+            StatUptime.Text = mpd.GetStats().Uptime.ToString();
+            StatTotalTimePlayed.Text = mpd.GetStats().TotalTimePlayed.ToString();
+            StatDatabaseUpdate.Text = mpd.GetStats().DatabaseUpdate.ToString();
+        }
+
+        private void ConnectHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+                MPDConnect_Clicked(null, null);
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;
+            SaveSettings();
+            WindowState = WindowState.Minimized;
+            Hide();
+        }
+
+        public void InitHwnd()
+        {
+            WindowInteropHelper helper = new(this);
+            helper.EnsureHandle();
+        }
+
+        public void SaveSettings()
+        {
+            Properties.Settings.Default.mpd_host = MpdHost.Text;
+            Properties.Settings.Default.mpd_port = int.Parse(MpdPort.Text, CultureInfo.InvariantCulture);
+            //Properties.Settings.Default.mpd_password = MpdPassword.Text;
+            Properties.Settings.Default.snapcast_startup = (bool)SnapcastStartup.IsChecked;
+            Properties.Settings.Default.snapcast_window = (bool)SnapcastWindow.IsChecked;
+            Properties.Settings.Default.snapcast_path = SnapcastPath.Text;
+            Properties.Settings.Default.snapcast_port = int.Parse(SnapcastPort.Text, CultureInfo.InvariantCulture);
+            Properties.Settings.Default.volume_offset = int.Parse(VolumeOffset.Text, CultureInfo.InvariantCulture);
+
+            Properties.Settings.Default.nextTrack_mod = GetMod(Shortcut_NextTrack);
+            Properties.Settings.Default.nextTrack_vk = GetVk(Shortcut_NextTrack);
+            Properties.Settings.Default.previousTrack_mod = GetMod(Shortcut_PreviousTrack);
+            Properties.Settings.Default.previousTrack_vk = GetVk(Shortcut_PreviousTrack);
+            Properties.Settings.Default.playPause_mod = GetMod(Shortcut_PlayPause);
+            Properties.Settings.Default.playPause_vk = GetVk(Shortcut_PlayPause);
+            Properties.Settings.Default.volumeUp_mod = GetMod(Shortcut_VolumeUp);
+            Properties.Settings.Default.volumeUp_vk = GetVk(Shortcut_VolumeUp);
+            Properties.Settings.Default.volumeDown_mod = GetMod(Shortcut_VolumeDown);
+            Properties.Settings.Default.volumeDown_vk = GetVk(Shortcut_VolumeDown);
+            Properties.Settings.Default.volumeMute_mod = GetMod(Shortcut_VolumeMute);
+            Properties.Settings.Default.volumeMute_vk = GetVk(Shortcut_VolumeMute);
+            Properties.Settings.Default.showWindow_mod = GetMod(Shortcut_ShowWindow);
+            Properties.Settings.Default.showWindow_vk = GetVk(Shortcut_ShowWindow);
+
+            Properties.Settings.Default.Save();
+        }
+
+
+        // Hotkeys
 
         void InitializeShortcuts()
         {
@@ -106,55 +235,6 @@ namespace unison
                 if (textBlock.Text != "None")
                     textBlock.FontWeight = FontWeights.Bold;
             }
-        }
-
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-            ProcessStartInfo psi = new(e.Uri.AbsoluteUri);
-            psi.UseShellExecute = true;
-            Process.Start(psi);
-            e.Handled = true;
-        }
-
-        public void UpdateConnectionStatus()
-        {
-            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
-            if (mpd.IsConnected())
-                ConnectionStatus.Text = $"{unison.Resources.Resources.Settings_ConnectionStatusConnected} {mpd.GetVersion()}.";
-            else
-                ConnectionStatus.Text = unison.Resources.Resources.Settings_ConnectionStatusOffline;
-        }
-
-        private void MPDConnect_Clicked(object sender, RoutedEventArgs e)
-        {
-            SaveSettings();
-            ConnectionStatus.Text = unison.Resources.Resources.Settings_ConnectionStatusConnecting;
-            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
-            mpd.Connect();
-        }
-
-        private void SnapcastReset_Clicked(object sender, RoutedEventArgs e)
-        {
-            SnapcastPath.Text = (string)Application.Current.FindResource("snapcastPath");
-            SnapcastPort.Text = (string)Application.Current.FindResource("snapcastPort");
-        }
-
-        public void UpdateStats()
-        {
-            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
-            StatSong.Text = mpd.GetStats().Songs.ToString();
-            StatAlbum.Text = mpd.GetStats().Albums.ToString();
-            StatArtist.Text = mpd.GetStats().Artists.ToString();
-            StatTotalPlaytime.Text = mpd.GetStats().TotalPlaytime.ToString();
-            StatUptime.Text = mpd.GetStats().Uptime.ToString();
-            StatTotalTimePlayed.Text = mpd.GetStats().TotalTimePlayed.ToString();
-            StatDatabaseUpdate.Text = mpd.GetStats().DatabaseUpdate.ToString();
         }
 
         private void HotkeyChanged()
@@ -306,55 +386,6 @@ namespace unison
             Button button = stackPanel.Children.OfType<Button>().First();
             TextBlock textBlock = (TextBlock)button.Content;
             return (uint)(HotkeyHandler.VK)System.Enum.Parse(typeof(HotkeyHandler.VK), textBlock.Text, true);
-        }
-
-        public void SaveSettings()
-        {
-            Properties.Settings.Default.mpd_host = MpdHost.Text;
-            Properties.Settings.Default.mpd_port = int.Parse(MpdPort.Text, CultureInfo.InvariantCulture);
-            //Properties.Settings.Default.mpd_password = MpdPassword.Text;
-            Properties.Settings.Default.snapcast_startup = (bool)SnapcastStartup.IsChecked;
-            Properties.Settings.Default.snapcast_window = (bool)SnapcastWindow.IsChecked;
-            Properties.Settings.Default.snapcast_path = SnapcastPath.Text;
-            Properties.Settings.Default.snapcast_port = int.Parse(SnapcastPort.Text, CultureInfo.InvariantCulture);
-            Properties.Settings.Default.volume_offset = int.Parse(VolumeOffset.Text, CultureInfo.InvariantCulture);
-        
-            Properties.Settings.Default.nextTrack_mod = GetMod(Shortcut_NextTrack);
-            Properties.Settings.Default.nextTrack_vk = GetVk(Shortcut_NextTrack);
-            Properties.Settings.Default.previousTrack_mod = GetMod(Shortcut_PreviousTrack);
-            Properties.Settings.Default.previousTrack_vk = GetVk(Shortcut_PreviousTrack);
-            Properties.Settings.Default.playPause_mod = GetMod(Shortcut_PlayPause);
-            Properties.Settings.Default.playPause_vk = GetVk(Shortcut_PlayPause);
-            Properties.Settings.Default.volumeUp_mod = GetMod(Shortcut_VolumeUp);
-            Properties.Settings.Default.volumeUp_vk = GetVk(Shortcut_VolumeUp);
-            Properties.Settings.Default.volumeDown_mod = GetMod(Shortcut_VolumeDown);
-            Properties.Settings.Default.volumeDown_vk = GetVk(Shortcut_VolumeDown);
-            Properties.Settings.Default.volumeMute_mod = GetMod(Shortcut_VolumeMute);
-            Properties.Settings.Default.volumeMute_vk = GetVk(Shortcut_VolumeMute);
-            Properties.Settings.Default.showWindow_mod = GetMod(Shortcut_ShowWindow);
-            Properties.Settings.Default.showWindow_vk = GetVk(Shortcut_ShowWindow);
-
-            Properties.Settings.Default.Save();
-        }
-
-        private void ConnectHandler(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return)
-                MPDConnect_Clicked(null, null);
-        }
-
-        private void Window_Closing(object sender, CancelEventArgs e)
-        {
-            e.Cancel = true;
-            SaveSettings();
-            WindowState = WindowState.Minimized;
-            Hide();
-        }
-
-        public void InitHwnd()
-        {
-            WindowInteropHelper helper = new(this);
-            helper.EnsureHandle();
         }
     }
 }

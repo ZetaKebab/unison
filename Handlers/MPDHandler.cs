@@ -65,12 +65,10 @@ namespace unison
         private MpcConnection _connection;
         private MpcConnection _commandConnection;
         private IPEndPoint _mpdEndpoint;
-        private CancellationTokenSource cancelToken;
+        private CancellationTokenSource _cancelToken;
 
         public MPDHandler()
         {
-            cancelToken = new CancellationTokenSource();
-
             Initialize(null, null);
 
             _stats = new Statistics();
@@ -161,7 +159,7 @@ namespace unison
                 IMpdMessage<T> response = await _commandConnection.SendAsync(command);
                 if (!response.IsResponseValid)
                 {
-                    var mpdError = response.Response?.Result?.MpdError;
+                    string mpdError = response.Response?.Result?.MpdError;
                     if (mpdError != null && mpdError != "")
                         throw new Exception(mpdError);
                     else
@@ -186,7 +184,9 @@ namespace unison
 
         public async void Connect()
         {
-            CancellationToken token = cancelToken.Token;
+            _cancelToken = new CancellationTokenSource();
+            CancellationToken token = _cancelToken.Token;
+
             try
             {
                 _connection = await ConnectInternal(token);
@@ -194,8 +194,10 @@ namespace unison
             }
             catch (MpcNET.Exceptions.MpcConnectException e)
             {
+                _connected = false;
                 _invalidIp = true;
                 Trace.WriteLine($"Error in connect: {e.Message}");
+                ConnectionChanged?.Invoke(this, EventArgs.Empty);
                 return;
             }
             if (_connection != null && _commandConnection != null)
@@ -210,6 +212,7 @@ namespace unison
             }
             else
             {
+                _connected = false;
                 ConnectionChanged?.Invoke(this, EventArgs.Empty);
                 return;
             }
@@ -261,12 +264,16 @@ namespace unison
             return connection;
         }
 
-        private void Disconnected()
-        {
+        public void Disconnected()
+        {            
             _connected = false;
-            _connection = null;
-            _commandConnection = null;
             ConnectionChanged?.Invoke(this, EventArgs.Empty);
+
+            if (_connection != null)
+                _connection = null;
+
+            if (_commandConnection != null)
+                _commandConnection = null;
         }
 
         private void Loop(CancellationToken token)
@@ -277,27 +284,29 @@ namespace unison
                 {
                     try
                     {
+                        token.ThrowIfCancellationRequested();
                         if (token.IsCancellationRequested || _connection == null)
                             break;
 
-                        var idleChanges = await _connection.SendAsync(new IdleCommand("stored_playlist playlist player mixer output options"));
+                        IMpdMessage<string> idleChanges = await _connection.SendAsync(new IdleCommand("stored_playlist playlist player mixer output options update"));
 
                         if (idleChanges.IsResponseValid)
                             await HandleIdleResponseAsync(idleChanges.Response.Content);
                         else
                         {
                             Trace.WriteLine($"Error in Idle connection thread: {idleChanges.Response?.Content}");
-                            //throw new Exception(idleChanges.Response?.Content);
+                            throw new Exception(idleChanges.Response?.Content);
                         }
                     }
                     catch (Exception e)
                     {
                         Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
                         Disconnected();
+                        break;
                     }
                 }
 
-            }).ConfigureAwait(false);
+            }, token).ConfigureAwait(false);
         }
 
         private async Task HandleIdleResponseAsync(string subsystems)
@@ -383,12 +392,12 @@ namespace unison
                     if (_connection == null)
                         return;
 
-                    var albumReq = await _connection.SendAsync(new AlbumArtCommand(path, currentSize));
+                    IMpdMessage<MpdBinaryData> albumReq = await _connection.SendAsync(new AlbumArtCommand(path, currentSize));
                     if (!albumReq.IsResponseValid)
                         break;
 
-                    var response = albumReq.Response.Content;
-                    if (response.Binary == 0)
+                    MpdBinaryData response = albumReq.Response.Content;
+                    if (response == null || response.Binary == 0)
                         break;
 
                     totalBinarySize = response.Size;
@@ -512,7 +521,6 @@ namespace unison
 
         public void AddSong(string Uri)
         {
-            Debug.WriteLine("AddCommand path: " + Uri);
             SendCommand(new AddCommand(Uri));
         }
 
@@ -526,20 +534,23 @@ namespace unison
         {
             Dictionary<string, string> response = await SafelySendCommandAsync(new StatsCommand());
 
-            _stats.Songs = int.Parse(response["songs"]);
-            _stats.Albums = int.Parse(response["albums"]);
-            _stats.Artists = int.Parse(response["artists"]);
+            if (response != null)
+            {
+                _stats.Songs = int.Parse(response["songs"]);
+                _stats.Albums = int.Parse(response["albums"]);
+                _stats.Artists = int.Parse(response["artists"]);
 
-            TimeSpan time;
-            time = TimeSpan.FromSeconds(int.Parse(response["uptime"]));
-            _stats.Uptime = time.ToString(@"dd\:hh\:mm\:ss");
-            time = TimeSpan.FromSeconds(int.Parse(response["db_playtime"]));
-            _stats.TotalPlaytime = time.ToString(@"dd\:hh\:mm\:ss");
-            time = TimeSpan.FromSeconds(int.Parse(response["playtime"]));
-            _stats.TotalTimePlayed = time.ToString(@"dd\:hh\:mm\:ss");
+                TimeSpan time;
+                time = TimeSpan.FromSeconds(int.Parse(response["uptime"]));
+                _stats.Uptime = time.ToString(@"dd\:hh\:mm\:ss");
+                time = TimeSpan.FromSeconds(int.Parse(response["db_playtime"]));
+                _stats.TotalPlaytime = time.ToString(@"dd\:hh\:mm\:ss");
+                time = TimeSpan.FromSeconds(int.Parse(response["playtime"]));
+                _stats.TotalTimePlayed = time.ToString(@"dd\:hh\:mm\:ss");
 
-            DateTime date = new DateTime(1970, 1, 1).AddSeconds(int.Parse(response["db_update"])).ToLocalTime();
-            _stats.DatabaseUpdate = date.ToString("dd/MM/yyyy @ HH:mm");
+                DateTime date = new DateTime(1970, 1, 1).AddSeconds(int.Parse(response["db_update"])).ToLocalTime();
+                _stats.DatabaseUpdate = date.ToString("dd/MM/yyyy @ HH:mm");
+            }
         }
     }
 }
