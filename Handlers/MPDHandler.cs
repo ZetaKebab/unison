@@ -384,11 +384,34 @@ namespace unison
             List<byte> data = new List<byte>();
             try
             {
+                bool ReadPictureFailed = true;
                 long totalBinarySize = 9999;
                 long currentSize = 0;
 
                 do
                 {
+                    if (_connection == null)
+                        return;
+
+                    IMpdMessage<MpdBinaryData> albumReq = await _connection.SendAsync(new ReadPictureCommand(path, currentSize));
+                    if (!albumReq.IsResponseValid)
+                        break;
+
+                    MpdBinaryData response = albumReq.Response.Content;
+                    if (response == null || response.Binary == 0)
+                        break;
+
+                    ReadPictureFailed = false;
+                    totalBinarySize = response.Size;
+                    currentSize += response.Binary;
+                    data.AddRange(response.Data);
+                }
+                while (currentSize < totalBinarySize && !token.IsCancellationRequested);
+
+                do
+                {
+                    if (!ReadPictureFailed)
+                        break;
                     if (_connection == null)
                         return;
 
@@ -403,7 +426,8 @@ namespace unison
                     totalBinarySize = response.Size;
                     currentSize += response.Binary;
                     data.AddRange(response.Data);
-                } while (currentSize < totalBinarySize && !token.IsCancellationRequested);
+                }
+                while (currentSize < totalBinarySize && !token.IsCancellationRequested);
             }
             catch (Exception e)
             {
