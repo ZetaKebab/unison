@@ -41,12 +41,18 @@
                                         <TextBox x:Name="MpdPort" KeyDown="ConnectHandler" PreviewTextInput="NumberValidationTextBox" MaxLength="5" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
                                     </StackPanel>
 
-                                    <!--<StackPanel Margin="0,5,0,0">
-                                        <TextBlock Text="Password" TextWrapping="Wrap" Margin="5,0,0,0"/>
-                                        <TextBox x:Name="MpdPassword" TextWrapping="Wrap" Width="250" Margin="10,2,0,0"/>
-                                    </StackPanel>-->
+                                    <StackPanel Margin="0,5,0,0">
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_Password}" TextWrapping="Wrap" Margin="5,0,0,0"/>
+                                        <PasswordBox x:Name="MpdPassword" Width="250" Margin="10,2,0,0"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_ConnectionPasswordInfo}" TextWrapping="Wrap" Margin="10,5,0,0" MaxWidth="250" HorizontalAlignment="Left"/>
+                                    </StackPanel>
 
-                                    <TextBlock x:Name="ConnectionStatus" Text="{x:Static properties:Resources.Settings_ConnectionStatusOffline}" TextWrapping="Wrap" Margin="5,10,0,0"/>
+                                    <TextBlock TextWrapping="Wrap" Margin="5,10,0,0">
+                                        <Run Text="{x:Static properties:Resources.Settings_ConnectionStatus}" FontWeight="Bold" />
+                                        <Run x:Name="ConnectionStatus" Text="{x:Static properties:Resources.Settings_ConnectionStatusOffline}"/>
+                                    </TextBlock>
+
+                                    <!--<TextBlock x:Name="ConnectionStatus" Text="{x:Static properties:Resources.Settings_ConnectionStatusOffline}" TextWrapping="Wrap" Margin="5,10,0,0"/>-->
                                     <Button x:Name="ConnectButton" Content="{x:Static properties:Resources.Settings_ConnectButton}" Margin="0,10,0,0" Width="120" Click="MPDConnect_Clicked"/>
                                 </StackPanel>
                             </Grid>
@@ -205,7 +211,7 @@
                                     </Grid>
 
                                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                        <TextBlock Text="{x:Static properties:Resources.Settings_ShortcutsInfo}" TextWrapping="Wrap" Margin="0,2,0,0" MaxWidth="420" />
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_ShortcutsInfo}" TextWrapping="Wrap" MaxWidth="440" TextAlignment="Justify" />
                                     </StackPanel>
 
                                     <Button Content="{x:Static properties:Resources.Settings_SnapcastResetButton}" Margin="0,10,0,0" Width="120" Click="ShortcutsReset_Clicked"/>

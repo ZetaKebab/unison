@@ -33,13 +33,7 @@ Through [Radio-Browser](https://www.radio-browser.info), a community database, y
 
 ![Radio stations](Screenshots/screen4.png)
 
-## Caveats
-
-### Missing features
-
-* MPD passwords: I don't really see the point, but if asked, I will integrate them.
-
-### Planned features
+## Planned features
 
 * A complete shuffle system based on set criteria, aka a smart playlist.
 * Playlist, queue and library management. I use other software to do it, but I will implement them at some point.

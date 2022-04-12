@@ -55,7 +55,6 @@ namespace unison
         bool _isUpdatingSong = false;
 
         public IPAddress _ipAddress;
-        bool _invalidIp = false;
 
         private event EventHandler ConnectionChanged;
         private event EventHandler StatusChanged;
@@ -96,7 +95,7 @@ namespace unison
 
         void OnConnectionChanged(object sender, EventArgs e)
         {
-            if (!_connected && !_invalidIp)
+            if (!_connected)
                 _retryTimer.Start();
             else
                 _retryTimer.Stop();
@@ -195,14 +194,12 @@ namespace unison
             catch (MpcNET.Exceptions.MpcConnectException e)
             {
                 _connected = false;
-                _invalidIp = true;
                 Trace.WriteLine($"Error in connect: {e.Message}");
                 ConnectionChanged?.Invoke(this, EventArgs.Empty);
                 return;
             }
             if (_connection != null && _commandConnection != null)
             {
-                _invalidIp = false;
                 if (_connection.IsConnected && _commandConnection.IsConnected)
                 {
                     _connected = true;
@@ -251,7 +248,7 @@ namespace unison
             MpcConnection connection = new MpcConnection(_mpdEndpoint);
             await connection.ConnectAsync(token);
 
-            /*if (!string.IsNullOrEmpty(Properties.Settings.Default.mpd_password))
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.mpd_password))
             {
                 IMpdMessage<string> result = await connection.SendAsync(new PasswordCommand(Properties.Settings.Default.mpd_password));
                 if (!result.IsResponseValid)
@@ -259,7 +256,7 @@ namespace unison
                     string mpdError = result.Response?.Result?.MpdError;
                     Trace.WriteLine(mpdError);
                 }
-            }*/
+            }
 
             return connection;
         }

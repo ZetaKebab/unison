@@ -196,7 +196,25 @@ namespace unison.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connected to MPD.
+        ///   Looks up a localized string similar to Please note that since MPD passwords are not secure (they are sent in plain text to the server), there are saved as is in the setting file..
+        /// </summary>
+        public static string Settings_ConnectionPasswordInfo {
+            get {
+                return ResourceManager.GetString("Settings_ConnectionPasswordInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status:.
+        /// </summary>
+        public static string Settings_ConnectionStatus {
+            get {
+                return ResourceManager.GetString("Settings_ConnectionStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to connected to MPD.
         /// </summary>
         public static string Settings_ConnectionStatusConnected {
             get {
@@ -205,7 +223,7 @@ namespace unison.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connecting....
+        ///   Looks up a localized string similar to connecting....
         /// </summary>
         public static string Settings_ConnectionStatusConnecting {
             get {
@@ -214,7 +232,7 @@ namespace unison.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not connected..
+        ///   Looks up a localized string similar to not connected..
         /// </summary>
         public static string Settings_ConnectionStatusOffline {
             get {
@@ -255,6 +273,15 @@ namespace unison.Resources {
         public static string Settings_NextTrack {
             get {
                 return ResourceManager.GetString("Settings_NextTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Settings_Password {
+            get {
+                return ResourceManager.GetString("Settings_Password", resourceCulture);
             }
         }
         

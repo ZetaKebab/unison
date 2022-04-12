@@ -53,7 +53,7 @@ namespace unison
         {
             MpdHost.Text = Properties.Settings.Default.mpd_host;
             MpdPort.Text = Properties.Settings.Default.mpd_port.ToString();
-            //MpdPassword.Text = Properties.Settings.Default.mpd_password;
+            MpdPassword.Password = Properties.Settings.Default.mpd_password;
             SnapcastStartup.IsChecked = Properties.Settings.Default.snapcast_startup;
             SnapcastWindow.IsChecked = Properties.Settings.Default.snapcast_window;
             SnapcastPath.Text = Properties.Settings.Default.snapcast_path;
@@ -163,7 +163,7 @@ namespace unison
         {
             Properties.Settings.Default.mpd_host = MpdHost.Text;
             Properties.Settings.Default.mpd_port = int.Parse(MpdPort.Text, CultureInfo.InvariantCulture);
-            //Properties.Settings.Default.mpd_password = MpdPassword.Text;
+            Properties.Settings.Default.mpd_password = MpdPassword.Password;
             Properties.Settings.Default.snapcast_startup = (bool)SnapcastStartup.IsChecked;
             Properties.Settings.Default.snapcast_window = (bool)SnapcastWindow.IsChecked;
             Properties.Settings.Default.snapcast_path = SnapcastPath.Text;

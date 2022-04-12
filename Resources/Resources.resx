@@ -162,14 +162,20 @@
   <data name="Settings_Connection" xml:space="preserve">
     <value>Connection</value>
   </data>
+  <data name="Settings_ConnectionPasswordInfo" xml:space="preserve">
+    <value>Please note that since MPD passwords are not secure (they are sent in plain text to the server), there are saved as is in the setting file.</value>
+  </data>
+  <data name="Settings_ConnectionStatus" xml:space="preserve">
+    <value>Status:</value>
+  </data>
   <data name="Settings_ConnectionStatusConnected" xml:space="preserve">
-    <value>Connected to MPD</value>
+    <value>connected to MPD</value>
   </data>
   <data name="Settings_ConnectionStatusConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>connecting...</value>
   </data>
   <data name="Settings_ConnectionStatusOffline" xml:space="preserve">
-    <value>Not connected.</value>
+    <value>not connected.</value>
   </data>
   <data name="Settings_Host" xml:space="preserve">
     <value>Host</value>
@@ -182,6 +188,9 @@
   </data>
   <data name="Settings_NextTrack" xml:space="preserve">
     <value>Next track</value>
+  </data>
+  <data name="Settings_Password" xml:space="preserve">
+    <value>Password</value>
   </data>
   <data name="Settings_PlayPause" xml:space="preserve">
     <value>Play / pause</value>

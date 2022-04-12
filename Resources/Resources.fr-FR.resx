@@ -133,7 +133,7 @@
     <value>Nom</value>
   </data>
   <data name="Radio_NotFound" xml:space="preserve">
-    <value>Aucun station trouvée !</value>
+    <value>Aucune station trouvée !</value>
   </data>
   <data name="Radio_Reset" xml:space="preserve">
     <value>Réinitialiser</value>
@@ -162,14 +162,20 @@
   <data name="Settings_Connection" xml:space="preserve">
     <value>Connexion</value>
   </data>
+  <data name="Settings_ConnectionPasswordInfo" xml:space="preserve">
+    <value>Veuillez noter que comme les mots de passe de MPD ne sont pas sécurisés (ils sont envoyés en clair au serveur), ils sont sauvegardés tels quels.</value>
+  </data>
+  <data name="Settings_ConnectionStatus" xml:space="preserve">
+    <value>Statut :</value>
+  </data>
   <data name="Settings_ConnectionStatusConnected" xml:space="preserve">
-    <value>Connecté à MPD</value>
+    <value>connecté à MPD</value>
   </data>
   <data name="Settings_ConnectionStatusConnecting" xml:space="preserve">
-    <value>Connexion en cours...</value>
+    <value>connexion en cours...</value>
   </data>
   <data name="Settings_ConnectionStatusOffline" xml:space="preserve">
-    <value>Non connecté.</value>
+    <value>non connecté.</value>
   </data>
   <data name="Settings_Host" xml:space="preserve">
     <value>Hôte</value>
@@ -182,6 +188,9 @@
   </data>
   <data name="Settings_NextTrack" xml:space="preserve">
     <value>Piste suivante</value>
+  </data>
+  <data name="Settings_Password" xml:space="preserve">
+    <value>Mot de passe</value>
   </data>
   <data name="Settings_PlayPause" xml:space="preserve">
     <value>Jouer / pause</value>
