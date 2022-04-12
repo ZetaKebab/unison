@@ -78,16 +78,24 @@ namespace unison
 
         public async void Initialize()
         {
-            List<NameAndCount> Countries = await _radioBrowser.Lists.GetCountriesAsync();
-            CountryList.Items.Add(new CountryListItem { Name = "", Count = 0 });
-            
-            foreach (NameAndCount Country in Countries)
+            try
             {
-                CountryList.Items.Add(new CountryListItem
+                List<NameAndCount> Countries = await _radioBrowser.Lists.GetCountriesAsync();
+                CountryList.Items.Add(new CountryListItem { Name = "", Count = 0 });
+
+                foreach (NameAndCount Country in Countries)
                 {
-                    Name = Country.Name,
-                    Count = Country.Stationcount
-                });
+                    CountryList.Items.Add(new CountryListItem
+                    {
+                        Name = Country.Name,
+                        Count = Country.Stationcount
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Exception while getting countries in RadioBrowser: " + e.Message);
+                return;
             }
         }
 
