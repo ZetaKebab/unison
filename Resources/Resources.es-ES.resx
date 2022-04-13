@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Exit" xml:space="preserve">
+    <value>Salir</value>
+  </data>
+  <data name="Radios" xml:space="preserve">
+    <value>Radios</value>
+  </data>
+  <data name="Radio_Country" xml:space="preserve">
+    <value>Países</value>
+  </data>
+  <data name="Radio_Loading" xml:space="preserve">
+    <value>Cargando estaciones...</value>
+  </data>
+  <data name="Radio_Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Radio_NotFound" xml:space="preserve">
+    <value>¡No estaciones encontradas!</value>
+  </data>
+  <data name="Radio_Reset" xml:space="preserve">
+    <value>Reinicializar</value>
+  </data>
+  <data name="Radio_Search" xml:space="preserve">
+    <value>Búsqueda</value>
+  </data>
+  <data name="Radio_SearchStation" xml:space="preserve">
+    <value>Buscar estación</value>
+  </data>
+  <data name="Radio_Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Ajustes</value>
+  </data>
+  <data name="Settings_About" xml:space="preserve">
+    <value>Acerca de</value>
+  </data>
+  <data name="Settings_AboutInfo" xml:space="preserve">
+    <value>unison es un software libre. Es construido con las siguientes tecnologías:</value>
+  </data>
+  <data name="Settings_ConnectButton" xml:space="preserve">
+    <value>Conexión</value>
+  </data>
+  <data name="Settings_Connection" xml:space="preserve">
+    <value>Conexión</value>
+  </data>
+  <data name="Settings_ConnectionPasswordInfo" xml:space="preserve">
+    <value>Tenga en cuenta que, dado que las contraseñas de MPD no son seguras (se envían en texto sin formato al servidor), se guardan tal cual en el archivo de configuración.</value>
+  </data>
+  <data name="Settings_ConnectionStatus" xml:space="preserve">
+    <value>Estado:</value>
+  </data>
+  <data name="Settings_ConnectionStatusConnected" xml:space="preserve">
+    <value>conectado a MPD</value>
+  </data>
+  <data name="Settings_ConnectionStatusConnecting" xml:space="preserve">
+    <value>conectando...</value>
+  </data>
+  <data name="Settings_ConnectionStatusOffline" xml:space="preserve">
+    <value>no conectado.</value>
+  </data>
+  <data name="Settings_Host" xml:space="preserve">
+    <value>Host</value>
+  </data>
+  <data name="Settings_License" xml:space="preserve">
+    <value>Licencia</value>
+  </data>
+  <data name="Settings_MadeBy" xml:space="preserve">
+    <value>Creado por</value>
+  </data>
+  <data name="Settings_NextTrack" xml:space="preserve">
+    <value>Pista siguiente</value>
+  </data>
+  <data name="Settings_Password" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="Settings_PlayPause" xml:space="preserve">
+    <value>Jugar / pausa</value>
+  </data>
+  <data name="Settings_Port" xml:space="preserve">
+    <value>Puerto</value>
+  </data>
+  <data name="Settings_PreviousTrack" xml:space="preserve">
+    <value>Pista precedente</value>
+  </data>
+  <data name="Settings_Shortcuts" xml:space="preserve">
+    <value>Atajos</value>
+  </data>
+  <data name="Settings_ShortcutsInfo" xml:space="preserve">
+    <value>Tenga en cuenta que si no está reconocida la tecla, esto se debe a una limitación en el funcionamiento de las teclas virtuales.</value>
+  </data>
+  <data name="Settings_ShortcutsKey" xml:space="preserve">
+    <value>Entre una tecla...</value>
+  </data>
+  <data name="Settings_ShowWindow" xml:space="preserve">
+    <value>Mostrar ventana</value>
+  </data>
+  <data name="Settings_SnapcastInfo1" xml:space="preserve">
+    <value>Puede cambiar a su propia versión instalada localmente del cliente Snapcast con una ruta</value>
+  </data>
+  <data name="Settings_SnapcastInfo2" xml:space="preserve">
+    <value> absoluta</value>
+  </data>
+  <data name="Settings_SnapcastInfo3" xml:space="preserve">
+    <value>.</value>
+  </data>
+  <data name="Settings_SnapcastLauch" xml:space="preserve">
+    <value>Lanzar al inicio</value>
+  </data>
+  <data name="Settings_SnapcastPath" xml:space="preserve">
+    <value>Ruta del ejecutable</value>
+  </data>
+  <data name="Settings_SnapcastPort" xml:space="preserve">
+    <value>Puerto</value>
+  </data>
+  <data name="Settings_SnapcastResetButton" xml:space="preserve">
+    <value>Reinicializar</value>
+  </data>
+  <data name="Settings_SnapcastWindow" xml:space="preserve">
+    <value>Mostrar ventana de Snapcast</value>
+  </data>
+  <data name="Settings_SourceCode1" xml:space="preserve">
+    <value>Código fuente disponible gratuitamente</value>
+  </data>
+  <data name="Settings_SourceCode2" xml:space="preserve">
+    <value>aquí</value>
+  </data>
+  <data name="Settings_Version" xml:space="preserve">
+    <value>Versión:</value>
+  </data>
+  <data name="Settings_VolumeDown" xml:space="preserve">
+    <value>Bajar volumen</value>
+  </data>
+  <data name="Settings_VolumeMute" xml:space="preserve">
+    <value>Volumen mudo</value>
+  </data>
+  <data name="Settings_VolumeOffset" xml:space="preserve">
+    <value>Intervalo de volumen</value>
+  </data>
+  <data name="Settings_VolumeUp" xml:space="preserve">
+    <value>Subir volumen</value>
+  </data>
+  <data name="ShowWindow" xml:space="preserve">
+    <value>Mostrar ventana</value>
+  </data>
+  <data name="Snapcast_Popup1" xml:space="preserve">
+    <value>Error Snapcast</value>
+  </data>
+  <data name="Snapcast_Popup2" xml:space="preserve">
+    <value>Ruta no válida:</value>
+  </data>
+  <data name="Snapcast_Popup3" xml:space="preserve">
+    <value>Ruta actual:</value>
+  </data>
+  <data name="Snapcast_Popup4" xml:space="preserve">
+    <value>Puede restablecerlo en la configuración si es necesario.</value>
+  </data>
+  <data name="StartSnapcast" xml:space="preserve">
+    <value>Iniciar Snapcast</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>Estadísticas</value>
+  </data>
+  <data name="Stats_Albums" xml:space="preserve">
+    <value>Álbumes:</value>
+  </data>
+  <data name="Stats_Artists" xml:space="preserve">
+    <value>Artistas:</value>
+  </data>
+  <data name="Stats_LastDatabaseUpdate" xml:space="preserve">
+    <value>Última actualización de la base de datos:</value>
+  </data>
+  <data name="Stats_Songs" xml:space="preserve">
+    <value>Canciones:</value>
+  </data>
+  <data name="Stats_TotalPlaytime" xml:space="preserve">
+    <value>Tiempo de juego total:</value>
+  </data>
+  <data name="Stats_TotalTimePlayed" xml:space="preserve">
+    <value>Tiempo total jugado:</value>
+  </data>
+  <data name="Stats_Uptime" xml:space="preserve">
+    <value>Tiempo de actividad de MPD:</value>
+  </data>
+  <data name="StopSnapcast" xml:space="preserve">
+    <value>Parar Snapcast</value>
+  </data>
+</root>

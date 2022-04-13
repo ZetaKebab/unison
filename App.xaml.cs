@@ -15,6 +15,8 @@ namespace unison
         {
             //debug language
             //unison.Resources.Resources.Culture = CultureInfo.GetCultureInfo("fr-FR");
+            //unison.Resources.Resources.Culture = CultureInfo.GetCultureInfo("es-ES");
+
 
             base.OnStartup(e);
 

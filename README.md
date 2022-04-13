@@ -40,4 +40,4 @@ Through [Radio-Browser](https://www.radio-browser.info), a community database, y
 
 ## Translations
 
-unison is translated in English and French. You can contribute if you want!
+unison is translated in English, French and Spanish. You can contribute if you want!
