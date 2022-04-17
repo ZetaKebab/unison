@@ -43,7 +43,7 @@
 
                                     <StackPanel Margin="0,5,0,0">
                                         <TextBlock Text="{x:Static properties:Resources.Settings_Password}" TextWrapping="Wrap" Margin="5,0,0,0"/>
-                                        <PasswordBox x:Name="MpdPassword" Width="250" Margin="10,2,0,0"/>
+                                        <PasswordBox x:Name="MpdPassword" KeyDown="ConnectHandler" Width="250" Margin="10,2,0,0"/>
                                         <TextBlock Text="{x:Static properties:Resources.Settings_ConnectionPasswordInfo}" TextWrapping="Wrap" Margin="10,5,0,0" MaxWidth="250" HorizontalAlignment="Left"/>
                                     </StackPanel>
 
@@ -52,33 +52,8 @@
                                         <Run x:Name="ConnectionStatus" Text="{x:Static properties:Resources.Settings_ConnectionStatusOffline}"/>
                                     </TextBlock>
 
-                                    <!--<TextBlock x:Name="ConnectionStatus" Text="{x:Static properties:Resources.Settings_ConnectionStatusOffline}" TextWrapping="Wrap" Margin="5,10,0,0"/>-->
                                     <Button x:Name="ConnectButton" Content="{x:Static properties:Resources.Settings_ConnectButton}" Margin="0,10,0,0" Width="120" Click="MPDConnect_Clicked"/>
                                 </StackPanel>
-                            </Grid>
-                        </GroupBox>
-                    </DockPanel>
-                </TabItem>
-
-                <TabItem Header="{x:Static properties:Resources.Stats}">
-                    <DockPanel Margin="8">
-                        <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
-                            <GroupBox.Header>
-                                <TextBlock>
-                                    <emoji:EmojiInline Text="📊"/>
-                                    <Run Text="{x:Static properties:Resources.Stats}"/>
-                                </TextBlock>
-                            </GroupBox.Header>
-                            <Grid VerticalAlignment="Top">
-                                <TextBlock>
-                                    <Run Text="{x:Static properties:Resources.Stats_Songs}"/><Run Text=" "/><Run x:Name="StatSong"/><LineBreak/>
-                                    <Run Text="{x:Static properties:Resources.Stats_Albums}"/><Run Text=" "/><Run x:Name="StatAlbum"/><LineBreak/>
-                                    <Run Text="{x:Static properties:Resources.Stats_Artists}"/><Run Text=" "/><Run x:Name="StatArtist"/><LineBreak/>
-                                    <Run Text="{x:Static properties:Resources.Stats_TotalPlaytime}"/><Run Text=" "/><Run x:Name="StatTotalPlaytime"/><LineBreak/><LineBreak/>
-                                    <Run Text="{x:Static properties:Resources.Stats_Uptime}"/><Run Text=" "/><Run x:Name="StatUptime"/><LineBreak/>
-                                    <Run Text="{x:Static properties:Resources.Stats_TotalTimePlayed}"/><Run Text=" "/><Run x:Name="StatTotalTimePlayed"/><LineBreak/>
-                                    <Run Text="{x:Static properties:Resources.Stats_LastDatabaseUpdate}"/><Run Text=" "/><Run x:Name="StatDatabaseUpdate"/>
-                                </TextBlock>
                             </Grid>
                         </GroupBox>
                     </DockPanel>
@@ -217,6 +192,30 @@
                                     <Button Content="{x:Static properties:Resources.Settings_SnapcastResetButton}" Margin="0,10,0,0" Width="120" Click="ShortcutsReset_Clicked"/>
 
                                 </StackPanel>
+                            </Grid>
+                        </GroupBox>
+                    </DockPanel>
+                </TabItem>
+
+                <TabItem Header="{x:Static properties:Resources.Stats}">
+                    <DockPanel Margin="8">
+                        <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
+                            <GroupBox.Header>
+                                <TextBlock>
+                                    <emoji:EmojiInline Text="📊"/>
+                                    <Run Text="{x:Static properties:Resources.Stats}"/>
+                                </TextBlock>
+                            </GroupBox.Header>
+                            <Grid VerticalAlignment="Top">
+                                <TextBlock>
+                                    <Run Text="{x:Static properties:Resources.Stats_Songs}"/><Run Text=" "/><Run x:Name="StatSong"/><LineBreak/>
+                                    <Run Text="{x:Static properties:Resources.Stats_Albums}"/><Run Text=" "/><Run x:Name="StatAlbum"/><LineBreak/>
+                                    <Run Text="{x:Static properties:Resources.Stats_Artists}"/><Run Text=" "/><Run x:Name="StatArtist"/><LineBreak/>
+                                    <Run Text="{x:Static properties:Resources.Stats_TotalPlaytime}"/><Run Text=" "/><Run x:Name="StatTotalPlaytime"/><LineBreak/><LineBreak/>
+                                    <Run Text="{x:Static properties:Resources.Stats_Uptime}"/><Run Text=" "/><Run x:Name="StatUptime"/><LineBreak/>
+                                    <Run Text="{x:Static properties:Resources.Stats_TotalTimePlayed}"/><Run Text=" "/><Run x:Name="StatTotalTimePlayed"/><LineBreak/>
+                                    <Run Text="{x:Static properties:Resources.Stats_LastDatabaseUpdate}"/><Run Text=" "/><Run x:Name="StatDatabaseUpdate"/>
+                                </TextBlock>
                             </Grid>
                         </GroupBox>
                     </DockPanel>
