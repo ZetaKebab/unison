@@ -58,6 +58,8 @@ namespace unison
                 ConnectionFailIcon.Visibility = Visibility.Visible;
             }
             _settingsWin.UpdateConnectionStatus();
+            if (_radiosWin.IsConnected())
+                Radio.IsEnabled = true;
             Connection.Text = $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
         }
 
@@ -186,11 +188,6 @@ namespace unison
                 SnapcastText.Text = unison.Resources.Resources.StopSnapcast; 
             else
                 SnapcastText.Text = unison.Resources.Resources.StartSnapcast;
-        }
-
-        public void OnRadioBrowserConnected()
-        {
-            Radio.IsEnabled = true;
         }
 
         public void UpdateButton(ref Border border, bool b)

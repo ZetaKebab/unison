@@ -54,6 +54,9 @@ namespace unison
     {
         private RadioBrowserClient _radioBrowser;
         private MPDHandler _mpd;
+        private bool _connected = true;
+
+        public bool IsConnected() => _connected;
 
         public Radios()
         {
@@ -69,11 +72,8 @@ namespace unison
                 Debug.WriteLine("Exception while connecting to RadioBrowser: " + e.Message);
                 return;
             }
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
-                MainWin.OnRadioBrowserConnected();
-            });
+
+            _connected = true;
         }
 
         public async void Initialize()
