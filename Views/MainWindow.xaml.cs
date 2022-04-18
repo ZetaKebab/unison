@@ -46,9 +46,12 @@ namespace unison
         {
             if (_mpd.IsConnected())
             {
-                Snapcast.IsEnabled = true;
                 ConnectionOkIcon.Visibility = Visibility.Visible;
                 ConnectionFailIcon.Visibility = Visibility.Collapsed;
+
+                Snapcast.IsEnabled = true;
+                if (_radiosWin.IsConnected())
+                    Radio.IsEnabled = true;
             }
             else
             {
@@ -56,10 +59,11 @@ namespace unison
                 DefaultState(true);
                 ConnectionOkIcon.Visibility = Visibility.Collapsed;
                 ConnectionFailIcon.Visibility = Visibility.Visible;
+
+                Snapcast.IsEnabled = false;
+                Radio.IsEnabled = false;
             }
             _settingsWin.UpdateConnectionStatus();
-            if (_radiosWin.IsConnected())
-                Radio.IsEnabled = true;
             Connection.Text = $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
         }
 
