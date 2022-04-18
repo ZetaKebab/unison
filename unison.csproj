@@ -7,12 +7,12 @@
     <ApplicationIcon>Resources\icon-full.ico</ApplicationIcon>
     <Win32Resource></Win32Resource>
     <StartupObject>unison.App</StartupObject>
-    <Version>1.2</Version>
+    <Version>1.3</Version>
     <Company />
     <Authors>Théo Marchal</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageProjectUrl>https://git.n700.ovh/keb/unison</PackageProjectUrl>
-    <RepositoryUrl>https://git.n700.ovh/keb/unison</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/ZetaKebab/unison</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ZetaKebab/unison</RepositoryUrl>
     <Copyright>Théo Marchal</Copyright>
     <PackageIconUrl />
   </PropertyGroup>
@@ -22,6 +22,8 @@
     <None Remove="Resources\icon-mini.ico" />
     <None Remove="Resources\nocover.png" />
     <None Remove="LICENSE" />
+    <None Remove="Resources\nothing.png" />
+    <None Remove="Resources\radio.png" />
     <None Include="LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -38,6 +40,12 @@
     <Resource Include="Resources\nocover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\nothing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\radio.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="LICENSE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -47,7 +55,7 @@
     <PackageReference Include="Emoji.Wpf" Version="0.3.3" />
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="RadioBrowser" Version="0.6.1" />
-	<PackageReference Include="MpcNET" Version="1.3.0" />
+	<PackageReference Include="MpcNET" Version="1.4.0" />
   </ItemGroup>
 
   <ItemGroup>

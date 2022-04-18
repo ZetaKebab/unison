@@ -159,8 +159,9 @@ namespace unison
             PlayPause.Text = (string)Application.Current.FindResource("pauseButton");
             TimeSlider.Value = 50;
             TimeSlider.IsEnabled = false;
-            NoCover.Visibility = Visibility.Visible;
+            NoCover.Visibility = Visibility.Collapsed;
             Cover.Visibility = Visibility.Collapsed;
+            RadioCover.Visibility = Visibility.Collapsed;
 
             if (LostConnection)
             {
@@ -172,16 +173,18 @@ namespace unison
 
         public void OnCoverChanged(object sender, EventArgs e)
         {
-            if (_mpd.GetCover() == null)
-            {
+            NoCover.Visibility = Visibility.Collapsed;
+            Cover.Visibility = Visibility.Collapsed;
+            RadioCover.Visibility = Visibility.Collapsed;
+
+            if (_mpd.GetCurrentSong().Time == -1)
+                RadioCover.Visibility = Visibility.Visible;
+            else if (_mpd.GetCover() == null)
                 NoCover.Visibility = Visibility.Visible;
-                Cover.Visibility = Visibility.Collapsed;
-            }
             else if (Cover.Source != _mpd.GetCover())
             {
                 Cover.Source = _mpd.GetCover();
                 Cover.Visibility = Visibility.Visible;
-                NoCover.Visibility = Visibility.Collapsed;
             }
         }
 

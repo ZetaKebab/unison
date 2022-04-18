@@ -104,7 +104,8 @@
                             <VisualBrush Visual="{Binding ElementName=mask}"/>
                         </StackPanel.OpacityMask>
                         <Image x:Name="Cover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Resources/nocover.png" Visibility="Collapsed" />
-                        <Image x:Name="NoCover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Resources/nocover.png" />
+                        <Image x:Name="NoCover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Resources/nocover.png" Visibility="Collapsed" />
+                        <Image x:Name="RadioCover" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Resources/radio.png" Visibility="Collapsed" />
                     </StackPanel>
                 </Grid>
             </Border>
