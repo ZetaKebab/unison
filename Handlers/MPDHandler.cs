@@ -390,7 +390,7 @@ namespace unison
                     if (_connection == null)
                         return;
 
-                    IMpdMessage<MpdBinaryData> albumReq = await _connection.SendAsync(new ReadPictureCommand(path, currentSize));
+                    IMpdMessage<MpdBinaryData> albumReq = await _connection.SendAsync(new AlbumArtCommand(path, currentSize));
                     if (!albumReq.IsResponseValid)
                         break;
 
@@ -412,7 +412,7 @@ namespace unison
                     if (_connection == null)
                         return;
 
-                    IMpdMessage<MpdBinaryData> albumReq = await _connection.SendAsync(new AlbumArtCommand(path, currentSize));
+                    IMpdMessage<MpdBinaryData> albumReq = await _connection.SendAsync(new ReadPictureCommand(path, currentSize));
                     if (!albumReq.IsResponseValid)
                         break;
 
@@ -441,7 +441,7 @@ namespace unison
                 {
                     _cover = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                 }
-                catch (System.NotSupportedException)
+                catch
                 {
                     _cover = null;
                 }
