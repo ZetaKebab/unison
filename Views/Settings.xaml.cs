@@ -111,14 +111,11 @@ namespace unison
 
             SaveSettings();
 
-            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
-            if (mpd.IsConnected())
-                mpd = new MPDHandler();
-
             ConnectButton.IsEnabled = false;
             ConnectionStatus.Text = unison.Resources.Resources.Settings_ConnectionStatusConnecting;
 
-            System.Threading.Tasks.Task.Run(() => { mpd.Connect(); });
+            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
+            System.Threading.Tasks.Task.Run(async () => { await mpd.Initialize(); });
         }
 
         private void SnapcastReset_Clicked(object sender, RoutedEventArgs e)

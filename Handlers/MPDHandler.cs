@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using MpcNET;
 using MpcNET.Commands.Database;
 using MpcNET.Commands.Playback;
@@ -49,7 +48,7 @@ namespace unison
         private BitmapFrame _cover;
         public Statistics _stats;
         private readonly System.Timers.Timer _elapsedTimer;
-        private DispatcherTimer _retryTimer;
+        //private DispatcherTimer _retryTimer;
 
         bool _isUpdatingStatus = false;
         bool _isUpdatingSong = false;
@@ -64,17 +63,19 @@ namespace unison
         private MpcConnection _connection;
         private MpcConnection _commandConnection;
         private IPEndPoint _mpdEndpoint;
-        private CancellationTokenSource _cancelToken;
+
+        private CancellationTokenSource _cancelCommand;
+        private CancellationTokenSource _cancelConnect;
 
         public MPDHandler()
         {
-            Initialize(null, null);
+            Startup();
 
             _stats = new Statistics();
 
-            _retryTimer = new DispatcherTimer();
-            _retryTimer.Interval = TimeSpan.FromSeconds(5);
-            _retryTimer.Tick += Initialize;
+            //_retryTimer = new DispatcherTimer();
+            //_retryTimer.Interval = TimeSpan.FromSeconds(5);
+            //_retryTimer.Tick += Initialize;
 
             _elapsedTimer = new System.Timers.Timer(500);
             _elapsedTimer.Elapsed += new System.Timers.ElapsedEventHandler(ElapsedTimer);
@@ -95,10 +96,10 @@ namespace unison
 
         void OnConnectionChanged(object sender, EventArgs e)
         {
-            if (!_connected)
-                _retryTimer.Start();
-            else
-                _retryTimer.Stop();
+            //if (!_connected)
+            //    _retryTimer.Start();
+            //else
+            //    _retryTimer.Stop();
 
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -147,7 +148,7 @@ namespace unison
 
         public async Task<T> SafelySendCommandAsync<T>(IMpcCommand<T> command)
         {
-            if (_commandConnection == null)
+            if (_commandConnection == null || !IsConnected())
             {
                 Trace.WriteLine("[SafelySendCommandAsync] no command connection");
                 return default(T);
@@ -175,21 +176,52 @@ namespace unison
             return default(T);
         }
 
-        private void Initialize(object sender, EventArgs e)
+        public async void Startup()
         {
-            if (!_connected)
-                Connect();
+            await Initialize();
         }
 
-        public async void Connect()
+        public async Task Initialize()
         {
-            _cancelToken = new CancellationTokenSource();
-            CancellationToken token = _cancelToken.Token;
+            Trace.WriteLine("Initializing");
+
+            Disconnected();
+
+            if (!_connected)
+                await Connect();
+        }
+
+        public void Disconnected()
+        {
+            _connected = false;
+            ConnectionChanged?.Invoke(this, EventArgs.Empty);
+
+            _commandConnection?.DisconnectAsync();
+            _connection?.DisconnectAsync();
+
+            _cancelConnect?.Cancel();
+            _cancelConnect = new CancellationTokenSource();
+
+            _cancelCommand?.Cancel();
+            _cancelCommand = new CancellationTokenSource();
+
+            _connection = null;
+            _commandConnection = null;
+
+            Trace.WriteLine("Disconnected");
+        }
+
+        public async Task Connect()
+        {
+            Trace.WriteLine("Connecting");
+
+            if (_cancelCommand.IsCancellationRequested || _cancelConnect.IsCancellationRequested)
+                return;
 
             try
             {
-                _connection = await ConnectInternal(token);
-                _commandConnection = await ConnectInternal(token);
+                _connection = await ConnectInternal(_cancelConnect.Token);
+                _commandConnection = await ConnectInternal(_cancelCommand.Token);
             }
             catch (MpcNET.Exceptions.MpcConnectException e)
             {
@@ -217,11 +249,14 @@ namespace unison
             await UpdateStatusAsync();
             await UpdateSongAsync();
 
-            Loop(token);
+            Loop(_cancelCommand.Token);
         }
 
         private async Task<MpcConnection> ConnectInternal(CancellationToken token)
         {
+            if (token.IsCancellationRequested)
+                return null;
+
             IPAddress.TryParse(Properties.Settings.Default.mpd_host, out _ipAddress);
 
             if (_ipAddress == null)
@@ -261,18 +296,6 @@ namespace unison
             return connection;
         }
 
-        public void Disconnected()
-        {            
-            _connected = false;
-            ConnectionChanged?.Invoke(this, EventArgs.Empty);
-
-            if (_connection != null)
-                _connection = null;
-
-            if (_commandConnection != null)
-                _commandConnection = null;
-        }
-
         private void Loop(CancellationToken token)
         {
             Task.Run(async () =>
@@ -281,8 +304,7 @@ namespace unison
                 {
                     try
                     {
-                        token.ThrowIfCancellationRequested();
-                        if (token.IsCancellationRequested || _connection == null)
+                        if (token.IsCancellationRequested || _connection == null || !IsConnected())
                             break;
 
                         IMpdMessage<string> idleChanges = await _connection.SendAsync(new IdleCommand("stored_playlist playlist player mixer output options update"));
@@ -291,14 +313,17 @@ namespace unison
                             await HandleIdleResponseAsync(idleChanges.Response.Content);
                         else
                         {
-                            Trace.WriteLine($"Error in Idle connection thread: {idleChanges.Response?.Content}");
+                            Trace.WriteLine($"Error in Idle connection thread (1): {idleChanges.Response?.Content}");
                             throw new Exception(idleChanges.Response?.Content);
                         }
                     }
                     catch (Exception e)
                     {
-                        Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
-                        Disconnected();
+                        if (token.IsCancellationRequested)
+                            Trace.WriteLine($"Idle connection cancelled.");
+                        else
+                            Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
+                        await Initialize();
                         break;
                     }
                 }
@@ -321,6 +346,7 @@ namespace unison
             catch (Exception e)
             {
                 Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
+                await Initialize();
             }
         }
 
@@ -345,6 +371,7 @@ namespace unison
             catch (Exception e)
             {
                 Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
+                await Initialize();
             }
 
             _isUpdatingStatus = false;
@@ -352,6 +379,8 @@ namespace unison
 
         private async Task UpdateSongAsync()
         {
+            Trace.WriteLine("Updating song");
+
             if (_connection == null || _isUpdatingSong)
                 return;
 
@@ -371,13 +400,17 @@ namespace unison
             catch (Exception e)
             {
                 Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
+                await Initialize();
             }
 
             _isUpdatingSong = false;
         }
 
-        private async void GetAlbumCover(string path, CancellationToken token = default)
+        private async void GetAlbumCover(string path, CancellationToken token)
         {
+            if (token.IsCancellationRequested)
+                return;
+
             List<byte> data = new List<byte>();
             try
             {
@@ -428,6 +461,9 @@ namespace unison
             }
             catch (Exception e)
             {
+                if (token.IsCancellationRequested)
+                    return;
+
                 Trace.WriteLine("Exception caught while getting albumart: " + e);
                 return;
             }
@@ -476,7 +512,7 @@ namespace unison
             SongChanged?.Invoke(this, EventArgs.Empty);
 
             string uri = Regex.Escape(_currentSong.Path);
-            GetAlbumCover(uri);
+            GetAlbumCover(uri, _cancelCommand.Token);
         }
 
         public void UpdateCover()
