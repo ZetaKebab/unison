@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using MpcNET;
 using MpcNET.Commands.Database;
 using MpcNET.Commands.Playback;
@@ -48,7 +49,7 @@ namespace unison
         private BitmapFrame _cover;
         public Statistics _stats;
         private readonly System.Timers.Timer _elapsedTimer;
-        //private DispatcherTimer _retryTimer;
+        private DispatcherTimer _retryTimer;
 
         bool _isUpdatingStatus = false;
         bool _isUpdatingSong = false;
@@ -69,13 +70,13 @@ namespace unison
 
         public MPDHandler()
         {
-            Startup();
+            Startup(null, null);
 
             _stats = new Statistics();
 
-            //_retryTimer = new DispatcherTimer();
-            //_retryTimer.Interval = TimeSpan.FromSeconds(5);
-            //_retryTimer.Tick += Initialize;
+            _retryTimer = new DispatcherTimer();
+            _retryTimer.Interval = TimeSpan.FromSeconds(5);
+            _retryTimer.Tick += Startup;
 
             _elapsedTimer = new System.Timers.Timer(500);
             _elapsedTimer.Elapsed += new System.Timers.ElapsedEventHandler(ElapsedTimer);
@@ -96,10 +97,10 @@ namespace unison
 
         void OnConnectionChanged(object sender, EventArgs e)
         {
-            //if (!_connected)
-            //    _retryTimer.Start();
-            //else
-            //    _retryTimer.Stop();
+            if (!_connected)
+                _retryTimer.Start();
+            else
+                _retryTimer.Stop();
 
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -176,7 +177,7 @@ namespace unison
             return default(T);
         }
 
-        public async void Startup()
+        public async void Startup(object sender, EventArgs e)
         {
             await Initialize();
         }
