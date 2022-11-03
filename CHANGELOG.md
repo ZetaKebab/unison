@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.3.1
+
+*Released: 03/11/2022*
+
+* Update .NET version from 5.0 to 6.0
+* Fix: simple patch to avoid a crash concerning GetAlbumCover
+* Fix: connection change now working
+
 ## v1.3
 
 *Released: 18/04/2022*
