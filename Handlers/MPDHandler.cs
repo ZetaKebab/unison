@@ -46,7 +46,7 @@ namespace unison
 
         private MpdStatus _currentStatus;
         private IMpdFile _currentSong;
-        private BitmapFrame _cover;
+        private BitmapImage _cover;
         public Statistics _stats;
         private readonly System.Timers.Timer _elapsedTimer;
         private DispatcherTimer _retryTimer;
@@ -474,14 +474,12 @@ namespace unison
             else
             {
                 using MemoryStream stream = new MemoryStream(data.ToArray());
-                try
-                {
-                    _cover = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-                }
-                catch
-                {
-                    _cover = null;
-                }
+                _cover = new BitmapImage();
+                _cover.BeginInit();
+                _cover.CacheOption = BitmapCacheOption.OnLoad;
+                _cover.StreamSource = stream;
+                _cover.EndInit();
+                _cover.Freeze();
             }
             UpdateCover();
         }
@@ -523,7 +521,7 @@ namespace unison
 
         public IMpdFile GetCurrentSong() => _currentSong;
         public MpdStatus GetStatus() => _currentStatus;
-        public BitmapFrame GetCover() => _cover;
+        public BitmapImage GetCover() => _cover;
         public string GetVersion() => _version;
         public Statistics GetStats() => _stats;
         public double GetCurrentTime() => _currentTime;
