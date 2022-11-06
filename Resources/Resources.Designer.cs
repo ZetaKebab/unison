@@ -19,7 +19,7 @@ namespace unison.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -615,6 +615,60 @@ namespace unison.Resources {
         public static string StopSnapcast {
             get {
                 return ResourceManager.GetString("StopSnapcast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for updates.
+        /// </summary>
+        public static string Update_ButtonCheck {
+            get {
+                return ResourceManager.GetString("Update_ButtonCheck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start update.
+        /// </summary>
+        public static string Update_ButtonStart {
+            get {
+                return ResourceManager.GetString("Update_ButtonStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update available! New version is.
+        /// </summary>
+        public static string Update_Message1 {
+            get {
+                return ResourceManager.GetString("Update_Message1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install now?.
+        /// </summary>
+        public static string Update_Message2 {
+            get {
+                return ResourceManager.GetString("Update_Message2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New version.
+        /// </summary>
+        public static string Update_String1 {
+            get {
+                return ResourceManager.GetString("Update_String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to available!.
+        /// </summary>
+        public static string Update_String2 {
+            get {
+                return ResourceManager.GetString("Update_String2", resourceCulture);
             }
         }
     }

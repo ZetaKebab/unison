@@ -1,6 +1,6 @@
-﻿using System.Globalization;
-using System.Windows;
+﻿using System.Windows;
 using Hardcodet.Wpf.TaskbarNotification;
+using unison.Handlers;
 
 namespace unison
 {
@@ -10,12 +10,13 @@ namespace unison
         private HotkeyHandler _hotkeys;
         private SnapcastHandler _snapcast;
         private MPDHandler _mpd;
+        private UpdateHandler _updater;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             //debug language
-            //unison.Resources.Resources.Culture = CultureInfo.GetCultureInfo("fr-FR");
-            //unison.Resources.Resources.Culture = CultureInfo.GetCultureInfo("es-ES");
+            //unison.Resources.Resources.Culture = System.Globalization.CultureInfo.GetCultureInfo("fr-FR");
+            //unison.Resources.Resources.Culture = System.Globalization.CultureInfo.GetCultureInfo("es-ES");
 
 
             base.OnStartup(e);
@@ -28,6 +29,9 @@ namespace unison
 
             _snapcast = new SnapcastHandler();
             Current.Properties["snapcast"] = _snapcast;
+
+            _updater = new UpdateHandler();
+            Current.Properties["updater"] = _updater;
 
             Current.MainWindow = new MainWindow();
 

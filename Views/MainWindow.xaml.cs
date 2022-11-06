@@ -271,6 +271,11 @@ namespace unison
             slider.ToolTip = (int)slider.Value;
         }
 
+        public void UpdateUpdateStatus(string version)
+        {
+            _settingsWin.UpdateUpdateStatus(version);
+        }
+
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);

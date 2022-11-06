@@ -229,16 +229,23 @@
                             </GroupBox.Header>
                             <Grid VerticalAlignment="Top">
                                 <StackPanel Orientation="Vertical">
-                                    <TextBlock TextWrapping="Wrap" Margin="0,0,0,10" VerticalAlignment="Top">
+                                    <TextBlock TextWrapping="Wrap" VerticalAlignment="Top">
                                         <Run Text="{x:Static properties:Resources.Settings_Version}"/>
                                         <Run Text="{Binding GetVersion, Mode = OneWay}"/>
                                     </TextBlock>
+                                    <TextBlock x:Name="UpdateText" TextWrapping="Wrap" VerticalAlignment="Top">
+                                        <Run x:Name="UpdateText2" Text="New version 1.3.2 available!" FontWeight="Bold"/>
+                                    </TextBlock>
+
+                                    <Button x:Name="UpdateButton" Content="{x:Static properties:Resources.Update_ButtonCheck}" Margin="0,3,0,10" Width="150" Click="CheckUpdates" HorizontalAlignment="Left"/>
+
                                     <TextBlock TextWrapping="Wrap" VerticalAlignment="Top">
                                         <Run Text="{x:Static properties:Resources.Settings_AboutInfo}" /><LineBreak/>
                                         ※ <Hyperlink NavigateUri="https://github.com/Difegue/MpcNET" RequestNavigate="Hyperlink_RequestNavigate">MpcNET</Hyperlink><LineBreak/>
                                         ※ <Hyperlink NavigateUri="https://github.com/hardcodet/wpf-notifyicon" RequestNavigate="Hyperlink_RequestNavigate">wpf-notifyicon</Hyperlink><LineBreak/>
                                         ※ <Hyperlink NavigateUri="https://github.com/samhocevar/emoji.wpf" RequestNavigate="Hyperlink_RequestNavigate">Emoji.WPF</Hyperlink><LineBreak/>
-                                         ※ <Hyperlink NavigateUri="https://github.com/tof4/RadioBrowser" RequestNavigate="Hyperlink_RequestNavigate">RadioBrowser</Hyperlink>
+                                        ※ <Hyperlink NavigateUri="https://github.com/tof4/RadioBrowser" RequestNavigate="Hyperlink_RequestNavigate">RadioBrowser</Hyperlink><LineBreak/>
+                                        ※ <Hyperlink NavigateUri="https://github.com/ravibpatel/AutoUpdater.NET" RequestNavigate="Hyperlink_RequestNavigate">AutoUpdater.NET</Hyperlink>
                                     </TextBlock>
                                     <TextBlock Margin="0,10,0,0">
                                         <Run Text="{x:Static properties:Resources.Settings_SourceCode1}" />

@@ -5,11 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Navigation;
+using unison.Handlers;
 
 namespace unison
 {
@@ -59,6 +61,8 @@ namespace unison
             SnapcastPath.Text = Properties.Settings.Default.snapcast_path;
             SnapcastPort.Text = Properties.Settings.Default.snapcast_port.ToString();
             VolumeOffset.Text = Properties.Settings.Default.volume_offset.ToString();
+
+            UpdateText.Visibility = Visibility.Collapsed;
 
             InitializeShortcuts();
         }
@@ -115,7 +119,7 @@ namespace unison
             ConnectionStatus.Text = unison.Resources.Resources.Settings_ConnectionStatusConnecting;
 
             MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
-            System.Threading.Tasks.Task.Run(async () => { await mpd.Initialize(); });
+            Task.Run(async () => { await mpd.Initialize(); });
         }
 
         private void SnapcastReset_Clicked(object sender, RoutedEventArgs e)
@@ -140,6 +144,19 @@ namespace unison
         {
             if (e.Key == Key.Return)
                 MPDConnect_Clicked(null, null);
+        }
+
+        private void CheckUpdates(object sender, RoutedEventArgs e)
+        {
+            UpdateHandler updater = (UpdateHandler)Application.Current.Properties["updater"];
+            updater.Start();
+        }
+
+        public void UpdateUpdateStatus(string version)
+        {
+            UpdateText.Visibility = Visibility.Visible;
+            UpdateText2.Text = unison.Resources.Resources.Update_String1 + " " + version + " " + unison.Resources.Resources.Update_String2;
+            UpdateButton.Content = unison.Resources.Resources.Update_ButtonStart;
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -373,12 +390,12 @@ namespace unison
             InitializeShortcuts();
         }
 
-        public uint GetMod(StackPanel stackPanel)
+        private uint GetMod(StackPanel stackPanel)
         {
             return (uint)(GetMOD(stackPanel.Children.OfType<ComboBox>().First().SelectedItem.ToString()) | GetMOD(stackPanel.Children.OfType<ComboBox>().Last().SelectedItem.ToString()));
         }
 
-        public uint GetVk(StackPanel stackPanel)
+        private uint GetVk(StackPanel stackPanel)
         {
             Button button = stackPanel.Children.OfType<Button>().First();
             TextBlock textBlock = (TextBlock)button.Content;
