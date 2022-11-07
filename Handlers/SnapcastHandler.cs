@@ -20,6 +20,16 @@ namespace unison
             }
         }
 
+        private void HandleExit(object sender, EventArgs e)
+        {
+            _snapcast.Kill();
+            HasStarted = false;
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                UpdateInterface();
+            });
+        }
+
         public void UpdateInterface()
         {
             TaskbarIcon Systray = (TaskbarIcon)Application.Current.Properties["systray"];
@@ -42,6 +52,9 @@ namespace unison
                 _snapcast.StartInfo.FileName = Properties.Settings.Default.snapcast_path + @"\snapclient.exe";
                 _snapcast.StartInfo.Arguments = $"--host {mpd._ipAddress}";
                 _snapcast.StartInfo.CreateNoWindow = !Properties.Settings.Default.snapcast_window;
+                _snapcast.EnableRaisingEvents = true;
+                _snapcast.Exited += new EventHandler(HandleExit);
+
                 try
                 {
                     _snapcast.Start();
