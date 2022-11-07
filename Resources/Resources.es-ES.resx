@@ -315,6 +315,9 @@
   <data name="Update_Message2" xml:space="preserve">
     <value>¿Instalar ahora?</value>
   </data>
+  <data name="Update_NoUpdate" xml:space="preserve">
+    <value>No actualización disponible.</value>
+  </data>
   <data name="Update_String1" xml:space="preserve">
     <value>¡Nueva versión</value>
   </data>

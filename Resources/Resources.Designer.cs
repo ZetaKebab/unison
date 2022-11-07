@@ -655,6 +655,15 @@ namespace unison.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No update available..
+        /// </summary>
+        public static string Update_NoUpdate {
+            get {
+                return ResourceManager.GetString("Update_NoUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New version.
         /// </summary>
         public static string Update_String1 {

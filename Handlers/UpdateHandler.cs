@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using AutoUpdaterDotNET;
 
 namespace unison.Handlers
@@ -10,14 +11,17 @@ namespace unison.Handlers
         private bool _UpdateAvailable = false;
         public bool UpdateAvailable() => _UpdateAvailable;
 
+        private bool _RequestedCheck = false;
+
         public UpdateHandler()
         {
             AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
             Start();
         }
 
-        public void Start()
+        public void Start(bool RequestCheck = false)
         {
+            _RequestedCheck = RequestCheck;
             AutoUpdater.Start(xmlFile);
         }
 
@@ -38,10 +42,15 @@ namespace unison.Handlers
                     MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
                     MainWin.UpdateUpdateStatus(number);
 
-                    MessageBoxResult Result = MessageBox.Show($"{unison.Resources.Resources.Update_Message1} {number}.\n{unison.Resources.Resources.Update_Message2}",
+                    MessageBoxResult Result = MessageBox.Show($"{Resources.Resources.Update_Message1} {number}.\n{Resources.Resources.Update_Message2}",
                                                                 "unison", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     if (Result == MessageBoxResult.Yes)
                         AutoUpdater.DownloadUpdate(args);
+                }
+                else
+                {
+                    if (_RequestedCheck)
+                        MessageBox.Show($"{Resources.Resources.Update_NoUpdate}", "unison", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
         }

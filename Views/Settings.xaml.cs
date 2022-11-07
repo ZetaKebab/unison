@@ -149,7 +149,7 @@ namespace unison
         private void CheckUpdates(object sender, RoutedEventArgs e)
         {
             UpdateHandler updater = (UpdateHandler)Application.Current.Properties["updater"];
-            updater.Start();
+            updater.Start(true);
         }
 
         public void UpdateUpdateStatus(string version)

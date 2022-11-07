@@ -61,10 +61,10 @@ namespace unison
                 }
                 catch (Exception err)
                 {
-                    MessageBox.Show($"[{unison.Resources.Resources.Snapcast_Popup1}]\n" +
-                                    $"{unison.Resources.Resources.Snapcast_Popup2} {err.Message}\n\n" +
-                                    $"{unison.Resources.Resources.Snapcast_Popup3} {Properties.Settings.Default.snapcast_path}\n" +
-                                    $"{unison.Resources.Resources.Snapcast_Popup4}",
+                    MessageBox.Show($"[{Resources.Resources.Snapcast_Popup1}]\n" +
+                                    $"{Resources.Resources.Snapcast_Popup2} {err.Message}\n\n" +
+                                    $"{Resources.Resources.Snapcast_Popup3} {Properties.Settings.Default.snapcast_path}\n" +
+                                    $"{Resources.Resources.Snapcast_Popup4}",
                                     "unison", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }

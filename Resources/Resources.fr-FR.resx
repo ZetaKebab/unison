@@ -298,13 +298,13 @@
     <value>Temps d'écoute écoulé :</value>
   </data>
   <data name="Stats_Uptime" xml:space="preserve">
-    <value>MPD lancé depuis : </value>
+    <value>MPD lancé depuis :</value>
   </data>
   <data name="StopSnapcast" xml:space="preserve">
     <value>Stopper Snapcast</value>
   </data>
   <data name="Update_ButtonCheck" xml:space="preserve">
-    <value>Chercher une mise à jour</value>
+    <value>Vérifier les mises à jour</value>
   </data>
   <data name="Update_ButtonStart" xml:space="preserve">
     <value>Mettre à jour</value>
@@ -314,6 +314,9 @@
   </data>
   <data name="Update_Message2" xml:space="preserve">
     <value>Installer maintenant ?</value>
+  </data>
+  <data name="Update_NoUpdate" xml:space="preserve">
+    <value>Pas de mise à jour disponible.</value>
   </data>
   <data name="Update_String1" xml:space="preserve">
     <value>Nouvelle version</value>
