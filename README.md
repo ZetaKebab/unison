@@ -6,7 +6,7 @@
 
 * lightweight window that can be toggled with shortcuts
 * music control through rebindable shortcuts
-* [Snapcast](https://mjaggard.github.io/snapcast/) integration
+* [Snapcast](https://github.com/badaix/snapcast) integration
 * Radio stations
 
 ## Features
