@@ -234,7 +234,7 @@
                                         <Run Text="{Binding GetVersion, Mode = OneWay}"/>
                                     </TextBlock>
                                     <TextBlock x:Name="UpdateText" TextWrapping="Wrap" VerticalAlignment="Top">
-                                        <Run x:Name="UpdateText2" Text="New version 1.3.2 available!" FontWeight="Bold"/>
+                                        <Run x:Name="UpdateText2" Text="New version X.X.X available!" FontWeight="Bold"/>
                                     </TextBlock>
 
                                     <Button x:Name="UpdateButton" Content="{x:Static properties:Resources.Update_ButtonCheck}" Margin="0,3,0,10" Width="150" Click="CheckUpdates" HorizontalAlignment="Left"/>
@@ -263,7 +263,11 @@
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
+                    </DockPanel>
+                </TabItem>
 
+                <TabItem Header="{x:Static properties:Resources.Settings_License}" Height="20" VerticalAlignment="Bottom">
+                    <DockPanel Margin="8">
                         <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0" Margin="0,10,0,0">
                             <GroupBox.Header>
                                 <TextBlock>

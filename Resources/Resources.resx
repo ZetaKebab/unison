@@ -163,7 +163,7 @@
     <value>Connection</value>
   </data>
   <data name="Settings_ConnectionPasswordInfo" xml:space="preserve">
-    <value>Please note that since MPD passwords are not secure (they are sent in plain text to the server), there are saved as is in the setting file.</value>
+    <value>Please note that since MPD passwords are not secure (they are sent in plain text to the server), they are saved as is in the setting file.</value>
   </data>
   <data name="Settings_ConnectionStatus" xml:space="preserve">
     <value>Status:</value>

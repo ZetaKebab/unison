@@ -196,7 +196,7 @@ namespace unison.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please note that since MPD passwords are not secure (they are sent in plain text to the server), there are saved as is in the setting file..
+        ///   Looks up a localized string similar to Please note that since MPD passwords are not secure (they are sent in plain text to the server), they are saved as is in the setting file..
         /// </summary>
         public static string Settings_ConnectionPasswordInfo {
             get {
