@@ -1,7 +1,4 @@
-﻿using RadioBrowser;
-using RadioBrowser.Models;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System;
@@ -10,79 +7,36 @@ using System.Windows.Interop;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Collections.Generic;
+using unison.Handlers;
+using RadioBrowser.Models;
 
 namespace unison
 {
-    public class CountryListItem
-    {
-        public uint Count { get; set; }
-        public string Name { get; set; }
-
-        public override string ToString()
-        {
-            if (Name == "")
-                return "None";
-            return $"{Name} ({Count})";
-        }
-    }
-
-    public class StationListItem
-    {
-        public string Name { get; set; }
-        public string Codec { get; set; }
-        public string Tags { get; set; }
-        public int Bitrate { get; set; }
-        public Uri Url { get; set; }
-
-        private string _country;
-        public string Country
-        {
-            get
-            {
-                if (_country.Length == 0)
-                    return "🏴‍☠️";
-                return string.Concat(_country.ToUpper().Select(x => char.ConvertFromUtf32(x + 0x1F1A5))); // return emoji
-            }
-            set
-            {
-                _country = value;
-            }
-        }
-    }
-
     public partial class Radios : Window
     {
-        private RadioBrowserClient _radioBrowser;
         private MPDHandler _mpd;
-        private bool _connected = true;
+        RadioHandler _radio;
 
-        public bool IsConnected() => _connected;
+        public bool IsConnected() => _radio.IsConnected();
 
         public Radios()
         {
             InitializeComponent();
-
-            try
-            {
-                _radioBrowser = new RadioBrowserClient();
-                Initialize();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Exception while connecting to RadioBrowser: " + e.Message);
-                return;
-            }
-
-            _connected = true;
+            Initialize();
         }
 
         public async void Initialize()
         {
+            _radio = new RadioHandler();
+
+            if (!_radio.IsConnected())
+                SearchButton.IsEnabled = false;
+
             try
             {
-                List<NameAndCount> Countries = await _radioBrowser.Lists.GetCountriesAsync();
                 CountryList.Items.Add(new CountryListItem { Name = "", Count = 0 });
 
+                List<NameAndCount> Countries = await _radio.GetCountries();
                 foreach (NameAndCount Country in Countries)
                 {
                     CountryList.Items.Add(new CountryListItem
@@ -94,14 +48,33 @@ namespace unison
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Exception while getting countries in RadioBrowser: " + e.Message);
+                Trace.WriteLine("Exception while getting countries in RadioBrowser: " + e.Message);
                 return;
             }
         }
 
-        private string CleanString(string str)
+        private static string CleanString(string str)
         {
             return str.Replace("\r\n", "").Replace("\n", "").Replace("\r", "");
+        }
+
+        private void SearchHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+                Search_Clicked(null, null);
+        }
+
+        private async void Search_Clicked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CountryListItem a = (CountryListItem)CountryList.SelectedItem;
+                await SearchAdvanced(NameSearch.Text, a?.Name, TagSearch.Text);
+            }
+            catch (Exception except)
+            {
+                Trace.WriteLine("Error on RadioBrowser search: " + except.Message);
+            }
         }
 
         public async Task SearchAdvanced(string name, string country, string tags)
@@ -110,11 +83,14 @@ namespace unison
             {
                 SearchStatus.Text = unison.Resources.Resources.Radio_Loading;
 
-                List<StationInfo> advancedSearch = await _radioBrowser.Search.AdvancedAsync(new AdvancedSearchOptions
+                List<StationInfo> advancedSearch = await Task.Run(async () =>
                 {
-                    Name = name,
-                    Country = country,
-                    TagList = tags
+                    return await _radio.AdvancedSearch(new AdvancedSearchOptions
+                    {
+                        Name = name,
+                        Country = country,
+                        TagList = tags
+                    });
                 });
 
                 RadioListGrid.Items.Clear();
@@ -140,7 +116,7 @@ namespace unison
             }
             catch (Exception except)
             {
-                Debug.WriteLine("Error on RadioBrowser search advanced: " + except.Message);
+                Trace.WriteLine("Error on RadioBrowser search advanced: " + except.Message);
             }
         }
 
@@ -160,13 +136,13 @@ namespace unison
             }
             catch (ArgumentOutOfRangeException)
             {
-                Debug.WriteLine("Error: Invalid index.");
+                Trace.WriteLine("Error: Invalid index.");
                 return;
             }
 
             if (station.Url == null)
             {
-                Debug.WriteLine("Error: Invalid station.");
+                Trace.WriteLine("Error: Invalid station.");
                 return;
             }
 
@@ -174,30 +150,11 @@ namespace unison
             _mpd.ClearAddAndPlay(station.Url.AbsoluteUri);
         }
 
-        private async void Search_Clicked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                CountryListItem a = (CountryListItem)CountryList.SelectedItem;
-                await SearchAdvanced(NameSearch.Text, a?.Name, TagSearch.Text);
-            }
-            catch (Exception except)
-            {
-                Debug.WriteLine("Error on RadioBrowser search: " + except.Message);
-            }
-        }
-
         private void Reset_Clicked(object sender, RoutedEventArgs e)
         {
             NameSearch.Text = "";
             TagSearch.Text = "";
             CountryList.SelectedIndex = 0;
-        }
-
-        private void SearchHandler(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return)
-                Search_Clicked(null, null);
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
