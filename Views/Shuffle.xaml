@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
-        xmlns:local="clr-namespace:unison" xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+        xmlns:properties="clr-namespace:unison.Resources" xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Title="Shuffle" Closing="Window_Closing" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
 
@@ -49,7 +49,7 @@
                     <GroupBox.Header>
                         <TextBlock>
                             <emoji:EmojiInline Text="🔡"/>
-                            <Run Text="Filter"/>
+                            <Run Text="{x:Static properties:Resources.Shuffle_Filter}"/>
                         </TextBlock>
                     </GroupBox.Header>
                     <StackPanel Orientation="Vertical" Margin="5,0,5,0">
@@ -60,15 +60,15 @@
 
                         <StackPanel x:Name="SongFilterPanel" Margin="0,10,0,0">
                             <TextBlock>
-                                <Run Text="Number of songs in filter: "/><Run x:Name="SongFilterNumber" FontWeight="Bold"/>
+                                <Run Text="{x:Static properties:Resources.Shuffle_FilterSongNumber}"/><Run Text=" "/><Run x:Name="SongFilterNumber" FontWeight="Bold"/>
                             </TextBlock>
                         </StackPanel>
 
                         <StackPanel Margin="0,5,0,0">
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                                <Button Content="Query filter" Click="UpdateFilter_Clicked" Padding="5, 2" VerticalAlignment="Bottom" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}" Margin="0,0,10,0"/>
-                                <Button Content="Reset" Click="Reset_Clicked" Padding="5, 2" VerticalAlignment="Bottom" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}"/>
-                                <TextBlock x:Name="QueryFilterText" Text="Querying filter..." Margin="15,3,0,0" FontStyle="Italic" Visibility="Collapsed" />
+                                <Button Content="{x:Static properties:Resources.Shuffle_FilterQuery}" Click="UpdateFilter_Clicked" Padding="5, 2" VerticalAlignment="Bottom" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}" Margin="0,0,10,0"/>
+                                <Button Content="{x:Static properties:Resources.Shuffle_FilterReset}" Click="Reset_Clicked" Padding="5, 2" VerticalAlignment="Bottom" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}"/>
+                                <TextBlock x:Name="QueryFilterText" Text="{x:Static properties:Resources.Shuffle_Querying1}" Margin="15,3,0,0" FontStyle="Italic" Visibility="Collapsed" />
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -80,18 +80,18 @@
                         <GroupBox.Header>
                             <TextBlock>
                             <emoji:EmojiInline Text="➕"/>
-                            <Run Text="Add to queue"/>
+                            <Run Text="{x:Static properties:Resources.Shuffle_Queue}"/>
                             </TextBlock>
                         </GroupBox.Header>
                         <StackPanel Orientation="Vertical" Margin="5,5,5,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                <TextBlock Text="Songs to add" Margin="0,0,5,5"/>
+                                <TextBlock Text="{x:Static properties:Resources.Shuffle_QueueSongs}" Margin="0,0,5,5"/>
                                 <TextBox x:Name="SongNumber" KeyUp="AddToQueueHandler" PreviewTextInput="QueueValidationTextBox" MaxLength="4" Text="15" Width="35" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <Button Content="Add to queue" Click="AddToQueue_Clicked" Padding="5, 2" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}"/>
+                                <Button Content="{x:Static properties:Resources.Shuffle_Queue}" Click="AddToQueue_Clicked" Padding="5, 2" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}"/>
                                 <TextBlock x:Name="SearchStatus" Margin="15,3,0,0" FontStyle="Italic" Visibility="Collapsed">
-                                    <Run Text="Adding "/><Run x:Name="NumberAddedSongs"/><Run Text=" songs..."/>
+                                    <Run Text="{x:Static properties:Resources.Shuffle_ButtonMessage1}"/><Run Text=" "/><Run x:Name="NumberAddedSongs"/><Run Text=" "/><Run Text="{x:Static properties:Resources.Shuffle_ButtonMessage2}"/>
                                 </TextBlock>
                             </StackPanel>
                         </StackPanel>
@@ -101,12 +101,12 @@
                         <GroupBox.Header>
                             <TextBlock>
                                 <emoji:EmojiInline Text="♾️"/>
-                                <Run Text="Continuous shuffle"/>
+                                <Run Text="{x:Static properties:Resources.Shuffle_Continuous}"/>
                             </TextBlock>
                         </GroupBox.Header>
                         <StackPanel Orientation="Horizontal" Margin="5,7,5,0">
                             <CheckBox x:Name="ContinuousShuffle" Checked="ContinuousShuffle_Checked" Unchecked="ContinuousShuffle_Checked" FocusVisualStyle="{x:Null}" VerticalAlignment="Top">
-                                <TextBlock Text="Enable continuous shuffle" TextWrapping="Wrap"/>
+                                <TextBlock Text="{x:Static properties:Resources.Shuffle_ContinuousEnable}" TextWrapping="Wrap"/>
                             </CheckBox>
                         </StackPanel>
                     </GroupBox>

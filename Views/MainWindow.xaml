@@ -17,7 +17,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" MinHeight="270" MinWidth="650">
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" MinHeight="270" MinWidth="700">
         <Grid x:Name="TopLayout" Margin="10,0,10,0" VerticalAlignment="Stretch" Width="Auto" Height="Auto">
             <Grid x:Name="Display" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="225,0,0,0" Height="Auto" Width="Auto">
                 <GroupBox Height="220" VerticalAlignment="Center">
@@ -115,7 +115,7 @@
                 <Button x:Name="Shuffle" Padding="5, 2" Click="Shuffle_Clicked" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" FocusVisualStyle="{x:Null}" Margin="0,0,10,0">
                     <StackPanel Orientation="Horizontal">
                         <emoji:TextBlock Text="🔁" Padding="0,0,0,2"/>
-                        <TextBlock Text="Shuffle" Margin="5, 0, 0, 0"/>
+                        <TextBlock Text="{x:Static properties:Resources.Shuffle}" Margin="5, 0, 0, 0"/>
                     </StackPanel>
                 </Button>
 

@@ -120,6 +120,33 @@
   <data name="Exit" xml:space="preserve">
     <value>Quitter</value>
   </data>
+  <data name="FilterType_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="FilterType_Artist" xml:space="preserve">
+    <value>Artiste</value>
+  </data>
+  <data name="FilterType_Directory" xml:space="preserve">
+    <value>Dossier</value>
+  </data>
+  <data name="FilterType_Genre" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="FilterType_Song" xml:space="preserve">
+    <value>Chanson</value>
+  </data>
+  <data name="FilterType_Year" xml:space="preserve">
+    <value>Année</value>
+  </data>
+  <data name="Operator_Contains" xml:space="preserve">
+    <value>continent</value>
+  </data>
+  <data name="Operator_Is" xml:space="preserve">
+    <value>est</value>
+  </data>
+  <data name="Operator_IsNot" xml:space="preserve">
+    <value>n'est pas</value>
+  </data>
   <data name="Radios" xml:space="preserve">
     <value>Radios</value>
   </data>
@@ -213,6 +240,21 @@
   <data name="Settings_ShowWindow" xml:space="preserve">
     <value>Afficher la fenêtre</value>
   </data>
+  <data name="Settings_Shuffle1" xml:space="preserve">
+    <value>La fenêtre aléatoire permet d'ajouter des chansons aléatoires à la file. Les deux options prennent en compte le filtre.</value>
+  </data>
+  <data name="Settings_Shuffle2" xml:space="preserve">
+    <value>Si le filtre est vide, l'intégralité de la bibliothèque est prise en compte.</value>
+  </data>
+  <data name="Settings_Shuffle3" xml:space="preserve">
+    <value>Le filtre est recherché à chaque fois que les options Ajouter à la file ou Aléatoire continu sont utilisées.</value>
+  </data>
+  <data name="Settings_Shuffle4" xml:space="preserve">
+    <value>Ajoute un nombre fixe de chansons à la file. Pour des raisons techniques, cette option est limitée à 100 chansons aléatoires sans filtre, et à 1000 chansons avec filtre.</value>
+  </data>
+  <data name="Settings_Shuffle5" xml:space="preserve">
+    <value>En activant cette option, unison va ajouter automatiquement des chansons à la file pour ne jamais arriver à cours de chansons à écouter.</value>
+  </data>
   <data name="Settings_SnapcastInfo1" xml:space="preserve">
     <value>Il est possible de mettre votre version localement installé de Snapcast avec un </value>
   </data>
@@ -260,6 +302,48 @@
   </data>
   <data name="ShowWindow" xml:space="preserve">
     <value>Montrer la fenêtre</value>
+  </data>
+  <data name="Shuffle" xml:space="preserve">
+    <value>Aléatoire</value>
+  </data>
+  <data name="Shuffle_ButtonMessage1" xml:space="preserve">
+    <value>Ajout de</value>
+  </data>
+  <data name="Shuffle_ButtonMessage2" xml:space="preserve">
+    <value>chansons...</value>
+  </data>
+  <data name="Shuffle_ButtonMessage3" xml:space="preserve">
+    <value>fini !</value>
+  </data>
+  <data name="Shuffle_Continuous" xml:space="preserve">
+    <value>Aléatoire continu</value>
+  </data>
+  <data name="Shuffle_ContinuousEnable" xml:space="preserve">
+    <value>Activer le mode aléatoire continu</value>
+  </data>
+  <data name="Shuffle_Filter" xml:space="preserve">
+    <value>Filtre</value>
+  </data>
+  <data name="Shuffle_FilterQuery" xml:space="preserve">
+    <value>Recherche du filtre</value>
+  </data>
+  <data name="Shuffle_FilterReset" xml:space="preserve">
+    <value>Réinitialiser</value>
+  </data>
+  <data name="Shuffle_FilterSongNumber" xml:space="preserve">
+    <value>Nombre de chansons dans le filtre :</value>
+  </data>
+  <data name="Shuffle_Querying1" xml:space="preserve">
+    <value>Recherche du filtre...</value>
+  </data>
+  <data name="Shuffle_Querying2" xml:space="preserve">
+    <value>fini !</value>
+  </data>
+  <data name="Shuffle_Queue" xml:space="preserve">
+    <value>Ajouter à la file</value>
+  </data>
+  <data name="Shuffle_QueueSongs" xml:space="preserve">
+    <value>Chansons à ajouter</value>
   </data>
   <data name="Snapcast_Popup1" xml:space="preserve">
     <value>Erreur Snapcast</value>

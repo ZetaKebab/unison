@@ -70,6 +70,87 @@ namespace unison.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Album.
+        /// </summary>
+        public static string FilterType_Album {
+            get {
+                return ResourceManager.GetString("FilterType_Album", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artist.
+        /// </summary>
+        public static string FilterType_Artist {
+            get {
+                return ResourceManager.GetString("FilterType_Artist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directory.
+        /// </summary>
+        public static string FilterType_Directory {
+            get {
+                return ResourceManager.GetString("FilterType_Directory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genre.
+        /// </summary>
+        public static string FilterType_Genre {
+            get {
+                return ResourceManager.GetString("FilterType_Genre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Song.
+        /// </summary>
+        public static string FilterType_Song {
+            get {
+                return ResourceManager.GetString("FilterType_Song", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year.
+        /// </summary>
+        public static string FilterType_Year {
+            get {
+                return ResourceManager.GetString("FilterType_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to contains.
+        /// </summary>
+        public static string Operator_Contains {
+            get {
+                return ResourceManager.GetString("Operator_Contains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is.
+        /// </summary>
+        public static string Operator_Is {
+            get {
+                return ResourceManager.GetString("Operator_Is", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is not.
+        /// </summary>
+        public static string Operator_IsNot {
+            get {
+                return ResourceManager.GetString("Operator_IsNot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Country.
         /// </summary>
         public static string Radio_Country {
@@ -349,6 +430,51 @@ namespace unison.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The shuffle window allows to add random songs to your queue. Both options take into account the filter..
+        /// </summary>
+        public static string Settings_Shuffle1 {
+            get {
+                return ResourceManager.GetString("Settings_Shuffle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the filter is empty, the entire music library is taken into account..
+        /// </summary>
+        public static string Settings_Shuffle2 {
+            get {
+                return ResourceManager.GetString("Settings_Shuffle2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The filter is queried each time you use the Add to queue or Continuous shuffle options..
+        /// </summary>
+        public static string Settings_Shuffle3 {
+            get {
+                return ResourceManager.GetString("Settings_Shuffle3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a fixed number of songs to the queue. For technical reasons, it is limited to 100 random songs without a filter, and to 1000 songs with a filter..
+        /// </summary>
+        public static string Settings_Shuffle4 {
+            get {
+                return ResourceManager.GetString("Settings_Shuffle4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By enabling this option, unison will automatically add songs to the queue so you never run out of songs to listen to..
+        /// </summary>
+        public static string Settings_Shuffle5 {
+            get {
+                return ResourceManager.GetString("Settings_Shuffle5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can change to your own locally installed version of the Snapcast client with an.
         /// </summary>
         public static string Settings_SnapcastInfo1 {
@@ -489,6 +615,132 @@ namespace unison.Resources {
         public static string ShowWindow {
             get {
                 return ResourceManager.GetString("ShowWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shuffle.
+        /// </summary>
+        public static string Shuffle {
+            get {
+                return ResourceManager.GetString("Shuffle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adding.
+        /// </summary>
+        public static string Shuffle_ButtonMessage1 {
+            get {
+                return ResourceManager.GetString("Shuffle_ButtonMessage1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to songs....
+        /// </summary>
+        public static string Shuffle_ButtonMessage2 {
+            get {
+                return ResourceManager.GetString("Shuffle_ButtonMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to done!.
+        /// </summary>
+        public static string Shuffle_ButtonMessage3 {
+            get {
+                return ResourceManager.GetString("Shuffle_ButtonMessage3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continuous shuffle.
+        /// </summary>
+        public static string Shuffle_Continuous {
+            get {
+                return ResourceManager.GetString("Shuffle_Continuous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable continuous shuffle.
+        /// </summary>
+        public static string Shuffle_ContinuousEnable {
+            get {
+                return ResourceManager.GetString("Shuffle_ContinuousEnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string Shuffle_Filter {
+            get {
+                return ResourceManager.GetString("Shuffle_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query filter.
+        /// </summary>
+        public static string Shuffle_FilterQuery {
+            get {
+                return ResourceManager.GetString("Shuffle_FilterQuery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Shuffle_FilterReset {
+            get {
+                return ResourceManager.GetString("Shuffle_FilterReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of songs in filter:.
+        /// </summary>
+        public static string Shuffle_FilterSongNumber {
+            get {
+                return ResourceManager.GetString("Shuffle_FilterSongNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Querying filter....
+        /// </summary>
+        public static string Shuffle_Querying1 {
+            get {
+                return ResourceManager.GetString("Shuffle_Querying1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to done!.
+        /// </summary>
+        public static string Shuffle_Querying2 {
+            get {
+                return ResourceManager.GetString("Shuffle_Querying2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add to queue.
+        /// </summary>
+        public static string Shuffle_Queue {
+            get {
+                return ResourceManager.GetString("Shuffle_Queue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Songs to add.
+        /// </summary>
+        public static string Shuffle_QueueSongs {
+            get {
+                return ResourceManager.GetString("Shuffle_QueueSongs", resourceCulture);
             }
         }
         

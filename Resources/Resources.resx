@@ -120,6 +120,33 @@
   <data name="Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="FilterType_Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="FilterType_Artist" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="FilterType_Directory" xml:space="preserve">
+    <value>Directory</value>
+  </data>
+  <data name="FilterType_Genre" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="FilterType_Song" xml:space="preserve">
+    <value>Song</value>
+  </data>
+  <data name="FilterType_Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="Operator_Contains" xml:space="preserve">
+    <value>contains</value>
+  </data>
+  <data name="Operator_Is" xml:space="preserve">
+    <value>is</value>
+  </data>
+  <data name="Operator_IsNot" xml:space="preserve">
+    <value>is not</value>
+  </data>
   <data name="Radios" xml:space="preserve">
     <value>Radios</value>
   </data>
@@ -213,6 +240,21 @@
   <data name="Settings_ShowWindow" xml:space="preserve">
     <value>Show window</value>
   </data>
+  <data name="Settings_Shuffle1" xml:space="preserve">
+    <value>The shuffle window allows to add random songs to your queue. Both options take into account the filter.</value>
+  </data>
+  <data name="Settings_Shuffle2" xml:space="preserve">
+    <value>If the filter is empty, the entire music library is taken into account.</value>
+  </data>
+  <data name="Settings_Shuffle3" xml:space="preserve">
+    <value>The filter is queried each time you use the Add to queue or Continuous shuffle options.</value>
+  </data>
+  <data name="Settings_Shuffle4" xml:space="preserve">
+    <value>Add a fixed number of songs to the queue. For technical reasons, it is limited to 100 random songs without a filter, and to 1000 songs with a filter.</value>
+  </data>
+  <data name="Settings_Shuffle5" xml:space="preserve">
+    <value>By enabling this option, unison will automatically add songs to the queue so you never run out of songs to listen to.</value>
+  </data>
   <data name="Settings_SnapcastInfo1" xml:space="preserve">
     <value>You can change to your own locally installed version of the Snapcast client with an</value>
   </data>
@@ -260,6 +302,48 @@
   </data>
   <data name="ShowWindow" xml:space="preserve">
     <value>Show window</value>
+  </data>
+  <data name="Shuffle" xml:space="preserve">
+    <value>Shuffle</value>
+  </data>
+  <data name="Shuffle_ButtonMessage1" xml:space="preserve">
+    <value>Adding</value>
+  </data>
+  <data name="Shuffle_ButtonMessage2" xml:space="preserve">
+    <value>songs...</value>
+  </data>
+  <data name="Shuffle_ButtonMessage3" xml:space="preserve">
+    <value>done!</value>
+  </data>
+  <data name="Shuffle_Continuous" xml:space="preserve">
+    <value>Continuous shuffle</value>
+  </data>
+  <data name="Shuffle_ContinuousEnable" xml:space="preserve">
+    <value>Enable continuous shuffle</value>
+  </data>
+  <data name="Shuffle_Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Shuffle_FilterQuery" xml:space="preserve">
+    <value>Query filter</value>
+  </data>
+  <data name="Shuffle_FilterReset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Shuffle_FilterSongNumber" xml:space="preserve">
+    <value>Number of songs in filter:</value>
+  </data>
+  <data name="Shuffle_Querying1" xml:space="preserve">
+    <value>Querying filter...</value>
+  </data>
+  <data name="Shuffle_Querying2" xml:space="preserve">
+    <value>done!</value>
+  </data>
+  <data name="Shuffle_Queue" xml:space="preserve">
+    <value>Add to queue</value>
+  </data>
+  <data name="Shuffle_QueueSongs" xml:space="preserve">
+    <value>Songs to add</value>
   </data>
   <data name="Snapcast_Popup1" xml:space="preserve">
     <value>Snapcast error</value>
