@@ -59,36 +59,6 @@
                     </DockPanel>
                 </TabItem>
 
-                <TabItem Header="Snapcast">
-                    <DockPanel Margin="8">
-                        <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
-                            <GroupBox.Header>
-                                <emoji:TextBlock Text="🔊 Snapcast"/>
-                            </GroupBox.Header>
-                            <Grid VerticalAlignment="Top">
-                                <StackPanel>
-                                    <StackPanel>
-                                        <CheckBox x:Name="SnapcastStartup" Margin="5, 5, 0, 0">
-                                            <TextBlock Text="{x:Static properties:Resources.Settings_SnapcastLauch}" TextWrapping="Wrap"/>
-                                        </CheckBox>
-                                        <CheckBox x:Name="SnapcastWindow" Margin="5,2.5,0,0">
-                                            <TextBlock Text="{x:Static properties:Resources.Settings_SnapcastWindow}" TextWrapping="Wrap"/>
-                                        </CheckBox>
-                                        <TextBlock Text="{x:Static properties:Resources.Settings_SnapcastPort}" TextWrapping="Wrap" Margin="5,5,0,0"/>
-                                        <TextBox x:Name="SnapcastPort" MaxLength="5" PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" Width="250" Margin="10,2,5,0" HorizontalAlignment="Left"/>
-                                        <TextBlock Text="{x:Static properties:Resources.Settings_SnapcastPath}" TextWrapping="Wrap" Margin="5,5,0,0"/>
-                                        <TextBox x:Name="SnapcastPath" TextWrapping="Wrap" Width="250" Margin="10,2,5,0" HorizontalAlignment="Left"/>
-                                        <TextBlock TextWrapping="Wrap" Margin="5,5,0,0" TextAlignment="Left" Width="250">
-                                            <Run Text="{x:Static properties:Resources.Settings_SnapcastInfo1}" /><Run Text="{x:Static properties:Resources.Settings_SnapcastInfo2}" FontStyle="Italic" FontWeight="DemiBold" /><Run Text="{x:Static properties:Resources.Settings_SnapcastInfo3}" />
-                                        </TextBlock>
-                                        <Button Content="{x:Static properties:Resources.Settings_SnapcastResetButton}" Margin="0,10,0,0" Width="120" Click="SnapcastReset_Clicked"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Grid>
-                        </GroupBox>
-                    </DockPanel>
-                </TabItem>
-
                 <TabItem Header="{x:Static properties:Resources.Settings_Shortcuts}">
                     <DockPanel Margin="8">
                         <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
@@ -132,7 +102,7 @@
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
-                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap" MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
 
@@ -140,7 +110,7 @@
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
-                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap" MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
 
@@ -148,7 +118,7 @@
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
-                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap" MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
 
@@ -156,7 +126,7 @@
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
-                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap" MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
 
@@ -164,7 +134,7 @@
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
-                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap" MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
 
@@ -172,7 +142,7 @@
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
-                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap" MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
 
@@ -180,7 +150,7 @@
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD1" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <ComboBox ItemsSource="{StaticResource ShortcutItems}" Margin="0,0,5,0" MinWidth="70" SelectionChanged="MOD_SelectionChanged" Tag="MOD2" FontWeight="Light" SelectedIndex="0" BorderBrush="{x:Null}" FocusVisualStyle="{x:Null}"></ComboBox>
                                             <Button Click="RemapKey_Clicked" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FocusVisualStyle="{x:Null}">
-                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap"  MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
+                                                <TextBlock Text="None" TextAlignment="Center" TextWrapping="Wrap" MinWidth="150" Margin="5,1,5,1" HorizontalAlignment="Stretch" FontWeight="Light" VerticalAlignment="Stretch"/>
                                             </Button>
                                         </StackPanel>
                                     </Grid>
@@ -190,7 +160,64 @@
                                     </StackPanel>
 
                                     <Button Content="{x:Static properties:Resources.Settings_SnapcastResetButton}" Margin="0,10,0,0" Width="120" Click="ShortcutsReset_Clicked"/>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+                    </DockPanel>
+                </TabItem>
 
+                <TabItem Header="Snapcast">
+                    <DockPanel Margin="8">
+                        <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
+                            <GroupBox.Header>
+                                <emoji:TextBlock Text="🔊 Snapcast"/>
+                            </GroupBox.Header>
+                            <Grid VerticalAlignment="Top">
+                                <StackPanel>
+                                    <StackPanel>
+                                        <CheckBox x:Name="SnapcastStartup" Margin="5, 5, 0, 0">
+                                            <TextBlock Text="{x:Static properties:Resources.Settings_SnapcastLauch}" TextWrapping="Wrap"/>
+                                        </CheckBox>
+                                        <CheckBox x:Name="SnapcastWindow" Margin="5,2.5,0,0">
+                                            <TextBlock Text="{x:Static properties:Resources.Settings_SnapcastWindow}" TextWrapping="Wrap"/>
+                                        </CheckBox>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_SnapcastPort}" TextWrapping="Wrap" Margin="5,5,0,0"/>
+                                        <TextBox x:Name="SnapcastPort" MaxLength="5" PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" Width="250" Margin="10,2,5,0" HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{x:Static properties:Resources.Settings_SnapcastPath}" TextWrapping="Wrap" Margin="5,5,0,0"/>
+                                        <TextBox x:Name="SnapcastPath" TextWrapping="Wrap" Width="250" Margin="10,2,5,0" HorizontalAlignment="Left"/>
+                                        <TextBlock TextWrapping="Wrap" Margin="5,5,0,0" TextAlignment="Left" Width="250">
+                                            <Run Text="{x:Static properties:Resources.Settings_SnapcastInfo1}" /><Run Text="{x:Static properties:Resources.Settings_SnapcastInfo2}" FontStyle="Italic" FontWeight="DemiBold" /><Run Text="{x:Static properties:Resources.Settings_SnapcastInfo3}" />
+                                        </TextBlock>
+                                        <Button Content="{x:Static properties:Resources.Settings_SnapcastResetButton}" Margin="0,10,0,0" Width="120" Click="SnapcastReset_Clicked"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+                    </DockPanel>
+                </TabItem>
+
+                <TabItem Header="Shuffle">
+                    <DockPanel Margin="8">
+                        <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
+                            <GroupBox.Header>
+                                <TextBlock>
+                                    <emoji:EmojiInline Text="🔁 "/>
+                                    <Run Text="Shuffle"></Run>
+                                </TextBlock>
+                            </GroupBox.Header>
+                            <Grid MaxWidth="500">
+                                <StackPanel>
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Run>The shuffle window allows to add random songs to your queue. Both options take into account the filter.</Run>
+                                        <Run>If the filter is empty, the entire music library is taken into account.</Run><LineBreak/><LineBreak/>
+                                        
+                                        <Run FontWeight="Bold">Add to queue</Run><LineBreak/>
+                                        <Run>Add a fixed number of songs to the queue. It can take a long time to add more than 100 songs, so the option is limited to 1000 songs.</Run>
+                                        <LineBreak/><LineBreak/>
+                                        
+                                        <Run FontWeight="Bold">Continuous shuffle</Run><LineBreak/>
+                                        <Run>By enabling this option, unison will automatically add songs to the queue so you never run out of songs to listen to.</Run>
+                                    </TextBlock>
                                 </StackPanel>
                             </Grid>
                         </GroupBox>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -34,7 +35,7 @@ namespace unison
     public class MPDHandler
     {
         private bool _connected;
-        public string _version;
+        private string _version;
         private int _currentVolume;
         private int _previousVolume;
         private bool _currentRandom;
@@ -43,6 +44,7 @@ namespace unison
         private bool _currentConsume;
         private double _currentTime;
         private double _totalTime;
+        private IEnumerable<IMpdFile> _Playlist;
 
         private MpdStatus _currentStatus;
         private IMpdFile _currentSong;
@@ -65,7 +67,7 @@ namespace unison
         private MpcConnection _commandConnection;
         private IPEndPoint _mpdEndpoint;
 
-        private CancellationTokenSource _cancelCommand;
+        public CancellationTokenSource _cancelCommand;
         private CancellationTokenSource _cancelConnect;
 
         public MPDHandler()
@@ -525,13 +527,27 @@ namespace unison
         public string GetVersion() => _version;
         public Statistics GetStats() => _stats;
         public double GetCurrentTime() => _currentTime;
+        public IEnumerable<IMpdFile> GetPlaylist() => _Playlist;
 
         public bool IsConnected() => _connected;
         public bool IsPlaying() => _currentStatus?.State == MpdState.Play;
 
-        public void Prev() => SendCommand(new PreviousCommand());
-        public void Next() => SendCommand(new NextCommand());
+        public bool CanPrevNext = true;
+
+        public void Prev()
+        {
+            if (CanPrevNext)
+                SendCommand(new PreviousCommand());
+        }
+
+        public void Next()
+        {
+            if (CanPrevNext)
+                SendCommand(new NextCommand());
+        }
+        
         public void PlayPause() => SendCommand(new PauseResumeCommand());
+        public void Play(int pos) => SendCommand(new PlayCommand(pos));
 
         public void Random() => SendCommand(new RandomCommand(!_currentRandom));
         public void Repeat() => SendCommand(new RepeatCommand(!_currentRepeat));
@@ -586,27 +602,35 @@ namespace unison
             SendCommand(commandList);
         }
 
+        public async Task QueryPlaylist() => _Playlist = await SafelySendCommandAsync(new PlaylistCommand());
+
+        public int GetPlaylistCount()
+        {
+            if (_Playlist == null)
+                return 0;
+            return _Playlist.ToArray().Count();
+        }
+
         public async void QueryStats()
         {
-            Dictionary<string, string> response = await SafelySendCommandAsync(new StatsCommand());
+            Dictionary<string, string> Response = await SafelySendCommandAsync(new StatsCommand());
+            if (Response == null)
+                return;
 
-            if (response != null)
-            {
-                _stats.Songs = int.Parse(response["songs"]);
-                _stats.Albums = int.Parse(response["albums"]);
-                _stats.Artists = int.Parse(response["artists"]);
+            _stats.Songs = int.Parse(Response["songs"]);
+            _stats.Albums = int.Parse(Response["albums"]);
+            _stats.Artists = int.Parse(Response["artists"]);
 
-                TimeSpan time;
-                time = TimeSpan.FromSeconds(int.Parse(response["uptime"]));
-                _stats.Uptime = time.ToString(@"dd\:hh\:mm\:ss");
-                time = TimeSpan.FromSeconds(int.Parse(response["db_playtime"]));
-                _stats.TotalPlaytime = time.ToString(@"dd\:hh\:mm\:ss");
-                time = TimeSpan.FromSeconds(int.Parse(response["playtime"]));
-                _stats.TotalTimePlayed = time.ToString(@"dd\:hh\:mm\:ss");
+            TimeSpan time;
+            time = TimeSpan.FromSeconds(int.Parse(Response["uptime"]));
+            _stats.Uptime = time.ToString(@"dd\:hh\:mm\:ss");
+            time = TimeSpan.FromSeconds(int.Parse(Response["db_playtime"]));
+            _stats.TotalPlaytime = time.ToString(@"dd\:hh\:mm\:ss");
+            time = TimeSpan.FromSeconds(int.Parse(Response["playtime"]));
+            _stats.TotalTimePlayed = time.ToString(@"dd\:hh\:mm\:ss");
 
-                DateTime date = new DateTime(1970, 1, 1).AddSeconds(int.Parse(response["db_update"])).ToLocalTime();
-                _stats.DatabaseUpdate = date.ToString("dd/MM/yyyy @ HH:mm");
-            }
+            DateTime date = new DateTime(1970, 1, 1).AddSeconds(int.Parse(Response["db_update"])).ToLocalTime();
+            _stats.DatabaseUpdate = date.ToString("dd/MM/yyyy @ HH:mm");
         }
     }
 }

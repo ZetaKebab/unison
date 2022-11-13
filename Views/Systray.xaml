@@ -30,11 +30,11 @@
                 <Image Width="16" Height="16" emoji:Image.Source="📻" />
             </MenuItem.Icon>
         </MenuItem>
-        <!--<MenuItem Header="Shuffle" Command="{Binding Shuffle}">
+        <MenuItem Header="Shuffle" Command="{Binding Shuffle}">
             <MenuItem.Icon>
                 <Image Width="16" Height="16" emoji:Image.Source="🔀" />
             </MenuItem.Icon>
-        </MenuItem>-->
+        </MenuItem>
         <MenuItem Header="{x:Static properties:Resources.Settings}" Command="{Binding Settings}">
             <MenuItem.Icon>
                 <Image Width="16" Height="16" emoji:Image.Source="🛠️" />

@@ -6,7 +6,7 @@ using System.Windows.Threading;
 using System.Windows.Interop;
 using System.Windows.Input;
 using System.Windows.Controls.Primitives;
-using unison.Handlers;
+using System.Diagnostics;
 
 namespace unison
 {
@@ -14,6 +14,7 @@ namespace unison
     {
         private readonly Settings _settingsWin;
         private readonly Radios _radiosWin;
+        private readonly Shuffle _shuffleWin;
         private readonly DispatcherTimer _timer;
         private readonly MPDHandler _mpd;
 
@@ -26,6 +27,7 @@ namespace unison
 
             _settingsWin = new Settings();
             _radiosWin = new Radios();
+            _shuffleWin = new Shuffle();
             _timer = new DispatcherTimer();
             _mpd = (MPDHandler)Application.Current.Properties["mpd"];
 
@@ -47,12 +49,17 @@ namespace unison
         {
             if (_mpd.IsConnected())
             {
+                _mpd.QueryStats();
+                _settingsWin.UpdateStats();
+
                 ConnectionOkIcon.Visibility = Visibility.Visible;
                 ConnectionFailIcon.Visibility = Visibility.Collapsed;
 
                 Snapcast.IsEnabled = true;
                 if (_radiosWin.IsConnected())
                     Radio.IsEnabled = true;
+
+                _shuffleWin.Initialize();
             }
             else
             {
@@ -68,7 +75,7 @@ namespace unison
             Connection.Text = $"{Properties.Settings.Default.mpd_host}:{Properties.Settings.Default.mpd_port}";
         }
 
-        public void OnSongChanged(object sender, EventArgs e)
+        public async void OnSongChanged(object sender, EventArgs e)
         {
             if (_mpd.GetCurrentSong() == null)
                 return;
@@ -114,6 +121,15 @@ namespace unison
                     _timer.Start();
                 EndTime.Text = FormatSeconds(_mpd.GetCurrentSong().Time);
             }
+
+            Trace.WriteLine("Song changed called!");
+
+            if (_shuffleWin.GetContinuous())
+            {
+                _mpd.CanPrevNext = false;
+                await _shuffleWin.HandleContinuous();
+                _mpd.CanPrevNext = true;
+            }
         }
 
         public void OnStatusChanged(object sender, EventArgs e)
@@ -142,9 +158,6 @@ namespace unison
                     DefaultState();
                 }
             }
-
-            _mpd.QueryStats();
-            _settingsWin.UpdateStats();
         }
 
         private void DefaultState(bool LostConnection = false)
@@ -217,7 +230,6 @@ namespace unison
         public void Pause_Clicked(object sender, RoutedEventArgs e) => _mpd.PlayPause();
         public void Previous_Clicked(object sender, RoutedEventArgs e) =>  _mpd.Prev();
         public void Next_Clicked(object sender, RoutedEventArgs e) => _mpd.Next();
-
         public void Random_Clicked(object sender, RoutedEventArgs e) => _mpd.Random();
         public void Repeat_Clicked(object sender, RoutedEventArgs e) => _mpd.Repeat();
         public void Single_Clicked(object sender, RoutedEventArgs e) => _mpd.Single();
@@ -237,6 +249,15 @@ namespace unison
 
             if (_radiosWin.WindowState == WindowState.Minimized)
                 _radiosWin.WindowState = WindowState.Normal;
+        }
+
+        public void Shuffle_Clicked(object sender, RoutedEventArgs e)
+        {
+            _shuffleWin.Show();
+            _shuffleWin.Activate();
+
+            if (_shuffleWin.WindowState == WindowState.Minimized)
+                _shuffleWin.WindowState = WindowState.Normal;
         }
 
         public void Settings_Clicked(object sender, RoutedEventArgs e)

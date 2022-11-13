@@ -1,0 +1,117 @@
+﻿<Window x:Class="unison.Shuffle"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
+        xmlns:local="clr-namespace:unison" xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+        mc:Ignorable="d"
+        Title="Shuffle" Closing="Window_Closing" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <x:Array x:Key="FilterType" Type="sys:String">
+            <sys:String>Song</sys:String>
+            <sys:String>Artist</sys:String>
+            <sys:String>Album</sys:String>
+            <sys:String>Year</sys:String>
+            <sys:String>Genre</sys:String>
+            <sys:String>Directory</sys:String>
+        </x:Array>
+        <x:Array x:Key="OperatorTypeA" Type="sys:String">
+            <sys:String>contains</sys:String>
+            <sys:String>is</sys:String>
+            <sys:String>is not</sys:String>
+        </x:Array>
+        <x:Array x:Key="OperatorTypeB" Type="sys:String">
+            <sys:String>is</sys:String>
+            <sys:String>is not</sys:String>
+        </x:Array>
+        <x:Array x:Key="OperatorTypeC" Type="sys:String">
+            <sys:String>is</sys:String>
+        </x:Array>
+
+        <DataTemplate x:Key="FilterPanel">
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <ComboBox x:Name="FilterType" SelectionChanged="FilterType_SelectionChanged" ItemsSource="{StaticResource FilterType}" SelectedIndex="0" Width="100" ScrollViewer.CanContentScroll="False" FocusVisualStyle="{x:Null}"/>
+                <ComboBox x:Name="FilterOperator" SelectionChanged="OperatorType_SelectionChanged" ItemsSource="{StaticResource OperatorTypeA}" SelectedIndex="0" Width="80" ScrollViewer.CanContentScroll="False" Margin="5,0,0,0" FocusVisualStyle="{x:Null}"/>
+                <ComboBox x:Name="FilterList" SelectedIndex="0" Width="240" Visibility="Collapsed" ScrollViewer.CanContentScroll="False" Margin="5,0,0,0" FocusVisualStyle="{x:Null}"/>
+                <TextBox x:Name="FilterValue" KeyUp="QueryFilterHandler" Width="240" Margin="5,0,0,0"/>
+                <Button Content="-" Padding="5, 2" Click="RemoveFilter_Clicked" Width="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}" Margin="5,0,0,0"/>
+                <Button Content="+" Padding="5, 2" Click="AddFilter_Clicked" Width="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}" Margin="5,0,0,0"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel>
+            <StackPanel HorizontalAlignment="Left" Orientation="Vertical" Margin="5,0,5,5">
+                <GroupBox DockPanel.Dock="Top" Padding="0,4,0,0">
+                    <GroupBox.Header>
+                        <TextBlock>
+                            <emoji:EmojiInline Text="🔡"/>
+                            <Run Text="Filter"/>
+                        </TextBlock>
+                    </GroupBox.Header>
+                    <StackPanel Orientation="Vertical" Margin="5,0,5,0">
+
+                        <StackPanel x:Name="FilterPanel">
+                            <ContentPresenter ContentTemplate="{StaticResource FilterPanel}"/>
+                        </StackPanel>
+
+                        <StackPanel x:Name="SongFilterPanel" Margin="0,10,0,0">
+                            <TextBlock>
+                                <Run Text="Number of songs in filter: "/><Run x:Name="SongFilterNumber" FontWeight="Bold"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,5,0,0">
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                                <Button Content="Query filter" Click="UpdateFilter_Clicked" Padding="5, 2" VerticalAlignment="Bottom" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}" Margin="0,0,10,0"/>
+                                <Button Content="Reset" Click="Reset_Clicked" Padding="5, 2" VerticalAlignment="Bottom" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}"/>
+                                <TextBlock x:Name="QueryFilterText" Text="Querying filter..." Margin="15,3,0,0" FontStyle="Italic" Visibility="Collapsed" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <GroupBox DockPanel.Dock="Right" Padding="0,4,0,0" Width="248">
+                        <GroupBox.Header>
+                            <TextBlock>
+                            <emoji:EmojiInline Text="➕"/>
+                            <Run Text="Add to queue"/>
+                            </TextBlock>
+                        </GroupBox.Header>
+                        <StackPanel Orientation="Vertical" Margin="5,5,5,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <TextBlock Text="Songs to add" Margin="0,0,5,5"/>
+                                <TextBox x:Name="SongNumber" KeyUp="AddToQueueHandler" PreviewTextInput="QueueValidationTextBox" MaxLength="4" Text="15" Width="35" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                <Button Content="Add to queue" Click="AddToQueue_Clicked" Padding="5, 2" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}"/>
+                                <TextBlock x:Name="SearchStatus" Margin="15,3,0,0" FontStyle="Italic" Visibility="Collapsed">
+                                    <Run Text="Adding "/><Run x:Name="NumberAddedSongs"/><Run Text=" songs..."/>
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+                    
+                    <GroupBox DockPanel.Dock="Left" Padding="0,4,0,0" Width="248" Margin="0,0,5,0">
+                        <GroupBox.Header>
+                            <TextBlock>
+                                <emoji:EmojiInline Text="♾️"/>
+                                <Run Text="Continuous shuffle"/>
+                            </TextBlock>
+                        </GroupBox.Header>
+                        <StackPanel Orientation="Horizontal" Margin="5,7,5,0">
+                            <CheckBox x:Name="ContinuousShuffle" Checked="ContinuousShuffle_Checked" Unchecked="ContinuousShuffle_Checked" FocusVisualStyle="{x:Null}" VerticalAlignment="Top">
+                                <TextBlock Text="Enable continuous shuffle" TextWrapping="Wrap"/>
+                            </CheckBox>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

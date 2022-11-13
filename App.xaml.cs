@@ -9,6 +9,7 @@ namespace unison
         private TaskbarIcon _systray;
         private HotkeyHandler _hotkeys;
         private SnapcastHandler _snapcast;
+        private ShuffleHandler _shuffle;
         private MPDHandler _mpd;
         private UpdateHandler _updater;
 
@@ -30,6 +31,9 @@ namespace unison
             _snapcast = new SnapcastHandler();
             Current.Properties["snapcast"] = _snapcast;
 
+            _shuffle = new ShuffleHandler();
+            Current.Properties["shuffle"] = _shuffle;
+            
             _updater = new UpdateHandler();
             Current.Properties["updater"] = _updater;
 

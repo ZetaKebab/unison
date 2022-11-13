@@ -71,6 +71,18 @@ namespace unison
             }
         }
 
+        public ICommand Shuffle
+        {
+            get
+            {
+                return new DelegateCommand
+                {
+                    CommandAction = () => ((MainWindow)Application.Current.MainWindow).Shuffle_Clicked(null, null),
+                    CanExecuteFunc = () => true
+                };
+            }
+        }
+
         public ICommand Settings
         {
             get
