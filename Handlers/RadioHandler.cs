@@ -75,7 +75,6 @@ namespace unison.Handlers
 
         public async Task<List<StationInfo>> AdvancedSearch(AdvancedSearchOptions options)
         {
-
             return await _radioBrowser.Search.AdvancedAsync(options);
         }
     }
