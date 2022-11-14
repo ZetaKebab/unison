@@ -611,6 +611,33 @@ namespace unison
             return _Playlist.ToArray().Count();
         }
 
+        private string FormatTime(TimeSpan time)
+        {
+            string FormattedTime = "";
+
+            if (time.Days == 1)
+                FormattedTime += $"{time.Days} {Resources.Resources.Day}, ";
+            else if (time.Days > 1)
+                FormattedTime += $"{time.Days} {Resources.Resources.Days}, ";
+
+            if (time.Hours == 1)
+                FormattedTime += $"{time.Hours} {Resources.Resources.Hour}, ";
+            else
+                FormattedTime += $"{time.Hours} {Resources.Resources.Hours}, ";
+
+            if (time.Minutes == 1)
+                FormattedTime += $"{time.Minutes} {Resources.Resources.Minute}, ";
+            else
+                FormattedTime += $"{time.Minutes} {Resources.Resources.Minutes}, ";
+
+            if (time.Seconds == 1)
+                FormattedTime += $"{time.Seconds} {Resources.Resources.Second}";
+            else
+                FormattedTime += $"{time.Seconds} {Resources.Resources.Seconds}";
+
+            return FormattedTime;
+        }
+
         public async void QueryStats()
         {
             Dictionary<string, string> Response = await SafelySendCommandAsync(new StatsCommand());
@@ -620,17 +647,14 @@ namespace unison
             _stats.Songs = int.Parse(Response["songs"]);
             _stats.Albums = int.Parse(Response["albums"]);
             _stats.Artists = int.Parse(Response["artists"]);
-
-            TimeSpan time;
-            time = TimeSpan.FromSeconds(int.Parse(Response["uptime"]));
-            _stats.Uptime = time.ToString(@"dd\:hh\:mm\:ss");
-            time = TimeSpan.FromSeconds(int.Parse(Response["db_playtime"]));
-            _stats.TotalPlaytime = time.ToString(@"dd\:hh\:mm\:ss");
-            time = TimeSpan.FromSeconds(int.Parse(Response["playtime"]));
-            _stats.TotalTimePlayed = time.ToString(@"dd\:hh\:mm\:ss");
+            
+            _stats.Uptime = FormatTime(TimeSpan.FromSeconds(int.Parse(Response["uptime"])));
+            _stats.TotalPlaytime = FormatTime(TimeSpan.FromSeconds(int.Parse(Response["db_playtime"])));
+            _stats.TotalTimePlayed = FormatTime(TimeSpan.FromSeconds(int.Parse(Response["playtime"])));
 
             DateTime date = new DateTime(1970, 1, 1).AddSeconds(int.Parse(Response["db_update"])).ToLocalTime();
-            _stats.DatabaseUpdate = date.ToString("dd/MM/yyyy @ HH:mm");
+            string dayOfWeek = Resources.Resources.Culture.DateTimeFormat.GetDayName(date.DayOfWeek);
+            _stats.DatabaseUpdate = dayOfWeek + " " + date.ToString("dd/MM/yyyy @ HH:mm");
         }
     }
 }

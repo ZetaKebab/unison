@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Day" xml:space="preserve">
+    <value>jour</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>jours</value>
+  </data>
   <data name="Exit" xml:space="preserve">
     <value>Quitter</value>
   </data>
@@ -137,6 +143,18 @@
   </data>
   <data name="FilterType_Year" xml:space="preserve">
     <value>Année</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>heure</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>heures</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>minute</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>minutes</value>
   </data>
   <data name="Operator_Contains" xml:space="preserve">
     <value>continent</value>
@@ -173,6 +191,12 @@
   </data>
   <data name="Radio_Tags" xml:space="preserve">
     <value>Tags</value>
+  </data>
+  <data name="Second" xml:space="preserve">
+    <value>seconde</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>secondes</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Configuration</value>
