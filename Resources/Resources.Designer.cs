@@ -61,6 +61,15 @@ namespace unison.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database.
+        /// </summary>
+        public static string Database {
+            get {
+                return ResourceManager.GetString("Database", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to day.
         /// </summary>
         public static string Day {
@@ -637,6 +646,15 @@ namespace unison.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update database.
+        /// </summary>
+        public static string Settings_UpdateDatabase {
+            get {
+                return ResourceManager.GetString("Settings_UpdateDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version:.
         /// </summary>
         public static string Settings_Version {
@@ -862,15 +880,6 @@ namespace unison.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stats.
-        /// </summary>
-        public static string Stats {
-            get {
-                return ResourceManager.GetString("Stats", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Albums:.
         /// </summary>
         public static string Stats_Albums {
@@ -921,6 +930,24 @@ namespace unison.Resources {
         public static string Stats_TotalTimePlayed {
             get {
                 return ResourceManager.GetString("Stats_TotalTimePlayed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating database....
+        /// </summary>
+        public static string Stats_UpdateDBMessage1 {
+            get {
+                return ResourceManager.GetString("Stats_UpdateDBMessage1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  done!.
+        /// </summary>
+        public static string Stats_UpdateDBMessage2 {
+            get {
+                return ResourceManager.GetString("Stats_UpdateDBMessage2", resourceCulture);
             }
         }
         

@@ -334,22 +334,51 @@ namespace unison
             }, token).ConfigureAwait(false);
         }
 
+        private bool UpdateStarted = false;
+
         private async Task HandleIdleResponseAsync(string subsystems)
         {
             try
             {
-                if (subsystems.Contains("player") || subsystems.Contains("mixer") || subsystems.Contains("output") || subsystems.Contains("options"))
+                if (subsystems.Contains("player") || subsystems.Contains("mixer") || subsystems.Contains("output") || subsystems.Contains("options") || subsystems.Contains("update"))
                 {
                     await UpdateStatusAsync();
 
                     if (subsystems.Contains("player"))
                         await UpdateSongAsync();
+
+                    if (subsystems.Contains("update"))
+                        UpdateDatabaseSync();
                 }
             }
             catch (Exception e)
             {
                 Trace.WriteLine($"Error in Idle connection thread: {e.Message}");
                 await Initialize();
+            }
+        }
+
+        private void UpdateDatabaseSync()
+        {
+            if (!UpdateStarted)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
+                    MainWin.GetSettings().MPDDatabaseUpdate_Start();
+                });
+
+                UpdateStarted = true;
+            }
+            else
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    MainWindow MainWin = (MainWindow)Application.Current.MainWindow;
+                    MainWin.GetSettings().MPDDatabaseUpdate_Stop();
+                    MainWin.UpdateStats();
+                });
+                UpdateStarted = false;
             }
         }
 
@@ -610,6 +639,8 @@ namespace unison
                 return 0;
             return _Playlist.ToArray().Count();
         }
+
+        public void UpdateDB() => SendCommand(new UpdateCommand());
 
         private string FormatTime(TimeSpan time)
         {

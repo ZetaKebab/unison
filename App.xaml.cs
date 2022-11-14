@@ -15,10 +15,11 @@ namespace unison
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            unison.Resources.Resources.Culture = System.Globalization.CultureInfo.CurrentCulture;
+
             //debug language
             //unison.Resources.Resources.Culture = System.Globalization.CultureInfo.GetCultureInfo("fr-FR");
             //unison.Resources.Resources.Culture = System.Globalization.CultureInfo.GetCultureInfo("es-ES");
-
 
             base.OnStartup(e);
 

@@ -7,6 +7,7 @@ using System.Windows.Interop;
 using System.Windows.Input;
 using System.Windows.Controls.Primitives;
 using System.Diagnostics;
+using System.Data;
 
 namespace unison
 {
@@ -17,6 +18,8 @@ namespace unison
         private readonly Shuffle _shuffleWin;
         private readonly DispatcherTimer _timer;
         private readonly MPDHandler _mpd;
+
+        public Settings GetSettings() => _settingsWin;
 
         public MainWindow()
         {
@@ -45,12 +48,17 @@ namespace unison
             TimeSlider.Value = _mpd.GetCurrentTime() / _mpd.GetCurrentSong().Time * 100;
         }
 
+        public void UpdateStats()
+        {
+            _mpd.QueryStats();
+            _settingsWin.UpdateStats();
+        }
+
         public void OnConnectionChanged(object sender, EventArgs e)
         {
             if (_mpd.IsConnected())
             {
-                _mpd.QueryStats();
-                _settingsWin.UpdateStats();
+                UpdateStats();
 
                 ConnectionOkIcon.Visibility = Visibility.Visible;
                 ConnectionFailIcon.Visibility = Visibility.Collapsed;

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -11,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Navigation;
+using System.Windows.Threading;
 using unison.Handlers;
 
 namespace unison
@@ -37,8 +39,7 @@ namespace unison
             }
         }
 
-        HotkeyHandler _hotkeys = (HotkeyHandler)Application.Current.Properties["hotkeys"];
-
+        readonly HotkeyHandler _hotkeys = (HotkeyHandler)Application.Current.Properties["hotkeys"];
 
         public Settings()
         {
@@ -74,11 +75,13 @@ namespace unison
             {
                 ConnectionStatus.Text = $"{unison.Resources.Resources.Settings_ConnectionStatusConnected} {mpd.GetVersion()}.";
                 ConnectButton.IsEnabled = false;
+                UpdateDatabaseButton.IsEnabled = true;
             }
             else
             {
                 ConnectionStatus.Text = unison.Resources.Resources.Settings_ConnectionStatusOffline;
                 ConnectButton.IsEnabled = true;
+                UpdateDatabaseButton.IsEnabled = false;
             }
         }
 
@@ -144,6 +147,37 @@ namespace unison
         {
             if (e.Key == Key.Return)
                 MPDConnect_Clicked(null, null);
+        }
+
+        private void MPDDatabaseUpdate_Clicked(object sender, RoutedEventArgs e)
+        {
+            MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
+            if (mpd.IsConnected())
+                mpd.UpdateDB();
+        }
+
+        private static void TimedText(TextBlock textBlock, int time)
+        {
+            DispatcherTimer Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromSeconds(time);
+            Timer.Tick += (sender, args) =>
+            {
+                Timer.Stop();
+                textBlock.Visibility = Visibility.Collapsed;
+            };
+            Timer.Start();
+        }
+
+        public void MPDDatabaseUpdate_Start()
+        {
+            UpdateDBMessage.Visibility = Visibility.Visible;
+        }
+
+        public void MPDDatabaseUpdate_Stop()
+        {
+            UpdateDBMessage2.Visibility = Visibility.Visible;
+            TimedText(UpdateDBMessage, 2);
+            TimedText(UpdateDBMessage2, 2);
         }
 
         private void CheckUpdates(object sender, RoutedEventArgs e)
