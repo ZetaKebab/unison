@@ -10,24 +10,24 @@
 
     <Window.Resources>
         <x:Array x:Key="FilterType" Type="sys:String">
-            <sys:String>Song</sys:String>
-            <sys:String>Artist</sys:String>
-            <sys:String>Album</sys:String>
-            <sys:String>Year</sys:String>
-            <sys:String>Genre</sys:String>
-            <sys:String>Directory</sys:String>
+            <x:Static Member="properties:Resources.FilterType_Song"/>
+            <x:Static Member="properties:Resources.FilterType_Artist"/>
+            <x:Static Member="properties:Resources.FilterType_Album"/>
+            <x:Static Member="properties:Resources.FilterType_Year"/>
+            <x:Static Member="properties:Resources.FilterType_Genre"/>
+            <x:Static Member="properties:Resources.FilterType_Directory"/>
         </x:Array>
         <x:Array x:Key="OperatorTypeA" Type="sys:String">
-            <sys:String>contains</sys:String>
-            <sys:String>is</sys:String>
-            <sys:String>is not</sys:String>
+            <x:Static Member="properties:Resources.Operator_Contains"/>
+            <x:Static Member="properties:Resources.Operator_Is"/>
+            <x:Static Member="properties:Resources.Operator_IsNot"/>
         </x:Array>
         <x:Array x:Key="OperatorTypeB" Type="sys:String">
-            <sys:String>is</sys:String>
-            <sys:String>is not</sys:String>
+            <x:Static Member="properties:Resources.Operator_Is"/>
+            <x:Static Member="properties:Resources.Operator_IsNot"/>
         </x:Array>
         <x:Array x:Key="OperatorTypeC" Type="sys:String">
-            <sys:String>is</sys:String>
+            <x:Static Member="properties:Resources.Operator_Is"/>
         </x:Array>
 
         <DataTemplate x:Key="FilterPanel">
