@@ -244,7 +244,7 @@ namespace unison
         public void Consume_Clicked(object sender, RoutedEventArgs e) => _mpd.Consume();
         public void ChangeVolume(int value) => _mpd.SetVolume(value);
 
-        public static void Snapcast_Clicked(object sender, RoutedEventArgs e)
+        public void Snapcast_Clicked(object sender, RoutedEventArgs e)
         {
             SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
             snapcast.LaunchOrExit();

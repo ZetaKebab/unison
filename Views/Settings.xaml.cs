@@ -85,7 +85,7 @@ namespace unison
             }
         }
 
-        private static void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
@@ -149,7 +149,7 @@ namespace unison
                 MPDConnect_Clicked(null, null);
         }
 
-        private static void MPDDatabaseUpdate_Clicked(object sender, RoutedEventArgs e)
+        private void MPDDatabaseUpdate_Clicked(object sender, RoutedEventArgs e)
         {
             MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
             if (mpd.IsConnected())
@@ -180,7 +180,7 @@ namespace unison
             TimedText(UpdateDBMessage2, 2);
         }
 
-        private static void CheckUpdates(object sender, RoutedEventArgs e)
+        private void CheckUpdates(object sender, RoutedEventArgs e)
         {
             UpdateHandler updater = (UpdateHandler)Application.Current.Properties["updater"];
             updater.Start(true);
