@@ -160,7 +160,7 @@
     <value>minutes</value>
   </data>
   <data name="Operator_Contains" xml:space="preserve">
-    <value>continent</value>
+    <value>contient</value>
   </data>
   <data name="Operator_Is" xml:space="preserve">
     <value>est</value>

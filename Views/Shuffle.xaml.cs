@@ -217,9 +217,13 @@ namespace unison
         {
             QueryFilterText.Visibility = Visibility.Visible;
             await UpdateFilter();
+
+            QueryFilterText2.Visibility = Visibility.Visible;
+
             TimedText(QueryFilterText, 1);
+            TimedText(QueryFilterText2, 1);
         }
-        
+
         private void TimedText(TextBlock textBlock, int time)
         {
             DispatcherTimer Timer = new DispatcherTimer();
@@ -330,18 +334,16 @@ namespace unison
             await UpdateFilter();
             QueueValidationNumber();
 
-            // TODO
-            // Added => Adding songs...
-            // to
-            // Added X songs! (display for 5 seconds)
-
             NumberAddedSongs.Text = SongNumber.Text;
             SearchStatus.Visibility = Visibility.Visible;
 
             int Num = int.Parse(SongNumber.Text);
             await AddToQueue_Internal(Num);
 
+            SearchStatus2.Visibility = Visibility.Visible;
+
             TimedText(SearchStatus, 2);
+            TimedText(SearchStatus2, 2);
         }
 
         private async Task AddToQueue_Internal(int Num)

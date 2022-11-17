@@ -943,7 +943,7 @@ namespace unison.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  done!.
+        ///   Looks up a localized string similar to done!.
         /// </summary>
         public static string Stats_UpdateDBMessage2 {
             get {

@@ -412,7 +412,7 @@
     <value>Updating database...</value>
   </data>
   <data name="Stats_UpdateDBMessage2" xml:space="preserve">
-    <value> done!</value>
+    <value>done!</value>
   </data>
   <data name="Stats_Uptime" xml:space="preserve">
     <value>MPD uptime:</value>
