@@ -47,7 +47,7 @@ namespace unison
             ListFolder(_mpd._cancelCommand.Token);
         }
 
-        public async void ListGenre(CancellationToken token)
+        private async void ListGenre(CancellationToken token)
         {
             if (GenreList.Count != 0)
                 return;
@@ -64,7 +64,7 @@ namespace unison
                 GenreList.Add(genre);
         }
 
-        public async void ListFolder(CancellationToken token)
+        private async void ListFolder(CancellationToken token)
         {
             if (FolderList.Count != 0)
                 return;
@@ -83,7 +83,7 @@ namespace unison
 
         private bool IsFilterEmpty()
         {
-            if (Filters.Count() == 0)
+            if (Filters.Count == 0)
                 return true;
             return false;
         }
@@ -124,7 +124,7 @@ namespace unison
             _shuffle.SongList.Clear();
         }
 
-        private ITag FilterEquivalence_Type(string value)
+        private static ITag FilterEquivalence_Type(string value)
         {
             if (value == "Song")
                 return MpdTags.Title;
@@ -139,7 +139,7 @@ namespace unison
             return MpdTags.Title;
         }
 
-        private FilterOperator FilterEquivalence_Operator(string value)
+        private static FilterOperator FilterEquivalence_Operator(string value)
         {
             if (value == "contains")
                 return FilterOperator.Contains;
@@ -224,7 +224,7 @@ namespace unison
             TimedText(QueryFilterText2, 1);
         }
 
-        private void TimedText(TextBlock textBlock, int time)
+        private static void TimedText(TextBlock textBlock, int time)
         {
             DispatcherTimer Timer = new DispatcherTimer();
             Timer.Interval = TimeSpan.FromSeconds(time);

@@ -8,6 +8,7 @@ namespace unison
     public class SnapcastHandler
     {
         private readonly Process _snapcast = new();
+
         public bool HasStarted { get; private set; }
 
         public void OnConnectionChanged(object sender, EventArgs e)
@@ -30,7 +31,7 @@ namespace unison
             });
         }
 
-        public void UpdateInterface()
+        public static void UpdateInterface()
         {
             TaskbarIcon Systray = (TaskbarIcon)Application.Current.Properties["systray"];
             SystrayViewModel DataContext = Systray.DataContext as SystrayViewModel;

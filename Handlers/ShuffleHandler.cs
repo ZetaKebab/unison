@@ -17,8 +17,8 @@ namespace unison
     class ShuffleHandler
     {
         private readonly MPDHandler _mpd;
-        public int AddedSongs = 0;
 
+        public int AddedSongs = 0;
         public List<string> SongList { get; }
 
         public ShuffleHandler()

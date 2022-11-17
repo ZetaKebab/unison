@@ -15,7 +15,7 @@ namespace unison
     public partial class Radios : Window
     {
         private MPDHandler _mpd;
-        RadioHandler _radio;
+        private RadioHandler _radio;
 
         public bool IsConnected() => _radio.IsConnected();
 

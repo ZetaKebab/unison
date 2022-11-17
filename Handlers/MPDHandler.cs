@@ -49,12 +49,12 @@ namespace unison
         private MpdStatus _currentStatus;
         private IMpdFile _currentSong;
         private BitmapImage _cover;
-        public Statistics _stats;
+        private readonly Statistics _stats;
         private readonly System.Timers.Timer _elapsedTimer;
-        private DispatcherTimer _retryTimer;
+        private readonly DispatcherTimer _retryTimer;
 
-        bool _isUpdatingStatus = false;
-        bool _isUpdatingSong = false;
+        private bool _isUpdatingStatus = false;
+        private bool _isUpdatingSong = false;
 
         public IPAddress _ipAddress;
 
@@ -69,6 +69,8 @@ namespace unison
 
         public CancellationTokenSource _cancelCommand;
         private CancellationTokenSource _cancelConnect;
+
+        private bool UpdateStarted = false;
 
         public MPDHandler()
         {
@@ -154,7 +156,7 @@ namespace unison
             if (_commandConnection == null || !IsConnected())
             {
                 Trace.WriteLine("[SafelySendCommandAsync] no command connection");
-                return default(T);
+                return default;
             }
 
             try
@@ -176,7 +178,7 @@ namespace unison
                 Trace.WriteLine($"Sending {command.GetType().Name} failed: {e.Message}");
             }
 
-            return default(T);
+            return default;
         }
 
         public async void Startup(object sender, EventArgs e)
@@ -333,8 +335,6 @@ namespace unison
 
             }, token).ConfigureAwait(false);
         }
-
-        private bool UpdateStarted = false;
 
         private async Task HandleIdleResponseAsync(string subsystems)
         {
@@ -637,12 +637,12 @@ namespace unison
         {
             if (_Playlist == null)
                 return 0;
-            return _Playlist.ToArray().Count();
+            return _Playlist.ToArray().Length;
         }
 
         public void UpdateDB() => SendCommand(new UpdateCommand());
 
-        private string FormatTime(TimeSpan time)
+        private static string FormatTime(TimeSpan time)
         {
             string FormattedTime = "";
 

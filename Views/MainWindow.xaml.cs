@@ -224,12 +224,12 @@ namespace unison
             border.Style = b ? (Style)Resources["SelectedButton"] : (Style)Resources["UnselectedButton"];
         }
 
-        public string FormatSeconds(int time)
+        public static string FormatSeconds(int time)
         {
             TimeSpan timespan = TimeSpan.FromSeconds(time);
             return timespan.ToString(@"mm\:ss");
         }
-        public string FormatSeconds(double time)
+        public static string FormatSeconds(double time)
         {
             TimeSpan timespan = TimeSpan.FromSeconds(time);
             return timespan.ToString(@"mm\:ss");
@@ -244,7 +244,7 @@ namespace unison
         public void Consume_Clicked(object sender, RoutedEventArgs e) => _mpd.Consume();
         public void ChangeVolume(int value) => _mpd.SetVolume(value);
 
-        public void Snapcast_Clicked(object sender, RoutedEventArgs e)
+        public static void Snapcast_Clicked(object sender, RoutedEventArgs e)
         {
             SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
             snapcast.LaunchOrExit();

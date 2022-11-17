@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using AutoUpdaterDotNET;
 
 namespace unison.Handlers
@@ -9,9 +8,9 @@ namespace unison.Handlers
         readonly string xmlFile = "https://raw.githubusercontent.com/ZetaKebab/unison/main/Installer/unison.xml";
 
         private bool _UpdateAvailable = false;
-        public bool UpdateAvailable() => _UpdateAvailable;
-
         private bool _RequestedCheck = false;
+
+        public bool UpdateAvailable() => _UpdateAvailable;
 
         public UpdateHandler()
         {
@@ -25,7 +24,7 @@ namespace unison.Handlers
             AutoUpdater.Start(xmlFile);
         }
 
-        private string CutVersionNumber(string number)
+        private static string CutVersionNumber(string number)
         {
             return number.Substring(0, number.LastIndexOf("."));
         }

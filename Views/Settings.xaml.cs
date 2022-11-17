@@ -85,7 +85,7 @@ namespace unison
             }
         }
 
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        private static void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
@@ -105,7 +105,7 @@ namespace unison
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            ProcessStartInfo psi = new(e.Uri.AbsoluteUri);
+            ProcessStartInfo psi = new ProcessStartInfo(e.Uri.AbsoluteUri);
             psi.UseShellExecute = true;
             Process.Start(psi);
             e.Handled = true;
@@ -149,7 +149,7 @@ namespace unison
                 MPDConnect_Clicked(null, null);
         }
 
-        private void MPDDatabaseUpdate_Clicked(object sender, RoutedEventArgs e)
+        private static void MPDDatabaseUpdate_Clicked(object sender, RoutedEventArgs e)
         {
             MPDHandler mpd = (MPDHandler)Application.Current.Properties["mpd"];
             if (mpd.IsConnected())
@@ -180,7 +180,7 @@ namespace unison
             TimedText(UpdateDBMessage2, 2);
         }
 
-        private void CheckUpdates(object sender, RoutedEventArgs e)
+        private static void CheckUpdates(object sender, RoutedEventArgs e)
         {
             UpdateHandler updater = (UpdateHandler)Application.Current.Properties["updater"];
             updater.Start(true);
@@ -382,7 +382,7 @@ namespace unison
             HotkeyChanged();
         }
 
-        private HotkeyHandler.VK GetVirtualKey(Key key)
+        private static HotkeyHandler.VK GetVirtualKey(Key key)
         {
             foreach (object value in System.Enum.GetValues(typeof(HotkeyHandler.VK)))
             {
@@ -392,7 +392,7 @@ namespace unison
             return HotkeyHandler.VK.None;
         }
 
-        private HotkeyHandler.MOD GetMOD(string str)
+        private static HotkeyHandler.MOD GetMOD(string str)
         {
             foreach (object value in System.Enum.GetValues(typeof(HotkeyHandler.MOD)))
             {
@@ -424,12 +424,12 @@ namespace unison
             InitializeShortcuts();
         }
 
-        private uint GetMod(StackPanel stackPanel)
+        private static uint GetMod(StackPanel stackPanel)
         {
             return (uint)(GetMOD(stackPanel.Children.OfType<ComboBox>().First().SelectedItem.ToString()) | GetMOD(stackPanel.Children.OfType<ComboBox>().Last().SelectedItem.ToString()));
         }
 
-        private uint GetVk(StackPanel stackPanel)
+        private static uint GetVk(StackPanel stackPanel)
         {
             Button button = stackPanel.Children.OfType<Button>().First();
             TextBlock textBlock = (TextBlock)button.Content;

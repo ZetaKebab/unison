@@ -32,7 +32,7 @@ namespace unison
             CanExecuteFunc = () => true
         };
 
-        public string SnapcastText
+        public static string SnapcastText
         {
             get
             {
@@ -59,7 +59,7 @@ namespace unison
             }
         }
 
-        public ICommand Radios
+        public static ICommand Radios
         {
             get
             {
@@ -71,7 +71,7 @@ namespace unison
             }
         }
 
-        public ICommand Shuffle
+        public static ICommand Shuffle
         {
             get
             {
@@ -83,7 +83,7 @@ namespace unison
             }
         }
 
-        public ICommand Settings
+        public static ICommand Settings
         {
             get
             {
