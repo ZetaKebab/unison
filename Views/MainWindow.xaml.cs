@@ -27,6 +27,8 @@ namespace unison
             InitializeComponent();
             DefaultState(true);
             WindowState = WindowState.Minimized;
+            Top = Properties.Settings.Default.MainWindowTop;
+            Left = Properties.Settings.Default.MainWindowLeft;
 
             _settingsWin = new Settings();
             _radiosWin = new Radios();
@@ -335,6 +337,13 @@ namespace unison
             e.Cancel = true;
             WindowState = WindowState.Minimized;
             Hide();
+        }
+
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.MainWindowTop = Top;
+            Properties.Settings.Default.MainWindowLeft = Left;
+            Properties.Settings.Default.Save();
         }
     }
 }

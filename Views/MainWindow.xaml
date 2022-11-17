@@ -6,7 +6,7 @@
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
         xmlns:properties="clr-namespace:unison.Resources"
         mc:Ignorable="d"
-        Title="unison" Closing="Window_Closing" Icon="/Resources/icon-full.ico" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
+        Title="unison" Closing="Window_Closing" LocationChanged="Window_LocationChanged" Icon="/Resources/icon-full.ico" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
 
     <Window.Resources>
         <Style TargetType="Border" x:Key="UnselectedButton">

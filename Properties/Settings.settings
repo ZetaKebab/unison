@@ -68,5 +68,11 @@
     <Setting Name="showWindow_vk" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">13</Value>
     </Setting>
+    <Setting Name="MainWindowTop" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="MainWindowLeft" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
