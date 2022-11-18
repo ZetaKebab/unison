@@ -126,26 +126,26 @@ namespace unison
 
         private static ITag FilterEquivalence_Type(string value)
         {
-            if (value == "Song")
+            if (value == unison.Resources.Resources.FilterType_Song)
                 return MpdTags.Title;
-            else if (value == "Artist")
+            else if (value == unison.Resources.Resources.FilterType_Artist)
                 return MpdTags.Artist;
-            else if (value == "Album")
+            else if (value == unison.Resources.Resources.FilterType_Album)
                 return MpdTags.Album;
-            else if (value == "Year")
+            else if (value == unison.Resources.Resources.FilterType_Year)
                 return MpdTags.Date;
-            else if (value == "Genre")
+            else if (value == unison.Resources.Resources.FilterType_Genre)
                 return MpdTags.Genre;
             return MpdTags.Title;
         }
 
         private static FilterOperator FilterEquivalence_Operator(string value)
         {
-            if (value == "contains")
+            if (value == unison.Resources.Resources.Operator_Contains)
                 return FilterOperator.Contains;
-            else if (value == "is")
+            else if (value == unison.Resources.Resources.Operator_Is)
                 return FilterOperator.Equal;
-            else if (value == "is not")
+            else if (value == unison.Resources.Resources.Operator_IsNot)
                 return FilterOperator.Different;
             return FilterOperator.Equal;
         }
@@ -180,9 +180,9 @@ namespace unison
         private void FilterType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string item = e.AddedItems[0].ToString();
-            if (item == "Genre")
+            if (item == unison.Resources.Resources.FilterType_Genre)
                 FilterType_Change(sender, "OperatorTypeB", GenreList);
-            else if (item == "Directory")
+            else if (item == unison.Resources.Resources.FilterType_Directory)
                 FilterType_Change(sender, "OperatorTypeC", FolderList);
             else
             {
@@ -258,7 +258,7 @@ namespace unison
                 {
                     if (child.Name == "FilterType")
                     {
-                        if (child.SelectedItem.ToString() == "Directory")
+                        if (child.SelectedItem.ToString() == unison.Resources.Resources.FilterType_Directory)
                             isDir = true;
                         else
                             tag = FilterEquivalence_Type(child.SelectedItem.ToString());

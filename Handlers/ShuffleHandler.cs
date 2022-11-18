@@ -81,6 +81,7 @@ namespace unison
                     AddedSongs++;
                 }
 
+                commandList.Add(new PlayCommand(0));
                 await _mpd.SafelySendCommandAsync(commandList);
             }
             // more available songs than requested =>
@@ -101,6 +102,7 @@ namespace unison
                     AddedSongs++;
                 }
 
+                commandList.Add(new PlayCommand(0));
                 await _mpd.SafelySendCommandAsync(commandList);
             }
         }
