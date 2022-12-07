@@ -436,6 +436,8 @@ namespace unison
             }
 
             _isUpdatingSong = false;
+
+            Trace.WriteLine("Updated song");
         }
 
         private async void GetAlbumCover(string path, CancellationToken token)
@@ -565,13 +567,13 @@ namespace unison
 
         public void Prev()
         {
-            if (CanPrevNext)
+            if (CanPrevNext && !_isUpdatingSong)
                 SendCommand(new PreviousCommand());
         }
 
         public void Next()
         {
-            if (CanPrevNext)
+            if (CanPrevNext && !_isUpdatingSong)
                 SendCommand(new NextCommand());
         }
         

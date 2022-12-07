@@ -386,8 +386,9 @@ namespace unison
                 return;
 
             int PlaylistLength = _mpd.GetStatus().PlaylistLength;
-            int Num = 10 - PlaylistLength;
-            if (Num < 1)
+            int Num = 50 - PlaylistLength;
+
+            if (PlaylistLength > 25)
                 return;
 
             await UpdateFilter();           
