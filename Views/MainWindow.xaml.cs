@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Controls.Primitives;
 using System.Diagnostics;
 using System.Data;
+using MpcNET.Commands.Playback;
 
 namespace unison
 {
@@ -136,6 +137,10 @@ namespace unison
 
             if (_shuffleWin.GetContinuous())
             {
+                // force consume: there's no other way to be sure
+                // that we don't get to the end of the queue with nothing to play
+                _mpd.SendCommand(new ConsumeCommand(true));
+
                 _mpd.CanPrevNext = false;
                 await _shuffleWin.HandleContinuous();
                 _mpd.CanPrevNext = true;
