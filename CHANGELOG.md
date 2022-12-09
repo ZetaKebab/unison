@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.4
+
+*Released: 09/12/2022*
+
+* New feature: shuffle system
+* New feature: (un)installer script
+* New feature: update system
+* New feature: update MPD database button
+* Restore window position when relaunching the app
+* New settings organisation
+* Update Emoji.WPF from 0.3.3 to 0.3.4
+* Fix: cover images are displaying in all cases
+* Fix: querying a large list of radios could hang the app
+
 ## v1.3.1
 
 *Released: 03/11/2022*
