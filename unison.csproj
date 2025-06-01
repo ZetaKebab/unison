@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\icon-full.ico</ApplicationIcon>
     <Win32Resource></Win32Resource>
     <StartupObject>unison.App</StartupObject>
-    <Version>1.4</Version>
+    <Version>1.4-dev</Version>
     <Company />
     <Authors>Théo Marchal</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -52,11 +52,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autoupdater.NET.Official" Version="1.8.0" />
+    <PackageReference Include="Autoupdater.NET.Official" Version="1.9.2" />
     <PackageReference Include="Emoji.Wpf" Version="0.3.4" />
-    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
     <PackageReference Include="RadioBrowser" Version="0.7.0" />
-	<PackageReference Include="MpcNET" Version="1.4.0" />
+	<PackageReference Include="MpcNET" Version="1.6.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -90,25 +90,25 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Update="snapcast_0.27\FLAC.dll">
+    <None Update="snapcast_0.31\FLAC.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="snapcast_0.27\ogg.dll">
+    <None Update="snapcast_0.31\ogg.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="snapcast_0.27\opus.dll">
+    <None Update="snapcast_0.31\opus.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="snapcast_0.27\README.txt">
+    <None Update="snapcast_0.31\README.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="snapcast_0.27\snapclient.exe">
+    <None Update="snapcast_0.31\snapclient.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="snapcast_0.27\soxr.dll">
+    <None Update="snapcast_0.31\soxr.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="snapcast_0.27\vorbis.dll">
+    <None Update="snapcast_0.31\vorbis.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

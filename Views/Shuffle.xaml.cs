@@ -55,7 +55,7 @@ namespace unison
             if (token.IsCancellationRequested)
                 return;
 
-            List<string> Response = await _mpd.SafelySendCommandAsync(new ListCommand(MpdTags.Genre, null, null));
+            List<string> Response = await _mpd.SafelySendCommandAsync(new ListCommand(MpdTags.Genre, null, null, null));
 
             if (Response == null)
                 return;

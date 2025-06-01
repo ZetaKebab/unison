@@ -1,6 +1,6 @@
 #define Name "unison"
 #define Version "1.4"
-#define Snapcast "snapcast_0.27"
+#define Snapcast "snapcast_0.31"
 #define Publisher "Théo Marchal"
 #define URL "https://github.com/ZetaKebab/unison"
 #define ExeName "unison.exe"
