@@ -257,8 +257,19 @@ namespace unison
             snapcast.LaunchOrExit();
         }
 
+        private bool _radiosVisible = false;
+        private bool _shuffleVisible = false;
+        private bool _settingsVisible = false;
+
         public void Radios_Clicked(object sender, RoutedEventArgs e)
         {
+            if (_radiosVisible)
+            {
+                _radiosVisible = false;
+                _radiosWin.Hide();
+                return;
+            }
+            _radiosVisible = true;
             _radiosWin.Show();
             _radiosWin.Activate();
 
@@ -268,6 +279,13 @@ namespace unison
 
         public void Shuffle_Clicked(object sender, RoutedEventArgs e)
         {
+            if (_shuffleVisible)
+            {
+                _shuffleVisible = false;
+                _shuffleWin.Hide();
+                return;
+            }
+            _shuffleVisible = true;
             _shuffleWin.Show();
             _shuffleWin.Activate();
 
@@ -277,6 +295,13 @@ namespace unison
 
         public void Settings_Clicked(object sender, RoutedEventArgs e)
         {
+            if (_settingsVisible)
+            {
+                _settingsVisible = false;
+                _settingsWin.Hide();
+                return;
+            }
+            _settingsVisible = true;
             _settingsWin.Show();
             _settingsWin.Activate();
 
