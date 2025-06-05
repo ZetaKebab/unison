@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,8 +35,9 @@ namespace unison
 
             SongList.Clear();
 
-            int song = _mpd.GetStats().Songs;
-            IEnumerable<IMpdFile> response = await _mpd.SafelySendCommandAsync(new SearchCommand(filter, 0, song + 1));
+            int songTotal = _mpd.GetStats().Songs;
+
+            IEnumerable<IMpdFile> response = await _mpd.SafelySendCommandAsync(new SearchCommand(filter, 0, songTotal + 1));
             foreach (IMpdFile file in response)
                 SongList.Add(file.Path);
         }
@@ -45,7 +47,7 @@ namespace unison
             if (token.IsCancellationRequested)
                 return;
 
-            int AddedSongs = 0;
+            int addedSongs = 0;
 
             var commandList = new CommandList();
             int songTotal = _mpd.GetStats().Songs;
@@ -54,12 +56,12 @@ namespace unison
             {
                 int song = new Random().Next(0, songTotal - 1);
                 commandList.Add(new SearchAddCommand(new FilterTag(MpdTags.Title, "", FilterOperator.Contains), song, song + 1));
-                AddedSongs++;
-
-                // play if stopped or unknown state (no queue managing at the moment, so mandatory)
-                if (i == 0 && (_mpd.GetStatus().State != MpdState.Play && _mpd.GetStatus().State != MpdState.Pause))
-                    commandList.Add(new PlayCommand(0));
+                addedSongs++;
             }
+
+            // play if stopped or unknown state (no queue managing at the moment, so mandatory)
+            if ((_mpd.GetStatus().State != MpdState.Play && _mpd.GetStatus().State != MpdState.Pause))
+                commandList.Add(new PlayCommand(0));
 
             await _mpd.SafelySendCommandAsync(commandList);
         }

@@ -61,6 +61,15 @@ namespace unison.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear queue.
+        /// </summary>
+        public static string Clear_Queue {
+            get {
+                return ResourceManager.GetString("Clear_Queue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database.
         /// </summary>
         public static string Database {
@@ -210,6 +219,24 @@ namespace unison.Resources {
         public static string Operator_IsNot {
             get {
                 return ResourceManager.GetString("Operator_IsNot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play queue.
+        /// </summary>
+        public static string Play_Queue {
+            get {
+                return ResourceManager.GetString("Play_Queue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Queue management.
+        /// </summary>
+        public static string Queue_Management {
+            get {
+                return ResourceManager.GetString("Queue_Management", resourceCulture);
             }
         }
         

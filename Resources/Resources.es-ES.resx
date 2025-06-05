@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Clear_Queue" xml:space="preserve">
+    <value>Borrar cola</value>
+  </data>
   <data name="Database" xml:space="preserve">
     <value>Base de datos</value>
   </data>
@@ -167,6 +170,12 @@
   </data>
   <data name="Operator_IsNot" xml:space="preserve">
     <value>no es</value>
+  </data>
+  <data name="Play_Queue" xml:space="preserve">
+    <value>Reproducir cola</value>
+  </data>
+  <data name="Queue_Management" xml:space="preserve">
+    <value>Gestión de cola</value>
   </data>
   <data name="Radios" xml:space="preserve">
     <value>Radios</value>

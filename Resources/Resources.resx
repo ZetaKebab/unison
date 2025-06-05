@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Clear_Queue" xml:space="preserve">
+    <value>Clear queue</value>
+  </data>
   <data name="Database" xml:space="preserve">
     <value>Database</value>
   </data>
@@ -167,6 +170,12 @@
   </data>
   <data name="Operator_IsNot" xml:space="preserve">
     <value>is not</value>
+  </data>
+  <data name="Play_Queue" xml:space="preserve">
+    <value>Play queue</value>
+  </data>
+  <data name="Queue_Management" xml:space="preserve">
+    <value>Queue management</value>
   </data>
   <data name="Radios" xml:space="preserve">
     <value>Radios</value>

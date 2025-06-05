@@ -375,6 +375,16 @@ namespace unison
             AddToQueue();
         }
 
+        public void ClearQueue_Clicked(object sender, RoutedEventArgs e)
+        {
+            _mpd.ClearQueue();
+        }
+
+        public void StartQueue_Clicked(object sender, RoutedEventArgs e)
+        {
+            _mpd.PlayCommand();
+        }
+
         public bool GetContinuous()
         {
             return _continuous;
