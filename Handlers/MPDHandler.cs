@@ -677,15 +677,24 @@ namespace unison
             if (Response == null)
                 return;
 
-            _stats.Songs = int.Parse(Response["songs"]);
-            _stats.Albums = int.Parse(Response["albums"]);
-            _stats.Artists = int.Parse(Response["artists"]);
-            
-            _stats.Uptime = FormatTime(TimeSpan.FromSeconds(int.Parse(Response["uptime"])));
-            _stats.TotalPlaytime = FormatTime(TimeSpan.FromSeconds(int.Parse(Response["db_playtime"])));
-            _stats.TotalTimePlayed = FormatTime(TimeSpan.FromSeconds(int.Parse(Response["playtime"])));
+            if (Response.ContainsKey("songs"))
+                _stats.Songs = int.Parse(Response["songs"]);
+            if (Response.ContainsKey("albums"))
+                _stats.Albums = int.Parse(Response["albums"]);
+            if (Response.ContainsKey("artists"))
+                _stats.Artists = int.Parse(Response["artists"]);
 
-            DateTime date = new DateTime(1970, 1, 1).AddSeconds(int.Parse(Response["db_update"])).ToLocalTime();
+            if (Response.ContainsKey("uptime"))
+                _stats.Uptime = FormatTime(TimeSpan.FromSeconds(int.Parse(Response["uptime"])));
+            if (Response.ContainsKey("db_playtime"))
+                _stats.TotalPlaytime = FormatTime(TimeSpan.FromSeconds(int.Parse(Response["db_playtime"])));
+            if (Response.ContainsKey("playtime"))
+                _stats.TotalTimePlayed = FormatTime(TimeSpan.FromSeconds(int.Parse(Response["playtime"])));
+
+            DateTime date = new DateTime(1970, 1, 1);
+            if (Response.ContainsKey("db_update"))
+                date = date.AddSeconds(int.Parse(Response["db_update"])).ToLocalTime();
+
             string dayOfWeek = Resources.Resources.Culture.DateTimeFormat.GetDayName(date.DayOfWeek);
             _stats.DatabaseUpdate = dayOfWeek + " " + date.ToString("dd/MM/yyyy @ HH:mm");
         }
