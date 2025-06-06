@@ -23,6 +23,9 @@ namespace unison
         {
             InitializeComponent();
             Initialize();
+            InitHwnd();
+
+            WindowState = WindowState.Minimized;
         }
 
         public async void Initialize()

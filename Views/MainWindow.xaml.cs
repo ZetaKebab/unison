@@ -17,10 +17,13 @@ namespace unison
         private readonly Settings _settingsWin;
         private readonly Radios _radiosWin;
         private readonly Shuffle _shuffleWin;
-        private readonly DispatcherTimer _timer;
-        private readonly MPDHandler _mpd;
 
         public Settings GetSettings() => _settingsWin;
+        public Radios GetRadios() => _radiosWin;
+        public Shuffle GetShuffle() => _shuffleWin;
+
+        private readonly DispatcherTimer _timer;
+        private readonly MPDHandler _mpd;
 
         public MainWindow()
         {
@@ -257,56 +260,49 @@ namespace unison
             snapcast.LaunchOrExit();
         }
 
-        private bool _radiosVisible = false;
-        private bool _shuffleVisible = false;
-        private bool _settingsVisible = false;
-
         public void Radios_Clicked(object sender, RoutedEventArgs e)
         {
-            if (_radiosVisible)
-            {
-                _radiosVisible = false;
-                _radiosWin.Hide();
-                return;
-            }
-            _radiosVisible = true;
-            _radiosWin.Show();
-            _radiosWin.Activate();
-
             if (_radiosWin.WindowState == WindowState.Minimized)
+            {
+                _radiosWin.Show();
+                _radiosWin.Activate();
                 _radiosWin.WindowState = WindowState.Normal;
+            }
+            else if (_radiosWin.WindowState == WindowState.Normal)
+            {
+                _radiosWin.Hide();
+                _radiosWin.WindowState = WindowState.Minimized;
+            }
         }
 
         public void Shuffle_Clicked(object sender, RoutedEventArgs e)
         {
-            if (_shuffleVisible)
-            {
-                _shuffleVisible = false;
-                _shuffleWin.Hide();
-                return;
-            }
-            _shuffleVisible = true;
-            _shuffleWin.Show();
-            _shuffleWin.Activate();
-
             if (_shuffleWin.WindowState == WindowState.Minimized)
+            {
+                _shuffleWin.Show();
+                _shuffleWin.Activate();
                 _shuffleWin.WindowState = WindowState.Normal;
+            }
+            else if (_shuffleWin.WindowState == WindowState.Normal)
+            {
+                _shuffleWin.Hide();
+                _shuffleWin.WindowState = WindowState.Minimized;
+            }
         }
 
         public void Settings_Clicked(object sender, RoutedEventArgs e)
         {
-            if (_settingsVisible)
-            {
-                _settingsVisible = false;
-                _settingsWin.Hide();
-                return;
-            }
-            _settingsVisible = true;
-            _settingsWin.Show();
-            _settingsWin.Activate();
-
             if (_settingsWin.WindowState == WindowState.Minimized)
+            {
+                _settingsWin.Show();
+                _settingsWin.Activate();
                 _settingsWin.WindowState = WindowState.Normal;
+            }
+            else if (_settingsWin.WindowState == WindowState.Normal)
+            {
+                _settingsWin.Hide();
+                _settingsWin.WindowState = WindowState.Minimized;
+            }
         }
 
         private void TimeSlider_DragStarted(object sender, DragStartedEventArgs e)

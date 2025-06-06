@@ -32,10 +32,14 @@ namespace unison
         public Shuffle()
         {
             InitializeComponent();
+            InitHwnd();
+        
             GenreList = new();
             FolderList = new();
             Filters = new();
             SongFilterNumber.Text = "0";
+
+            WindowState = WindowState.Minimized;
 
             _mpd = (MPDHandler)Application.Current.Properties["mpd"];
             _shuffle = (ShuffleHandler)Application.Current.Properties["shuffle"];
