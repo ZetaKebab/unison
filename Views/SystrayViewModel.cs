@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.Reflection;
 using System.ComponentModel;
 using System;
+using System.Diagnostics;
 
 namespace unison
 {
@@ -32,7 +33,7 @@ namespace unison
             CanExecuteFunc = () => true
         };
 
-        public static string SnapcastText
+        public string SnapcastText
         {
             get
             {
@@ -49,7 +50,7 @@ namespace unison
                 {
                     CommandAction = () =>
                     {
-                        Application.Current.Dispatcher.BeginInvoke(new Action(() => OnPropertyChanged("SnapcastText")));
+                        Application.Current.Dispatcher.BeginInvoke(new Action(() => OnPropertyChanged(SnapcastText)));
 
                         SnapcastHandler snapcast = (SnapcastHandler)Application.Current.Properties["snapcast"];
                         snapcast.LaunchOrExit();
