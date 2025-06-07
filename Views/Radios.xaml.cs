@@ -172,5 +172,12 @@ namespace unison
             WindowInteropHelper helper = new(this);
             helper.EnsureHandle();
         }
+
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.RadiosWindowTop = Top;
+            Properties.Settings.Default.RadiosWindowLeft = Left;
+            Properties.Settings.Default.Save();
+        }
     }
 }

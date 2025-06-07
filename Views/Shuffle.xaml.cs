@@ -432,5 +432,12 @@ namespace unison
             WindowInteropHelper helper = new(this);
             helper.EnsureHandle();
         }
+
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ShuffleWindowTop = Top;
+            Properties.Settings.Default.ShuffleWindowLeft = Left;
+            Properties.Settings.Default.Save();
+        }
     }
 }

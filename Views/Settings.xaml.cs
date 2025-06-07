@@ -207,6 +207,13 @@ namespace unison
             helper.EnsureHandle();
         }
 
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SettingsWindowTop = Top;
+            Properties.Settings.Default.SettingsWindowLeft = Left;
+            Properties.Settings.Default.Save();
+        }
+
         public void SaveSettings()
         {
             Properties.Settings.Default.mpd_host = MpdHost.Text;
