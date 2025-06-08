@@ -26,6 +26,9 @@ namespace unison
             InitHwnd();
 
             WindowState = WindowState.Minimized;
+
+            Top = Properties.Settings.Default.RadiosWindowTop;
+            Left = Properties.Settings.Default.RadiosWindowLeft;
         }
 
         public async void Initialize()

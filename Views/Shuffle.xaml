@@ -6,7 +6,7 @@
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
         xmlns:properties="clr-namespace:unison.Resources" xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        Title="Shuffle" Closing="Window_Closing" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+        Title="Shuffle" Closing="Window_Closing" LocationChanged="Window_LocationChanged" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
 
     <Window.Resources>
         <x:Array x:Key="FilterType" Type="sys:String">

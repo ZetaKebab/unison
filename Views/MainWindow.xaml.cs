@@ -30,7 +30,9 @@ namespace unison
             InitHwnd();
             InitializeComponent();
             DefaultState(true);
+
             WindowState = WindowState.Minimized;
+
             Top = Properties.Settings.Default.MainWindowTop;
             Left = Properties.Settings.Default.MainWindowLeft;
 

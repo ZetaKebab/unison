@@ -6,7 +6,7 @@
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
         xmlns:properties="clr-namespace:unison.Resources" 
         mc:Ignorable="d"
-        Title="Radios" Closing="Window_Closing" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+        Title="Radios" Closing="Window_Closing" LocationChanged="Window_LocationChanged" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
 
     <Grid Margin="0,5,0,0">
         <StackPanel>

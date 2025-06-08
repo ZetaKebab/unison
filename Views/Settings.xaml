@@ -6,7 +6,7 @@
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
         xmlns:properties="clr-namespace:unison.Resources" xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        Closing="Window_Closing" Title="{x:Static properties:Resources.Settings}" ResizeMode="CanMinimize" Icon="/Resources/icon-full.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
+         Title="{x:Static properties:Resources.Settings}" Closing="Window_Closing" LocationChanged="Window_LocationChanged" ResizeMode="CanMinimize" Icon="/Resources/icon-full.ico" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight">
 
     <Window.Resources>
         <x:Array x:Key="ShortcutItems" Type="sys:String">

@@ -45,11 +45,13 @@ namespace unison
         {
             InitHwnd();
             InitializeComponent();
+            Initialize();
             DataContext = this;
 
             WindowState = WindowState.Minimized;
 
-            Initialize();
+            Top = Properties.Settings.Default.SettingsWindowTop;
+            Left = Properties.Settings.Default.SettingsWindowLeft;
         }
 
         void Initialize()

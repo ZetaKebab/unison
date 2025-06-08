@@ -41,6 +41,9 @@ namespace unison
 
             WindowState = WindowState.Minimized;
 
+            Top = Properties.Settings.Default.ShuffleWindowTop;
+            Left = Properties.Settings.Default.ShuffleWindowLeft;
+
             _mpd = (MPDHandler)Application.Current.Properties["mpd"];
             _shuffle = (ShuffleHandler)Application.Current.Properties["shuffle"];
         }
