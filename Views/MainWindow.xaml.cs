@@ -350,7 +350,7 @@ namespace unison
                 string CopyText = SongTitle.Text + " - " + SongArtist.Text + "\n";
                 CopyText += SongAlbum.Text + "\n";
                 CopyText += SongTitle.ToolTip;
-                Clipboard.SetText(CopyText);
+                Clipboard.SetDataObject(CopyText);
             }
         }
 
