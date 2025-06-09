@@ -1,5 +1,5 @@
 #define Name "unison"
-#define Version "1.4"
+#define Version "1.5"
 #define Snapcast "snapcast_0.31"
 #define Publisher "Théo Marchal"
 #define URL "https://github.com/ZetaKebab/unison"

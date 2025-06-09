@@ -7,7 +7,7 @@
     <ApplicationIcon>Resources\icon-full.ico</ApplicationIcon>
     <Win32Resource></Win32Resource>
     <StartupObject>unison.App</StartupObject>
-    <Version>1.4-dev</Version>
+    <Version>1.5</Version>
     <Company />
     <Authors>Théo Marchal</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -15,6 +15,7 @@
     <RepositoryUrl>https://github.com/ZetaKebab/unison</RepositoryUrl>
     <Copyright>Théo Marchal</Copyright>
     <PackageIconUrl />
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>

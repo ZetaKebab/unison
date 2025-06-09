@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.5
+
+*Released: 09/06/2025*
+
+* Windows 11 compatibility
+* Shuffle button: add "clear queue" and "play queue" buttons
+* Hide windows when clicking corresponding buttons, if they were visible
+* Fix: add security to QueryStats response to avoid crashes
+* Fix: regression in Systray text display
+* Fix: clipboard copy crash
+* Update .NET (6.0 to 8.0)
+* Update Snapcast (0.26.0.1 to 0.31)
+* Update MpcNET (1.4.0 to 1.6.6)
+* Update RadioBrowser (0.6.1 to 0.7)
+* Update AutoUpdater.NET (1.7.6 to 1.9.2)
+* Update NotifyIcon.Wpf (1.1.0 to 2.0.1)
+
 ## v1.4
 
 *Released: 09/12/2022*
